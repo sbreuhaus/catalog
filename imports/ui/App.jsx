@@ -13,6 +13,7 @@ import Genre from './Genre.jsx';
 import BackToGenres from './BackToGenres';
 import SearchBar from './SearchBar';
 import PlayList from './PlayList';
+import DisplayTable from './DisplayTable';
 
 class App extends Component {
   constructor(props) {
@@ -23,11 +24,13 @@ class App extends Component {
       genre: '',
       playList: '',
       songs: this.props.songs,
-      searchMatches: ''
+      searchMatches: '',
+      matchedSongs: undefined
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleDisplayTable = this.handleDisplayTable.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,18 +87,14 @@ class App extends Component {
 
       return (
         <div className="container">
-
-            <div className="row">
-              <h2>Filter by genre</h2>
-              {genres.map((genre, index) => <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
-            </div>
-
-
-            <div className="row playlist-container">
-              <h2>Filter by playlist</h2>
-              {playLists.map((playList, index) => <PlayList key={index} playList={playList} ref={playList} clickPlaylist={this.clickPlaylist}/>)}
-            </div>
-
+          <div className="row">
+            <h2>Filter by genre</h2>
+            {genres.map((genre, index) => <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
+          </div>
+          <div className="row playlist-container">
+            <h2>Filter by playlist</h2>
+            {playLists.map((playList, index) => <PlayList key={index} playList={playList} ref={playList} clickPlaylist={this.clickPlaylist}/>)}
+          </div>
         </div>
       )
     }
@@ -143,9 +142,28 @@ class App extends Component {
       }
     }
 
+    trimString = (s) => {
+      let l = 0, r = s.length -1;
+      while (l < s.length && s[l] == ' ') l++;
+      while (r > l && s[r] == ' ') r -= 1;
+      return s.substring(l, r + 1);
+    }
+
+    compareObjects = (o1, o2) => {
+      let k = '';
+      for(k in o1) if(o1[k] != o2[k]) return false;
+      for(k in o2) if(o1[k] != o2[k]) return false;
+      return true;
+    }
+
+    itemExists = (haystack, needle) => {
+      for(var i=0; i<haystack.length; i++) if(this.compareObjects(haystack[i], needle)) return true;
+      return false;
+    }
+
     handleSearch(e) {
       e.preventDefault();
-      this.setState({searchMatches: e.target.value})
+      this.setState({searchMatches: e.target.value.trim()})
       let songs = this.state.songs;
       let matches = [];
       let searchMatches = this.state.searchMatches;
@@ -153,29 +171,44 @@ class App extends Component {
       for(var i=0; i<songs.length; i++) {
         for(key in songs[i]) {
           if(songs[i][key].toString().toLowerCase().indexOf(searchMatches)!=-1) {
-            //console.log("songs[i][key]", songs[i][key]);
-            matches.push(songs[i]);
+            console.log("itemexists.  what is this?", this);
+            if(!this.itemExists(matches, songs[i])) matches.push(songs[i]);
+
           }
         }
       }
       console.log(matches);
+      this.setState({matchedSongs: matches})
     }
 
-  render() {
-    let isGenre = this.state.isGenre;
-    return (
-      <div className="container">
-        <div className="form">
-          <SearchBar handleSearch={this.handleSearch}/>
+    handleDisplayTable() {
+      let matchedSongs = this.state.matchedSongs;
+      if(this.state.searchMatches){
+        return (
+          <div>
+            {matchedSongs.map((song, index) => (<DisplayTable song={song} key={index}/>))}
+          </div>
+        )
+      }
+    }
+
+    render() {
+      let isGenre = this.state.isGenre;
+      let searchMatches = this.state.searchMatches;
+      return (
+        <div className="container">
+          <div className="form">
+            <SearchBar handleSearch={this.handleSearch}/>
+          </div>
+          <h1>{this.state.searchMatches}</h1>
+          {this.handleDisplayTable()}
+          {this.handleFilterGenrePlaylist()}
+          {this.handleShowSongGenres()}
+          {this.handleShowPlayListSongs()}
+          {!isGenre ? <BackToGenres toggleView={this.toggleView.bind(this)}/> : ''}
         </div>
-        <h1>{this.state.searchMatches}</h1>
-        {this.handleFilterGenrePlaylist()}
-        {this.handleShowSongGenres()}
-        {this.handleShowPlayListSongs()}
-        {!isGenre ? <BackToGenres toggleView={this.toggleView.bind(this)}/> : ''}
-      </div>
-    )
-  }
+      )
+    }
 }
 
 App.propTypes = {

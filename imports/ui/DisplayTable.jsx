@@ -1,5 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react';
 
-export const DisplayTable = (props) => {
-  
+export default class DisplayTable extends Component {
+  render() {
+    return (
+      <div>
+        <li><p>{this.props.song.name}</p></li>
+      </div>
+    );
+  }
 }
