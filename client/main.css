@@ -22,6 +22,15 @@ li {
 .song-param:hover {
   cursor: pointer
 }
+
+audio {
+  width: 500px;
+}
+
+.sedgwick {
+  font-family: 'Sedgwick Ave Display', cursive;
+}
+
 /*
 .song-param {
   border: 1px dotted blue;
@@ -79,14 +88,19 @@ li {
 }
 
 .grid-div {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   border: 1px solid blue;
+  background-color: 
   height: 80px;
   text-align: center;
 }
 
-.grid-div p {
+/*.grid-div p {
   padding: 10px 40px;
-}
+}*/
 
 .playlist-container {
   margin-top: 50px;

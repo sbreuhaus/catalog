@@ -14,6 +14,8 @@ import BackToGenres from './BackToGenres';
 import SearchBar from './SearchBar';
 import PlayList from './PlayList';
 import DisplayTable from './DisplayTable';
+import MusicPlayer from './MusicPlayer';
+import NavBar from './NavBar';
 
 class App extends Component {
   constructor(props) {
@@ -29,12 +31,17 @@ class App extends Component {
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
+    this.clickSong = this.clickSong.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleDisplayTable = this.handleDisplayTable.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({songs: nextProps.songs})
+  }
+
+  clickSong(e) {
+    console.log("Song clicked!!");
   }
 
   clickGenre(e) {
@@ -56,7 +63,8 @@ class App extends Component {
   clickPlaylist(e) {
     console.log("playlist what is this?", this);
     console.log("e.target.innerHTML", e.target.innerHTML);
-    this.handleSetPlaylist(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, "")); //strip html tags
+    this.handleSetPlaylist(e.target.innerHTML); //strip html tags
+    // this.handleSetPlaylist(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, ""));
   }
 
   handleSetPlaylist(playList) {
@@ -106,7 +114,7 @@ class App extends Component {
       let filtered = [];
       let filterGenre = this.state.genre;
       for(var i = 0; i < filterSongs.length; i ++) {
-          let song = filterSongs[i].name;
+          let song = filterSongs[i];
           let genre = filterSongs[i].genre;
           if(genre == filterGenre) {
             filtered.push(song)
@@ -115,7 +123,7 @@ class App extends Component {
       return (
         <div className="row">
           <h1>{filterGenre}</h1>
-          {filtered.map((song, index) => (<Song song={song} key={index}/>))}
+          {filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong}/>))}
         </div>
         )
       }
@@ -128,7 +136,7 @@ class App extends Component {
         let filtered = [];
         let filterPlaylist = this.state.playList;
         for(var i = 0; i < filterSongs.length; i ++) {
-          let song = filterSongs[i].name;
+          let song = filterSongs[i];
           let playlist = filterSongs[i].playlist;
           if(playlist == filterPlaylist) {
             filtered.push(song)
@@ -157,7 +165,7 @@ class App extends Component {
     }
 
     itemExists = (haystack, needle) => {
-      for(var i=0; i<haystack.length; i++) if(this.compareObjects(haystack[i], needle)) return true;
+      for (var i = 0; i < haystack.length; i++) if(this.compareObjects(haystack[i], needle)) return true;
       return false;
     }
 
@@ -168,10 +176,9 @@ class App extends Component {
       let matches = [];
       let searchMatches = this.state.searchMatches;
 
-      for(var i=0; i<songs.length; i++) {
+      for(var i = 0; i < songs.length; i++) {
         for(key in songs[i]) {
           if(songs[i][key].toString().toLowerCase().indexOf(searchMatches)!=-1) {
-            console.log("itemexists.  what is this?", this);
             if(!this.itemExists(matches, songs[i])) matches.push(songs[i]);
 
           }
@@ -196,16 +203,21 @@ class App extends Component {
       let isGenre = this.state.isGenre;
       let searchMatches = this.state.searchMatches;
       return (
-        <div className="container">
-          <div className="form">
-            <SearchBar handleSearch={this.handleSearch}/>
+        <div>
+          <NavBar />
+          <div className="container">
+            <div className="row">
+              <SearchBar handleSearch={this.handleSearch}/>
+            </div>
+            <div className="row audio-player">
+              <MusicPlayer />
+            </div>
+            {this.handleDisplayTable()}
+            {this.handleFilterGenrePlaylist()}
+            {this.handleShowSongGenres()}
+            {this.handleShowPlayListSongs()}
+            {!isGenre ? <BackToGenres toggleView={this.toggleView.bind(this)}/> : ''}
           </div>
-          <h1>{this.state.searchMatches}</h1>
-          {this.handleDisplayTable()}
-          {this.handleFilterGenrePlaylist()}
-          {this.handleShowSongGenres()}
-          {this.handleShowPlayListSongs()}
-          {!isGenre ? <BackToGenres toggleView={this.toggleView.bind(this)}/> : ''}
         </div>
       )
     }
@@ -224,49 +236,3 @@ export default createContainer(() => {
     songs
   };
 }, App);
-
-// filtered.map((genre, index) => {
-//   return (
-//     <div className="container">
-//       <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>
-//     </div>
-//   )
-// });
-
-
-// else if(!this.state.isGenre) {
-//     let filterSongs = this.state.songs;
-//     let filtered = [];
-//     let filterGenre = this.state.genre;
-//     for(var i = 0; i < filterSongs.length; i ++) {
-//         let song = filterSongs[i].name;
-//         let genre = filterSongs[i].genre;
-//         if(genre == filterGenre) {
-//           filtered.push(song)
-//         }
-//       }
-//     return (
-//       <div className="row">
-//         <h1>{filterGenre}</h1>
-//         {filtered.map((song, index) => (<Song song={song} key={index}/>))}
-//         <BackToGenres toggleView={this.toggleView.bind(this)}/>
-//       </div>
-//       )
-//     } else if(!this.state.isPlaylist){
-//       let filterSongs = this.state.songs;
-//       let filtered = [];
-//       let filterPlaylist = this.state.playlist;
-//       for(var i = 0; i < filterSongs.length; i ++) {
-//           let song = filterSongs[i].name;
-//           let playlist = filterSongs[i].playlist;
-//           if(playlist == filterPlaylist) {
-//             filtered.push(song)
-//           }
-//         }
-//       return (
-//         <div className="row">
-//           {filtered.map((song, index) => (<Song song={song} key={index}/>))}
-//           <BackToGenres toggleView={this.toggleView.bind(this)}/>
-//         </div>
-//       )
-//     }

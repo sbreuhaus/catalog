@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-export default class SearchBar extends Component {
-  render() {
+const SearchBar = (props) => {
     return(
-      <div className="input-group padding-top">
-        <input type="text" className="form-control input-lg" placeholder="Search for..." onChange={this.props.handleSearch}></input>
+      <div className="form-group padding-top">
+        <input type="text" className="form-control input-lg" placeholder="Search for..." onChange={props.handleSearch}></input>
       </div>
     )
-  }
 }
+
+export default SearchBar;
