@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
+import Masonry from 'react-masonry-component';
+import '../../client/main.css';
 
+const masonryOptions = {
+    itemSelector: '.grid-item',
+    transitionDuration: 0,
+    columnWidth: '.sizer'
+};
 
 //songs collection
 import { Songs } from '../api/songs.js';
@@ -16,6 +23,7 @@ import PlayList from './PlayList';
 import DisplayTable from './DisplayTable';
 import MusicPlayer from './MusicPlayer';
 import NavBar from './NavBar';
+import SongMeta from './SongMeta';
 
 class App extends Component {
   constructor(props) {
@@ -27,21 +35,19 @@ class App extends Component {
       playList: '',
       songs: this.props.songs,
       searchMatches: '',
-      matchedSongs: undefined
+      matchedSongs: undefined,
+      playerSong: undefined,
+      songMeta: false
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
-    this.clickSong = this.clickSong.bind(this);
+    //this.clickSong = this.clickSong.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleDisplayTable = this.handleDisplayTable.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({songs: nextProps.songs})
-  }
-
-  clickSong(e) {
-    console.log("Song clicked!!");
   }
 
   clickGenre(e) {
@@ -75,7 +81,7 @@ class App extends Component {
     })
   }
 
-  handleFilterGenrePlaylist() {
+  handleFilterGenrePlaylist() { // on page load, filter through all genre's and playlists and display no duplicates
     if(this.state.isGenre){
       //console.log("genre is now showing");
       let allSongs = this.state.songs;
@@ -95,13 +101,13 @@ class App extends Component {
 
       return (
         <div className="container">
-          <div className="row">
-            <h2>Filter by genre</h2>
-            {genres.map((genre, index) => <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
-          </div>
           <div className="row playlist-container">
-            <h2>Filter by playlist</h2>
+            <h2 id="playlist">Filter by playlist</h2>
             {playLists.map((playList, index) => <PlayList key={index} playList={playList} ref={playList} clickPlaylist={this.clickPlaylist}/>)}
+          </div>
+          <div className="row">
+            <h2 id="filter">Filter by genre</h2>
+            {genres.map((genre, index) => <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
           </div>
         </div>
       )
@@ -113,6 +119,7 @@ class App extends Component {
       let filterSongs = this.state.songs;
       let filtered = [];
       let filterGenre = this.state.genre;
+      let songMeta = this.state.songMeta;
       for(var i = 0; i < filterSongs.length; i ++) {
           let song = filterSongs[i];
           let genre = filterSongs[i].genre;
@@ -123,7 +130,7 @@ class App extends Component {
       return (
         <div className="row">
           <h1>{filterGenre}</h1>
-          {filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong}/>))}
+          {filtered.map((song, index) => (<Song song={song} key={index}/>))}
         </div>
         )
       }
@@ -144,7 +151,7 @@ class App extends Component {
         }
         return (
           <div className="row">
-            {filtered.map((song, index) => (<Song song={song} key={index}/>))}
+            {filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong}/>))}
           </div>
         )
       }
@@ -184,7 +191,7 @@ class App extends Component {
           }
         }
       }
-      console.log(matches);
+      //console.log(matches);
       this.setState({matchedSongs: matches})
     }
 
@@ -193,7 +200,7 @@ class App extends Component {
       if(this.state.searchMatches){
         return (
           <div>
-            {matchedSongs.map((song, index) => (<DisplayTable song={song} key={index}/>))}
+            {matchedSongs.map((song, index) => (<DisplayTable song={song} key={index} clickSong={this.clickSong}/>))}
           </div>
         )
       }

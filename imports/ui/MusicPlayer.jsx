@@ -3,7 +3,7 @@ import ReactAudioPlayer from 'react-audio-player';
 
 const MusicPlayer = (props) => {
   return (
-    <div className="col-md-1">
+    <div className="col-md-1 music-player">
       <ReactAudioPlayer
         src="http://www.manmademusic.com/files/att_microcatalog/resources/Vamonos.mp3"
         controls

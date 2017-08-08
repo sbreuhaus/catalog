@@ -12,6 +12,10 @@ html, body {
   color: white;
 }
 
+ul {
+  padding: none;
+}
+
 li {
   position: relative;
   list-style: none;
@@ -23,12 +27,68 @@ li {
   cursor: pointer
 }
 
-audio {
-  width: 500px;
+/*audio {
+  width: 100%;
+}*/
+
+.grid-item {
+  background-color: red;
+  height: 60px;
+  /*border: 2px solid hsla(0, 0%, 0%, 0.5);*/
 }
 
-.sedgwick {
-  font-family: 'Sedgwick Ave Display', cursive;
+.playlist-container {
+  margin-top: 50px;
+}
+
+.genre-div {
+  height: 100px;
+  display: flex;
+  justify-content:flex-start;
+}
+
+.genre-div p {
+  max-width: 75%;
+}
+
+.play-list-div {
+  height: 100px;
+  display: flex;
+  justify-content:flex-start;
+}
+
+.play-list-div p {
+  max-width: 75%;
+}
+
+.genre-div:hover {
+  background-color: #C0B4A1;
+  cursor: pointer;
+  color: white;
+}
+
+.play-list-div:hover {
+  background-color: #CDE0F0;
+  cursor: pointer;
+  color: white;
+}
+
+#filter {
+  margin-bottom: 5vh;
+}
+
+#playlist {
+  margin-bottom: 10vh;
+}
+
+.music-player {
+  margin-top: 5vh;
+}
+
+.song-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 /*
@@ -80,10 +140,9 @@ audio {
   background:white;
 }*/
 
-.grid {
+/*.grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  /*grid-auto-rows: minmax(60px, auto);*/
   grid-gap: 20px;
 }
 
@@ -93,19 +152,12 @@ audio {
   padding-left: 10px;
   padding-right: 10px;
   border: 1px solid blue;
-  background-color: 
+  background-color: yellow;
   height: 80px;
   text-align: center;
 }
 
-/*.grid-div p {
-  padding: 10px 40px;
-}*/
-
-.playlist-container {
-  margin-top: 50px;
-}
 
 .padding-top {
   padding-top: 50px;
-}
+}*/

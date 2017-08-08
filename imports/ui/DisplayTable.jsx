@@ -4,7 +4,7 @@ export default class DisplayTable extends Component {
   render() {
     return (
       <div>
-        <li><p>{this.props.song.name}</p></li>
+        <li onClick={this.props.clickSong}><p>{this.props.song.name}</p></li>
       </div>
     );
   }

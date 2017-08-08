@@ -1,19 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
-// Task component - represents a single todo item
-const Song = (props) => {
-    return (
-      <ul className="list-group">
-        <li className="list-group-item" onClick={props.clickSong}>{props.song.name}</li>
-      </ul>
-    );
+import SongMeta from './SongMeta';
+
+class Song extends Component {
+    constructor(props){
+      super(props)
+
+      this.state = {
+        showMeta: false
+      }
+    }
+
+    clickSong = (e) => {
+      e.preventDefault();
+      console.log("Song clicked!!");
+      this.setState({showMeta: !this.state.showMeta})
+    }
+
+    renderSongMeta = () => {
+      console.log("renderSongMeta");
+      if(this.state.showMeta){
+        return <SongMeta />
+
+      }
+    }
+
+    render(){
+      return (
+        <li className="list-group">
+          <div className="list-group-item" onClick={this.clickSong}>{this.props.song.name}</div>
+          {this.renderSongMeta()}
+        </li>
+      );
+  }
 }
 
 export default Song;
 
 Song.propTypes = {
-  // This component gets the song to display through a React prop.
-  // We can use propTypes to indicate it is required
+
   song: PropTypes.object
 };
