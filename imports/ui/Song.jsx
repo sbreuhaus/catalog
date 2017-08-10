@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
 import SongMeta from './SongMeta';
+import FontAwesome from 'react-fontawesome';
+
 
 class Song extends Component {
     constructor(props){
@@ -31,7 +33,10 @@ class Song extends Component {
       return (
         <li className="list-group">
           <div className="list-group-item" onClick={this.clickSong}>
-            {this.props.song.name}
+            <div>
+              {!this.state.showMeta ? <FontAwesome className="fa fa-chevron-down" aria-hidden="true"></FontAwesome>
+                : <FontAwesome className="fa fa-chevron-up" aria-hidden="true"></FontAwesome>}  {this.props.song.name}
+            </div>
             {this.renderSongMeta()}
           </div>
         </li>

@@ -10,7 +10,6 @@ const NavBar = () => {
           <a className="navbar-brand" href="#">
             <ReactSVG
               path="../../ATT.svg"
-              callback={svg => console.log(svg)}
               className="example"
               style={{ width: 32 }}
               />

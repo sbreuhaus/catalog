@@ -17,7 +17,7 @@ import { Songs } from '../api/songs.js';
 //components
 import Song from './Song.jsx';
 import Genre from './Genre.jsx';
-import BackToGenres from './BackToGenres';
+import BackToHome from './BackToHome.jsx';
 import SearchBar from './SearchBar';
 import PlayList from './PlayList';
 import DisplayTable from './DisplayTable';
@@ -56,9 +56,21 @@ class App extends Component {
     this.toggleView()
   }
 
-  toggleView() {
+  toggleView = () => {
     this.setState({
       isGenre: !this.state.isGenre,
+    })
+  }
+
+  clickToHome = (e) => {
+    this.toggleView()
+    this.handleClearState()
+  }
+
+  handleClearState = () => {
+    this.setState({
+      genre: '',
+      playList: ''
     })
   }
 
@@ -69,8 +81,8 @@ class App extends Component {
   clickPlaylist(e) {
     console.log("playlist what is this?", this);
     console.log("e.target.innerHTML", e.target.innerHTML);
-    this.handleSetPlaylist(e.target.innerHTML); //strip html tags
-    // this.handleSetPlaylist(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, ""));
+    //this.handleSetPlaylist(e.target.innerHTML); //strip html tags
+    this.handleSetPlaylist(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, ""));
   }
 
   handleSetPlaylist(playList) {
@@ -102,11 +114,11 @@ class App extends Component {
       return (
         <div className="container">
           <div className="row playlist-container">
-            <h2 id="playlist">Filter by playlist</h2>
+            <h2 id="playlist">Playlists</h2>
             {playLists.map((playList, index) => <PlayList key={index} playList={playList} ref={playList} clickPlaylist={this.clickPlaylist}/>)}
           </div>
           <div className="row">
-            <h2 id="filter">Filter by genre</h2>
+            <h2 id="filter">Genres</h2>
             {genres.map((genre, index) => <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
           </div>
         </div>
@@ -127,10 +139,11 @@ class App extends Component {
             filtered.push(song)
           }
         }
+        console.log("FUCK!!!", filtered.length);
       return (
         <div className="row">
           <h1>{filterGenre}</h1>
-          {filtered.map((song, index) => (<Song song={song} key={index}/>))}
+          {filtered.map((song, index) => (<Song song={song} key={index} />))}
         </div>
         )
       }
@@ -151,6 +164,7 @@ class App extends Component {
         }
         return (
           <div className="row">
+            <h1>{filterPlaylist}</h1>
             {filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong}/>))}
           </div>
         )
@@ -223,7 +237,7 @@ class App extends Component {
             {this.handleFilterGenrePlaylist()}
             {this.handleShowSongGenres()}
             {this.handleShowPlayListSongs()}
-            {!isGenre ? <BackToGenres toggleView={this.toggleView.bind(this)}/> : ''}
+            {!isGenre ? <BackToHome clickToHome={this.clickToHome}/> : ''}
           </div>
         </div>
       )
