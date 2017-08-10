@@ -2,9 +2,16 @@ import React from 'react';
 
 const SongMeta = (props) => {
   return (
-    <div>
-      Here's the meta data
-    </div>
+
+        <ul>
+          <li>
+            Genre:  {props.song.genre}
+          </li>
+          <li>
+            Notable Intruments:  {props.song.notable_instr}
+          </li>
+        </ul>
+
   )
 }
 

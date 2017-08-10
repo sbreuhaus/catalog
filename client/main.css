@@ -49,6 +49,7 @@ li {
 
 .genre-div p {
   max-width: 75%;
+  margin-top: 15%;
 }
 
 .play-list-div {
@@ -59,16 +60,17 @@ li {
 
 .play-list-div p {
   max-width: 75%;
+  margin-top: 15%;
 }
 
 .genre-div:hover {
-  background-color: #C0B4A1;
+  background-color: #1B50C6;
   cursor: pointer;
   color: white;
 }
 
 .play-list-div:hover {
-  background-color: #CDE0F0;
+  background-color: #1B50C6;
   cursor: pointer;
   color: white;
 }
@@ -89,6 +91,15 @@ li {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.navbar {
+  min-height: 60px;
+  border-radius: 0px;
+}
+
+.navbar-inverse {
+  background-color: #0F1D42;
 }
 
 /*

@@ -20,17 +20,20 @@ class Song extends Component {
 
     renderSongMeta = () => {
       console.log("renderSongMeta");
+      let song = this.props.song;
+      console.log("i want to pass songs to songsMeta", song);
       if(this.state.showMeta){
-        return <SongMeta />
-
+        return <SongMeta song={song}/>
       }
     }
 
     render(){
       return (
         <li className="list-group">
-          <div className="list-group-item" onClick={this.clickSong}>{this.props.song.name}</div>
-          {this.renderSongMeta()}
+          <div className="list-group-item" onClick={this.clickSong}>
+            {this.props.song.name}
+            {this.renderSongMeta()}
+          </div>
         </li>
       );
   }
