@@ -37,7 +37,9 @@ class App extends Component {
       searchMatches: '',
       matchedSongs: undefined,
       playerSong: undefined,
-      songMeta: false
+      songMeta: false,
+      selectedUrl: undefined,
+      songUrl: undefined
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
@@ -70,7 +72,9 @@ class App extends Component {
   handleClearState = () => {
     this.setState({
       genre: '',
-      playList: ''
+      playList: '',
+      selectedUrl: '',
+      songUrl: ''
     })
   }
 
@@ -91,6 +95,18 @@ class App extends Component {
       playList: playList,
       isGenre: !this.state.isGenre
     })
+  }
+
+  handleSetUrl = (e) => {
+    e.preventDefault();
+    //console.log("handlesetURL", e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, ""));
+    let selectedUrl = e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, "").trim()
+    this.setState({selectedUrl: selectedUrl})
+    console.log("This is the selected URL", selectedUrl);
+    let songs = this.state.songs;
+    let filtered = songs.filter( song => song.name == selectedUrl)
+    let newUrl = filtered[0].url;
+    this.setState({songUrl: newUrl})
   }
 
   handleFilterGenrePlaylist() { // on page load, filter through all genre's and playlists and display no duplicates
@@ -139,34 +155,37 @@ class App extends Component {
             filtered.push(song)
           }
         }
-        console.log("FUCK!!!", filtered.length);
+        //console.log("FUCK!!!", filtered.length);
       return (
-        <div className="row">
+        <ul className="list-group">
           <h1>{filterGenre}</h1>
-          {filtered.map((song, index) => (<Song song={song} key={index} />))}
-        </div>
+          { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
+          { filtered.map((song, index) => (<Song song={song} key={index} setUrl={this.handleSetUrl}/>)) }
+        </ul>
         )
       }
     }
 
     handleShowPlayListSongs() {
       if(!this.state.isGenre){
-        console.log("bout to render playlist songs!!!");
+        //console.log("bout to render playlist songs!!!");
         let filterSongs = this.state.songs;
         let filtered = [];
         let filterPlaylist = this.state.playList;
         for(var i = 0; i < filterSongs.length; i ++) {
           let song = filterSongs[i];
           let playlist = filterSongs[i].playlist;
-          if(playlist == filterPlaylist) {
+          if(playlist == filterPlaylist && playlist != '') {
             filtered.push(song)
           }
         }
+        //console.log("playlist songs", filtered);
         return (
-          <div className="row">
+          <ul className="list-group">
             <h1>{filterPlaylist}</h1>
-            {filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong}/>))}
-          </div>
+            { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
+            { filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl}/>)) }
+          </ul>
         )
       }
     }
@@ -209,12 +228,19 @@ class App extends Component {
       this.setState({matchedSongs: matches})
     }
 
+    showMusicPlayer = () => {
+      let songUrl = this.state.songUrl;
+      if(this.state.selectedUrl || this.state.searchMatches){
+        return <MusicPlayer songUrl={songUrl} selectedUrl={this.state.selectedUrl}/>
+      }
+    }
+
     handleDisplayTable() {
       let matchedSongs = this.state.matchedSongs;
       if(this.state.searchMatches){
         return (
           <div>
-            {matchedSongs.map((song, index) => (<DisplayTable song={song} key={index} clickSong={this.clickSong}/>))}
+            { matchedSongs.map((song, index) => (<DisplayTable song={song} key={index} clickSong={this.clickSong}/>)) }
           </div>
         )
       }
@@ -223,6 +249,7 @@ class App extends Component {
     render() {
       let isGenre = this.state.isGenre;
       let searchMatches = this.state.searchMatches;
+      let songUrl = this.state.songUrl;
       return (
         <div>
           <NavBar />
@@ -231,13 +258,15 @@ class App extends Component {
               <SearchBar handleSearch={this.handleSearch}/>
             </div>
             <div className="row audio-player">
-              <MusicPlayer />
+              { this.showMusicPlayer() }
             </div>
-            {this.handleDisplayTable()}
-            {this.handleFilterGenrePlaylist()}
-            {this.handleShowSongGenres()}
-            {this.handleShowPlayListSongs()}
-            {!isGenre ? <BackToHome clickToHome={this.clickToHome}/> : ''}
+            <div className="row">
+              { this.handleDisplayTable() }
+              { this.handleFilterGenrePlaylist() }
+              { this.handleShowSongGenres() }
+              { this.handleShowPlayListSongs() }
+              { !isGenre ? <BackToHome clickToHome={this.clickToHome}/> : '' }
+            </div>
           </div>
         </div>
       )

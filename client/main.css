@@ -38,7 +38,7 @@ li {
 }
 
 .playlist-container {
-  margin-top: 50px;
+  margin-top: 5vh;
 }
 
 .genre-div {
@@ -87,6 +87,8 @@ li {
 
 .music-player {
   margin-top: 5vh;
+  margin: 0 auto;
+  width: 50%;
 }
 
 .song-container {
@@ -114,6 +116,14 @@ li {
 
 #home-btn {
   background-color: white;
+}
+
+.ul-no-pad {
+  padding: 0;
+}
+
+.padding-top {
+  padding-top: 5vh;
 }
 
 @media (min-width: 768px){
@@ -189,6 +199,4 @@ li {
 }
 
 
-.padding-top {
-  padding-top: 50px;
-}*/
+*/

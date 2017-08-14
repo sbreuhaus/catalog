@@ -7,6 +7,9 @@ const SongMeta = (props) => {
         Genre:  {props.song.genre}
       </li>
       <li>
+        Description: {props.song.description}
+      </li>
+      <li>
         Notable Intruments:  {props.song.notable_instr}
       </li>
       <li>

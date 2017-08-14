@@ -16,14 +16,17 @@ class Song extends Component {
 
     clickSong = (e) => {
       e.preventDefault();
-      console.log("Song clicked!!");
-      this.setState({showMeta: !this.state.showMeta})
+      //console.log("Song clicked!!");
+      this.setState({
+        showMeta: !this.state.showMeta
+      })
+      this.props.setUrl(e)
     }
 
     renderSongMeta = () => {
-      console.log("renderSongMeta");
+      //console.log("renderSongMeta");
       let song = this.props.song;
-      console.log("i want to pass songs to songsMeta", song);
+      //console.log("i want to pass songs to songsMeta", song);
       if(this.state.showMeta){
         return <SongMeta song={song}/>
       }
@@ -31,8 +34,8 @@ class Song extends Component {
 
     render(){
       return (
-        <li className="list-group">
-          <div className="list-group-item" onClick={this.clickSong}>
+        <li className="list-group-item">
+          <div className="" onClick={this.clickSong}>
             <div>
               {!this.state.showMeta ? <FontAwesome className="fa fa-chevron-down" aria-hidden="true"></FontAwesome>
                 : <FontAwesome className="fa fa-chevron-up" aria-hidden="true"></FontAwesome>}  {this.props.song.name}
