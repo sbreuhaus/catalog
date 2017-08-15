@@ -131,11 +131,15 @@ class App extends Component {
         <div className="container">
           <div className="row playlist-container">
             <h2 id="playlist">Playlists</h2>
-            {playLists.map((playList, index) => <PlayList key={index} playList={playList} ref={playList} clickPlaylist={this.clickPlaylist}/>)}
+            <div className="grid-playlist">
+              {playLists.map((playList, index) => <PlayList key={index} playList={playList} ref={playList} clickPlaylist={this.clickPlaylist}/>)}
+            </div>
           </div>
           <div className="row">
             <h2 id="filter">Genres</h2>
-            {genres.map((genre, index) => <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
+            <div className="grid-genre">
+              {genres.map((genre, index) => <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
+            </div>            
           </div>
         </div>
       )
