@@ -4,19 +4,19 @@ const SongMeta = (props) => {
   return (
     <ul className="li-last">
       <li>
-        Genre:  {props.song.genre}
+        Genre:  <span>{props.song.genre}</span>
       </li>
       <li>
-        Description: {props.song.description}
+        Description: <span>{props.song.description}</span>
       </li>
       <li>
-        Notable Intruments:  {props.song.notable_instr}
+        Notable Intruments:  <span>{props.song.notable_instr}</span>
       </li>
       <li>
-        Potential Uses:  {props.song.potential_uses}
+        Potential Uses:  <span>{props.song.potential_uses}</span>
       </li>
       <li>
-        Tags:  {props.song.other_tags}
+        Tags:  <span>{props.song.other_tags}</span>
       </li>
       <li>
         For more info about this track please contact Ryan Hamilton at ryan@manmademusic.com

@@ -43,12 +43,11 @@ class App extends Component {
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
-    //this.clickSong = this.clickSong.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleDisplayTable = this.handleDisplayTable.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) { // Meteor createContainer sends data in chunks.  This receives it.
     this.setState({songs: nextProps.songs})
   }
 
@@ -64,12 +63,12 @@ class App extends Component {
     })
   }
 
-  clickToHome = (e) => {
+  clickToHome = (e) => { // passed to BackToHome component
     this.toggleView()
     this.handleClearState()
   }
 
-  handleClearState = () => {
+  handleClearState = () => { // set state to empty strings
     this.setState({
       genre: '',
       playList: '',
@@ -82,27 +81,21 @@ class App extends Component {
     this.setState({genre: genre})
   }
 
-  clickPlaylist(e) {
-    console.log("playlist what is this?", this);
-    console.log("e.target.innerHTML", e.target.innerHTML);
-    //this.handleSetPlaylist(e.target.innerHTML); //strip html tags
+  clickPlaylist(e) { //click handler to set state of playlist
     this.handleSetPlaylist(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, ""));
   }
 
   handleSetPlaylist(playList) {
-    console.log("handleSetPlaylist firing");
     this.setState({
       playList: playList,
       isGenre: !this.state.isGenre
     })
   }
 
-  handleSetUrl = (e) => {
+  handleSetUrl = (e) => { //grabs song name from click event.  matches that to song object and grabs url.
     e.preventDefault();
-    //console.log("handlesetURL", e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, ""));
     let selectedUrl = e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, "").trim()
     this.setState({selectedUrl: selectedUrl})
-    console.log("This is the selected URL", selectedUrl);
     let songs = this.state.songs;
     let filtered = songs.filter( song => song.name == selectedUrl)
     let newUrl = filtered[0].url;
@@ -111,14 +104,12 @@ class App extends Component {
 
   handleFilterGenrePlaylist() { // on page load, filter through all genre's and playlists and display no duplicates
     if(this.state.isGenre){
-      //console.log("genre is now showing");
       let allSongs = this.state.songs;
       let genres = [];
       let playLists = [];
       for(var i = 0; i < allSongs.length; i ++) {
           let genre = allSongs[i].genre;
           let playList = allSongs[i].playlist;
-          //console.log("playlist", playList);
           if(genres.indexOf(genre) == -1){
             genres.push(genre)
           }
@@ -130,16 +121,16 @@ class App extends Component {
       return (
         <div className="container">
           <div className="row playlist-container">
-            <h2 id="playlist">Playlists</h2>
+            <h2 id="playlist">playlists</h2>
             <div className="grid-playlist">
               {playLists.map((playList, index) => <PlayList key={index} playList={playList} ref={playList} clickPlaylist={this.clickPlaylist}/>)}
             </div>
           </div>
           <div className="row">
-            <h2 id="filter">Genres</h2>
+            <h2 id="genre">genres</h2>
             <div className="grid-genre">
               {genres.map((genre, index) => <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
-            </div>            
+            </div>
           </div>
         </div>
       )
@@ -159,7 +150,6 @@ class App extends Component {
             filtered.push(song)
           }
         }
-        //console.log("FUCK!!!", filtered.length);
       return (
         <ul className="list-group">
           <h1>{filterGenre}</h1>
@@ -172,7 +162,6 @@ class App extends Component {
 
     handleShowPlayListSongs() {
       if(!this.state.isGenre){
-        //console.log("bout to render playlist songs!!!");
         let filterSongs = this.state.songs;
         let filtered = [];
         let filterPlaylist = this.state.playList;
@@ -183,7 +172,6 @@ class App extends Component {
             filtered.push(song)
           }
         }
-        //console.log("playlist songs", filtered);
         return (
           <ul className="list-group">
             <h1>{filterPlaylist}</h1>
@@ -228,7 +216,6 @@ class App extends Component {
           }
         }
       }
-      //console.log(matches);
       this.setState({matchedSongs: matches})
     }
 
@@ -259,6 +246,7 @@ class App extends Component {
           <NavBar />
           <div className="container">
             <div className="row">
+              <img className="mmm-logo" src="/MMM Logo_Text Only.png"></img>
               <SearchBar handleSearch={this.handleSearch}/>
             </div>
             <div className="row audio-player">

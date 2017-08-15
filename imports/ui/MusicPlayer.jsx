@@ -5,13 +5,13 @@ const MusicPlayer = (props) => {
   let songUrl = props.songUrl
   let selectedUrl = props.selectedUrl;
 
-  //console.log("new URL", songUrl);
-  const URL = `http://www.manmademusic.com/files/att_microcatalog/resources/${songUrl}.mp3`
-  //console.log("Here's the URL", URL);
+  const URL = `http://www.manmademusic.com/files/att_microcatalog/resources/${songUrl}.mp3`;
+
   return (
-    <div className="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 music-player">
-      <div className="text-justify">{props.selectedUrl}</div>
+    <div className="music-player">
+      <span className="player-song col-md-2 ">{props.selectedUrl}</span>
       <ReactAudioPlayer
+        className="col-md-6 col-sm-12 col-xs-12"
         src={URL}
         controls
         />

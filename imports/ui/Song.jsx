@@ -16,7 +16,6 @@ class Song extends Component {
 
     clickSong = (e) => {
       e.preventDefault();
-      //console.log("Song clicked!!");
       this.setState({
         showMeta: !this.state.showMeta
       })
@@ -24,9 +23,7 @@ class Song extends Component {
     }
 
     renderSongMeta = () => {
-      //console.log("renderSongMeta");
       let song = this.props.song;
-      //console.log("i want to pass songs to songsMeta", song);
       if(this.state.showMeta){
         return <SongMeta song={song}/>
       }
@@ -34,11 +31,12 @@ class Song extends Component {
 
     render(){
       return (
-        <li className="list-group-item">
+        <li className="list-group-item song">
           <div className="" onClick={this.clickSong}>
             <div>
               {!this.state.showMeta ? <FontAwesome className="fa fa-chevron-down" aria-hidden="true"></FontAwesome>
-                : <FontAwesome className="fa fa-chevron-up" aria-hidden="true"></FontAwesome>}  {this.props.song.name}
+                : <FontAwesome className="fa fa-chevron-up" aria-hidden="true"></FontAwesome>}
+                <span className="song-name">{this.props.song.name}</span>
             </div>
             {this.renderSongMeta()}
           </div>

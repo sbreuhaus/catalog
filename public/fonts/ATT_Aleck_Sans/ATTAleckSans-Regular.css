@@ -1,0 +1,12 @@
+/* Webfont: ATTAleckSans-Regular */@font-face {
+    font-family: 'ATTAleckSans';
+    src: url('ATTAleckSans-Regular.eot'); /* IE9 Compat Modes */
+    src: url('ATTAleckSans-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('ATTAleckSans-Regular.woff') format('woff'), /* Modern Browsers */
+         url('ATTAleckSans-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('ATTAleckSans-Regular.svg#ATTAleckSans-Regular') format('svg'); /* Legacy iOS */
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+

@@ -1,4 +1,9 @@
 /* CSS declarations go here */
+@font-face {
+ font-family: ‘ATTAleckSans-Regular’;
+   src: url(‘/fonts/ATT_Aleck_Sans/ATTAleckSans-Regular.eot’);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -27,9 +32,22 @@ li {
   cursor: pointer
 }
 
-/*audio {
-  width: 100%;
-}*/
+.home-button {
+  margin-bottom: 3vh;
+}
+
+.song {
+  margin-bottom: 2vh;
+}
+
+.song-name {
+  font-size: 1.3em;
+  margin-left: 3%;
+}
+
+.list-group h1 {
+  margin-bottom: 5vh;
+}
 
 .grid-item {
   background-color: red;
@@ -39,7 +57,7 @@ li {
 }
 
 .playlist-container {
-  margin-top: 5vh;
+  margin-top: 2vh;
 }
 
 .genre-div {
@@ -80,27 +98,34 @@ li {
   color: white;
 }
 
-/*#filter {
-  margin-bottom: 5vh;
-}*/
-
-#playlist {
+#filter {
   margin-bottom: 3vh;
+  margin-top: 5vh;
+}
+
+#genre {
+  margin-bottom: -3vh;
 }
 
 .music-player {
   margin-top: 5vh;
-  margin: 0 auto;
-  width: 50%;
+  /*margin: 0 auto;
+  width: 50%;*/
+}
+
+.player-song {
+  margin-top: 2vh;
+  font-weight: bold;
 }
 
 .navbar {
   min-height: 60px;
   border-radius: 0px;
+  border: none;
 }
 
 .navbar-inverse {
-  background-color: #0F1D42;
+  background-color: #009fdb;
 }
 
 .list-group:hover {
@@ -109,6 +134,20 @@ li {
 
 .li-last li:last-of-type {
   color: grey;
+}
+
+.li-last span {
+  margin-left: 1vh;
+}
+
+.li-last {
+  margin-left: 7vh;
+}
+
+@media (max-width: 420px){
+  .li-last {
+    margin-left: 3vh;
+  }
 }
 
 #home-btn {
@@ -123,17 +162,24 @@ li {
   padding-top: 5vh;
 }
 
+.mmm-logo {
+  max-width: 200px;
+}
+
 /*Styles for Playlist divs*/
 
 .grid-playlist {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 10px;
+  grid-gap: 1px;
 }
 
 .grid-div-playlist {
   order: 2;
-  border: 2px solid grey;
+  /*font-family: 'ATTAleckSans-Regular', sans-serif;*/
+  /*border: 1px solid grey;*/
+  background-color: #009fdb;
+  color: white;
   padding: 20px;
   font-size: 150%;
   text-align: center;
@@ -141,11 +187,16 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  opacity: 1;
+  transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
 }
 
 .grid-div-playlist:hover {
-  background-color: grey;
-  color: white;
+  background-color: #ffb81c;
+  color: black;
+  opacity: .7;
+  cursor: pointer;
 }
 
 .grid-div-playlist:first-of-type {
@@ -161,6 +212,23 @@ li {
 
 .grid-div-playlist:nth-child(7) {
   grid-column: auto / span 2;
+}
+
+@media (max-width: 1199px){
+  .grid-div-playlist:nth-child(6) {
+    grid-column: auto / span 2;
+  }
+}
+
+@media (max-width: 992px){
+  .grid-div-playlist:nth-child(6) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 2;
+
+  }
+  .grid-div-playlist:nth-child(5) {
+    grid-column: auto / span 1;
+  }
 }
 
 .grid-div-playlist:last-of-type {
@@ -186,25 +254,22 @@ li {
   color: #000;
 }
 
-.grid-genre {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 10px;
-}
 
 /*Styles for Genre Divs*/
 
 .grid-genre {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 10px;
+  grid-gap: 1px;
   margin-top: 5vh;
   margin-bottom: 10vh;
 }
 
 .grid-div-genre {
   /*order: 2;*/
-  border: 2px solid grey;
+  background-color: #009fdb;
+  /*border: 1px solid grey;*/
+  color: white;
   padding: 20px;
   font-size: 150%;
   text-align: center;
@@ -212,11 +277,16 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  opacity: 1;
+  transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
 }
 
 .grid-div-genre:hover {
-  background-color: grey;
-  color: white;
+  background-color: #ffb81c;
+  color: black;
+  opacity: .7;
+  cursor: pointer;
 }
 
 .grid-div-genre:first-of-type {
@@ -233,6 +303,44 @@ li {
 
 .grid-div-genre:nth-child(7) {
   grid-column: auto / span 2;
+}
+
+@media (max-width: 1199px) {
+  .grid-div-genre:nth-child(1) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 2;
+  }
+  .grid-div-genre:nth-child(6) {
+    grid-row: auto / span 2;
+  }
+}
+
+@media (max-width: 992px){
+  .grid-div-genre:nth-child(3) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 1;
+  }
+  .grid-div-genre:nth-child(4) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 2;
+  }
+  .grid-div-genre:last-of-type {
+    grid-column: auto / span 2;
+    grid-row: auto / span 1;
+  }
+}
+
+@media (max-width: 602px){
+  .grid-div-genre:nth-child(7) {
+    grid-column: auto / span 1;
+
+  }
+  .grid-div-genre:nth-child(9) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 2;
+
+
+  }
 }
 
 /*.grid-div-genre:last-of-type {
