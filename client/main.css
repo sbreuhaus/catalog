@@ -1,8 +1,4 @@
 /* CSS declarations go here */
-@font-face {
- font-family: ‘ATTAleckSans-Regular’;
-   src: url(‘/fonts/ATT_Aleck_Sans/ATTAleckSans-Regular.eot’);
-}
 
 * {
   box-sizing: border-box;
