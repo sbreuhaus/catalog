@@ -28,6 +28,10 @@ li {
   border-bottom: #eee solid 1px;
 }
 
+/*.audio-player {
+  margin-bottom: 10vh;
+}*/
+
 .song-param:hover {
   cursor: pointer
 }
@@ -53,7 +57,6 @@ li {
   background-color: red;
   height: 100px;
   width: 60px;
-  /*border: 2px solid hsla(0, 0%, 0%, 0.5);*/
 }
 
 .playlist-container {
@@ -109,13 +112,12 @@ li {
 
 .music-player {
   margin-top: 5vh;
-  /*margin: 0 auto;
-  width: 50%;*/
 }
 
 .player-song {
   margin-top: 2vh;
-  font-weight: bold;
+  /*font-weight: bold;*/
+  color: #959595;
 }
 
 .navbar {
@@ -176,8 +178,6 @@ li {
 
 .grid-div-playlist {
   order: 2;
-  /*font-family: 'ATTAleckSans-Regular', sans-serif;*/
-  /*border: 1px solid grey;*/
   background-color: #009fdb;
   color: white;
   padding: 20px;
@@ -199,15 +199,14 @@ li {
   cursor: pointer;
 }
 
-.grid-div-playlist:first-of-type {
-  /*background-color: #2C1320;
-  color: white;*/
+.grid-div-playlist:last-of-type {
+  font-weight: bold;
+
 }
 
 .grid-div-playlist:nth-child(5) {
   grid-column: auto / span 2;
-  /*background-color: #5F4B66;
-  color: white;*/
+
 }
 
 .grid-div-playlist:nth-child(7) {
@@ -266,9 +265,7 @@ li {
 }
 
 .grid-div-genre {
-  /*order: 2;*/
   background-color: #009fdb;
-  /*border: 1px solid grey;*/
   color: white;
   padding: 20px;
   font-size: 150%;
@@ -290,7 +287,6 @@ li {
 }
 
 .grid-div-genre:first-of-type {
-  /*background-color: red;*/
   grid-column: auto / span 2;
 }
 
@@ -343,16 +339,33 @@ li {
   }
 }
 
-/*.grid-div-genre:last-of-type {
-  order: 1;
-  grid-column: auto / span 2;
-  grid-row: 1 / 3;
-}*/
-
-
-
 @media (min-width: 768px){
   .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
     margin-left: 0px;
+  }
+}
+
+.list-group-item:last-child {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.list-group-item:first-child {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+@media (max-width: 768px) {
+  #playlist {
+    margin-left: 2vh;
+  }
+  #genre {
+    margin-left: 2vh;
+  }
+  .mmm-logo {
+    margin-left: 2vh;
+  }
+  input .form-control {
+    margin-left: 2vh;
+    width: 75%;
   }
 }

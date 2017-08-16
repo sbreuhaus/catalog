@@ -97,8 +97,9 @@ class App extends Component {
     let selectedUrl = e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, "").trim()
     this.setState({selectedUrl: selectedUrl})
     let songs = this.state.songs;
-    let filtered = songs.filter( song => song.name == selectedUrl)
+    let filtered = songs.filter( song => song.name === selectedUrl)
     let newUrl = filtered[0].url;
+    //debugger;
     this.setState({songUrl: newUrl})
   }
 
@@ -222,7 +223,7 @@ class App extends Component {
     showMusicPlayer = () => {
       let songUrl = this.state.songUrl;
       if(this.state.selectedUrl || this.state.searchMatches){
-        return <MusicPlayer songUrl={songUrl} selectedUrl={this.state.selectedUrl}/>
+        return <MusicPlayer songUrl={songUrl} selectedUrl={this.state.selectedUrl} searchMatches={this.state.searchMatches}/>
       }
     }
 
@@ -231,7 +232,7 @@ class App extends Component {
       if(this.state.searchMatches){
         return (
           <div>
-            { matchedSongs.map((song, index) => (<DisplayTable song={song} key={index} clickSong={this.clickSong}/>)) }
+            { matchedSongs.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl}/>)) }
           </div>
         )
       }
@@ -271,9 +272,6 @@ App.propTypes = {
 
 export default createContainer(() => {
   const songs = Songs.find({}).fetch()
-  //console.log("just came from db", songs);
-  //const genres = _.uniq(songs.find({}, { genre: true}), false, (obj) => obj.genre);
-
   return {
     songs
   };
