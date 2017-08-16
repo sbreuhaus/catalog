@@ -112,6 +112,7 @@ li {
 
 .player-song {
   margin-top: 2vh;
+  /*font-weight: bold;*/
   color: #959595;
 }
 
