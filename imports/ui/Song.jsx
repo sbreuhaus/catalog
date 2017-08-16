@@ -48,6 +48,5 @@ class Song extends Component {
 export default Song;
 
 Song.propTypes = {
-
   song: PropTypes.object
 };
