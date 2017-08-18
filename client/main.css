@@ -61,6 +61,7 @@ some changes to test*/
   margin-top: 2vh;
 }
 
+
 .genre-div {
   height: 200px;
   display: flex;
@@ -144,7 +145,7 @@ some changes to test*/
   margin-left: 7vh;
 }
 
-@media (max-width: 420px){
+@media screen and (max-width: 420px){
   .li-last {
     margin-left: 3vh;
   }
@@ -172,6 +173,7 @@ some changes to test*/
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 1px;
+  /*margin-bottom: 5vh;*/
 }
 
 .grid-div-playlist {
@@ -190,11 +192,20 @@ some changes to test*/
   -webkit-transition: opacity 0.3s;
 }
 
-.grid-div-playlist:hover {
+/*.grid-div-playlist:hover {
   background-color: #ffb81c;
   color: black;
   opacity: .7;
   cursor: pointer;
+}*/
+
+@media screen and (min-width: 900px) {
+  .grid-div-playlist:hover {
+    background-color: #ffb81c;
+    color: black;
+    opacity: .7;
+    cursor: pointer;
+  }
 }
 
 .grid-div-playlist:last-of-type {
@@ -211,13 +222,13 @@ some changes to test*/
   grid-column: auto / span 2;
 }
 
-@media (max-width: 1199px){
+@media screen and (max-width: 1199px){
   .grid-div-playlist:nth-child(6) {
     grid-column: auto / span 2;
   }
 }
 
-@media (max-width: 992px){
+@media screen and (max-width: 992px){
   .grid-div-playlist:nth-child(6) {
     grid-column: auto / span 1;
     grid-row: auto / span 2;
@@ -258,7 +269,7 @@ some changes to test*/
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 1px;
-  margin-top: 5vh;
+  /*margin-top: 5vh;*/
   margin-bottom: 10vh;
 }
 
@@ -299,7 +310,7 @@ some changes to test*/
   grid-column: auto / span 2;
 }
 
-@media (max-width: 1199px) {
+@media screen and (max-width: 1199px) {
   .grid-div-genre:nth-child(1) {
     grid-column: auto / span 1;
     grid-row: auto / span 2;
@@ -309,7 +320,7 @@ some changes to test*/
   }
 }
 
-@media (max-width: 992px){
+@media screen and (max-width: 992px){
   .grid-div-genre:nth-child(3) {
     grid-column: auto / span 1;
     grid-row: auto / span 1;
@@ -324,7 +335,7 @@ some changes to test*/
   }
 }
 
-@media (max-width: 602px){
+@media screen and (max-width: 602px){
   .grid-div-genre:nth-child(7) {
     grid-column: auto / span 1;
 
@@ -337,7 +348,7 @@ some changes to test*/
   }
 }
 
-@media (min-width: 768px){
+@media screen and (min-width: 768px){
   .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
     margin-left: 0px;
   }
@@ -352,7 +363,7 @@ some changes to test*/
   border-top-left-radius: 0px;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   #playlist {
     margin-left: 2vh;
   }
@@ -365,5 +376,23 @@ some changes to test*/
   input .form-control {
     margin-left: 2vh;
     width: 75%;
+  }
+}
+
+@media screen and (max-width: 768px){
+  #playlist {
+    height: 9vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: #71c5e8;
+    color: white;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+  }
+  .grid-genre {
+    margin-bottom: 0px;
   }
 }

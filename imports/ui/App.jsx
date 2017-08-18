@@ -128,7 +128,7 @@ class App extends Component {
             </div>
           </div>
           <div className="row">
-            <h2 id="genre">genres</h2>
+            <h2 id="playlist">genre</h2>
             <div className="grid-genre">
               {genres.map((genre, index) => <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
             </div>
@@ -153,7 +153,7 @@ class App extends Component {
         }
       return (
         <ul className="list-group">
-          <h1>{filterGenre}</h1>
+          <h1 className="text-center">{filterGenre}</h1>
           { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
           { filtered.map((song, index) => (<Song song={song} key={index} setUrl={this.handleSetUrl}/>)) }
         </ul>
@@ -175,7 +175,7 @@ class App extends Component {
         }
         return (
           <ul className="list-group">
-            <h1>{filterPlaylist}</h1>
+            <h1 className="text-center">{filterPlaylist}</h1>
             { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
             { filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl}/>)) }
           </ul>

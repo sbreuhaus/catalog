@@ -10,7 +10,6 @@ const MusicPlayer = (props) => {
     <div className="music-player" style={ searchMatches ? { marginBottom: '10vh' } : { marginBottom: '0px' } }>
       <ReactAudioPlayer
         className="col-md-6 col-sm-12 col-xs-12"
-
         src={URL}
         controls
         />
