@@ -95,6 +95,7 @@ class App extends Component {
   handleSetUrl = (e) => { //grabs song name from click event.  matches that to song object and grabs url.
     e.preventDefault();
     let selectedUrl = e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, "").trim()
+    console.log("selectedurl", selectedUrl);
     this.setState({selectedUrl: selectedUrl})
     let songs = this.state.songs;
     let filtered = songs.filter( song => song.name === selectedUrl)
@@ -153,7 +154,7 @@ class App extends Component {
         }
       return (
         <ul className="list-group">
-          <h1 className="text-center">{filterGenre}</h1>
+          <h1 className="which-alignment">{filterGenre}</h1>
           { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
           { filtered.map((song, index) => (<Song song={song} key={index} setUrl={this.handleSetUrl}/>)) }
         </ul>
@@ -175,7 +176,7 @@ class App extends Component {
         }
         return (
           <ul className="list-group">
-            <h1 className="text-center">{filterPlaylist}</h1>
+            <h1 className="which-alignment">{filterPlaylist}</h1>
             { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
             { filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl}/>)) }
           </ul>

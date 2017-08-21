@@ -32,11 +32,11 @@ class Song extends Component {
     render(){
       return (
         <li className="list-group-item song">
-          <div className="" onClick={this.clickSong}>
+          <div>
             <div>
               {!this.state.showMeta ? <FontAwesome className="fa fa-chevron-down" aria-hidden="true"></FontAwesome>
                 : <FontAwesome className="fa fa-chevron-up" aria-hidden="true"></FontAwesome>}
-                <span className="song-name">{this.props.song.name}</span>
+                <span className="song-name" onClick={this.clickSong}>{this.props.song.name}</span>
             </div>
             {this.renderSongMeta()}
           </div>

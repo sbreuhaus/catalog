@@ -19,6 +19,9 @@ const SongMeta = (props) => {
         Tags:  <span>{props.song.other_tags}</span>
       </li>
       <li>
+        Sponsorship:  <span>{props.song.sponsorship}</span>
+      </li>
+      <li>
         For more info about this track please contact Ryan Hamilton at ryan@manmademusic.com
       </li>
     </ul>

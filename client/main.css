@@ -24,11 +24,9 @@ li {
   border-bottom: #eee solid 1px;
 }
 
-/*.audio-player {
-  margin-bottom: 10vh;
-}*/
-/*
-some changes to test*/
+.which-alignment {
+  text-align: left;
+}
 
 .song-param:hover {
   cursor: pointer
@@ -262,7 +260,9 @@ some changes to test*/
   color: #000;
 }
 
-
+/*.song-bar {
+  background-color: #71c5e8;
+}*/
 /*Styles for Genre Divs*/
 
 .grid-genre {
@@ -377,9 +377,6 @@ some changes to test*/
     margin-left: 2vh;
     width: 75%;
   }
-}
-
-@media screen and (max-width: 768px){
   #playlist {
     height: 9vh;
     display: flex;
@@ -394,5 +391,9 @@ some changes to test*/
   }
   .grid-genre {
     margin-bottom: 0px;
+  }
+  .which-alignment {
+    text-align: center;
+    margin-top: 0px;
   }
 }
