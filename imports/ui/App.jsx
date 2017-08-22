@@ -35,7 +35,7 @@ class App extends Component {
       playList: '',
       songs: this.props.songs,
       searchMatches: '',
-      matchedSongs: undefined,
+      matchedSongs: [],
       playerSong: undefined,
       songMeta: false,
       selectedUrl: undefined,
@@ -205,20 +205,24 @@ class App extends Component {
 
     handleSearch(e) {
       e.preventDefault();
-      this.setState({searchMatches: e.target.value.trim()})
-      let songs = this.state.songs;
-      let matches = [];
-      let searchMatches = this.state.searchMatches;
+      this.setState({searchMatches: e.target.value.trim().toLowerCase()}, () => {
+        let songs = this.state.songs;
+        let matches = [];
+        let searchMatches = this.state.searchMatches;
+        console.log("searchMatches", searchMatches);
+        for(var i = 0; i < songs.length; i++) {
 
-      for(var i = 0; i < songs.length; i++) {
-        for(key in songs[i]) {
-          if(songs[i][key].toString().toLowerCase().indexOf(searchMatches)!=-1) {
-            if(!this.itemExists(matches, songs[i])) matches.push(songs[i]);
+          for(key in songs[i]) {
+            console.log("YO", songs[i][key], searchMatches);
+            //console.log(songs[i][key].toString().toLowerCase().indexOf(searchMatches));
+            if(songs[i][key].toString().toLowerCase().indexOf(searchMatches)!=-1) {
 
+              if(!this.itemExists(matches, songs[i])) matches.push(songs[i]);
+            }
           }
         }
-      }
-      this.setState({matchedSongs: matches})
+        this.setState({matchedSongs: matches})
+      })
     }
 
     showMusicPlayer = () => {
