@@ -25,3 +25,5 @@ accounts-password
 twbs:bootstrap
 harrison:papa-parse
 aldeed:simple-schema
+std:accounts-bootstrap
+email

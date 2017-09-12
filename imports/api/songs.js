@@ -8,32 +8,32 @@ import '../ui/SongUpload.jsx';
 
 export const Songs = new Mongo.Collection('songs');
 
-Songs.schema = new SimpleSchema({
-  name: {type: String},
-  playlist: {type: String},
-  description: {type: String},
-  genre: {type: String},
-  notable_instr: {type: String},
-  potential_uses: {type: String},
-  other_tags: {type: String},
-  sponsorship: {type: String},
-  url: {type: String}
-})
+// Songs.schema = new SimpleSchema({
+//   name: {type: String},
+//   playlist: {type: String},
+//   description: {type: String},
+//   genre: {type: String},
+//   notable_instr: {type: String},
+//   potential_uses: {type: String},
+//   other_tags: {type: String},
+//   sponsorship: {type: String},
+//   url: {type: String}
+// })
 
-Meteor.methods({
-  'songs.insert'({songName, genre}){
-    check(songName, String);
-
-    if(! Meteor.userId()){
-      throw new Meteor.Error('not-authorized');
-    }
-    console.log('INSERTING');
-    Songs.insert({
-      songName,
-      genre,
-      createdAt: new Date(),
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
-    });
-  },
-})
+// Meteor.methods({
+//   'songs.insert'({songName, genre}){
+//     check(songName, String);
+//
+//     if(! Meteor.userId()){
+//       throw new Meteor.Error('not-authorized');
+//     }
+//     console.log('INSERTING');
+//     Songs.insert({
+//       songName,
+//       genre,
+//       createdAt: new Date(),
+//       owner: Meteor.userId(),
+//       username: Meteor.user().username,
+//     });
+//   },
+// })

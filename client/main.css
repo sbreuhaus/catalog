@@ -1,11 +1,21 @@
 /* CSS declarations go here */
 
+@font-face {
+  font-family: 'ATTAleckSans';
+  src: url('/fonts/ATTAleckSans-Regular.ttf') format('truetype');
+}
+
 * {
   box-sizing: border-box;
 }
 
 html, body {
-   height: 100%;
+  font-family: 'ATTAleckSans', serif;
+  height: 100%;
+}
+
+body {
+  background-color: #009fdb;
 }
 
 .filtered-songs {
@@ -22,6 +32,10 @@ li {
   list-style: none;
   padding: 15px;
   border-bottom: #eee solid 1px;
+}
+
+audio {
+  padding: 0px;
 }
 
 .which-alignment {
@@ -114,7 +128,8 @@ li {
 .player-song {
   margin-top: 2vh;
   /*font-weight: bold;*/
-  color: #959595;
+  /*color: #959595;*/
+  color: white;
 }
 
 .navbar {
@@ -153,6 +168,10 @@ li {
   background-color: white;
 }
 
+#playlist {
+  margin-top: 5vh;
+}
+
 .ul-no-pad {
   padding: 0;
 }
@@ -176,8 +195,8 @@ li {
 
 .grid-div-playlist {
   order: 2;
-  background-color: #009fdb;
-  color: white;
+  background-color: white;
+  color: black;
   padding: 20px;
   font-size: 150%;
   text-align: center;
@@ -274,8 +293,8 @@ li {
 }
 
 .grid-div-genre {
-  background-color: #009fdb;
-  color: white;
+  background-color: white;
+  color: black;
   padding: 20px;
   font-size: 150%;
   text-align: center;

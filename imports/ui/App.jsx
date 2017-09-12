@@ -24,6 +24,8 @@ import DisplayTable from './DisplayTable';
 import MusicPlayer from './MusicPlayer';
 import NavBar from './NavBar';
 import SongMeta from './SongMeta';
+import SongUpload from './SongUpload';
+import AccountsUIWrapper from './AccountsUIWrapper';
 
 class App extends Component {
   constructor(props) {
@@ -95,7 +97,7 @@ class App extends Component {
   handleSetUrl = (e) => { //grabs song name from click event.  matches that to song object and grabs url.
     e.preventDefault();
     let selectedUrl = e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, "").trim()
-    console.log("selectedurl", selectedUrl);
+    //console.log("selectedurl", selectedUrl);
     this.setState({selectedUrl: selectedUrl})
     let songs = this.state.songs;
     let filtered = songs.filter( song => song.name === selectedUrl)
@@ -123,15 +125,15 @@ class App extends Component {
       return (
         <div className="container">
           <div className="row playlist-container">
-            <h2 id="playlist">playlists</h2>
+            <h2 id="playlist">PLAYLISTS</h2>
             <div className="grid-playlist">
-              {playLists.map((playList, index) => <PlayList key={index} playList={playList} ref={playList} clickPlaylist={this.clickPlaylist}/>)}
+              {playLists.map((playList, index) => <PlayList key={index} unique={index} playList={playList} ref={playList} clickPlaylist={this.clickPlaylist}/>)}
             </div>
           </div>
           <div className="row">
-            <h2 id="playlist">genre</h2>
+            <h2 id="playlist">GENRE</h2>
             <div className="grid-genre">
-              {genres.map((genre, index) => <Genre key={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
+              {genres.map((genre, index) => <Genre key={index} unique={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
             </div>
           </div>
         </div>
@@ -209,11 +211,11 @@ class App extends Component {
         let songs = this.state.songs;
         let matches = [];
         let searchMatches = this.state.searchMatches;
-        console.log("searchMatches", searchMatches);
+        //console.log("searchMatches", searchMatches);
         for(var i = 0; i < songs.length; i++) {
 
           for(key in songs[i]) {
-            console.log("YO", songs[i][key], searchMatches);
+            //console.log("YO", songs[i][key], searchMatches);
             //console.log(songs[i][key].toString().toLowerCase().indexOf(searchMatches));
             if(songs[i][key].toString().toLowerCase().indexOf(searchMatches)!=-1) {
 
@@ -247,17 +249,24 @@ class App extends Component {
       let isGenre = this.state.isGenre;
       let searchMatches = this.state.searchMatches;
       let songUrl = this.state.songUrl;
+      console.log("currentUser", this.props.currentUser);
       return (
+
         <div>
           <NavBar />
+
+
           <div className="container">
+
             <div className="row">
               <img className="mmm-logo" src="/MMM Logo_Text Only.png"></img>
               <SearchBar handleSearch={this.handleSearch}/>
             </div>
+
             <div className="row audio-player">
               { this.showMusicPlayer() }
             </div>
+
             <div className="row">
               { this.handleDisplayTable() }
               { this.handleFilterGenrePlaylist() }
@@ -265,7 +274,9 @@ class App extends Component {
               { this.handleShowPlayListSongs() }
               { !isGenre ? <BackToHome clickToHome={this.clickToHome}/> : '' }
             </div>
+
           </div>
+
         </div>
       )
     }

@@ -14,7 +14,7 @@ const MusicPlayer = (props) => {
         src={URL}
         controls
         />
-      <span className="player-song col-md-6 ">Current song: {props.selectedUrl}</span>
+      <span className="player-song col-md-6 ">{props.selectedUrl}</span>
     </div>
   )
 }
