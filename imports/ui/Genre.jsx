@@ -9,11 +9,6 @@ export default class Genre extends Component {
     }
   }
 
-  componentDidMount(){
-    console.log("key", this.props.unique);
-
-  }
-
   render() {
     let idKey = `genre${this.state.idKey}`;
     return (

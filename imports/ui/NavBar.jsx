@@ -2,12 +2,12 @@ import React from 'react';
 //import {logo} from '../../public/myLogos';
 import ReactSVG from 'react-svg';
 
-const NavBar = () => {
+const NavBar = ({clickToHome}) => {
   return (
     <nav className="navbar navbar-inverse">
       <div className="container-fluid">
         <div className="navbar-header">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="#" onClick={clickToHome}>
             <ReactSVG
               path="../../ATT.svg"
               className="example"

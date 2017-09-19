@@ -5,12 +5,6 @@ import ReactDOM from 'react-dom';
 import Masonry from 'react-masonry-component';
 import '../../client/main.css';
 
-const masonryOptions = {
-    itemSelector: '.grid-item',
-    transitionDuration: 0,
-    columnWidth: '.sizer'
-};
-
 //songs collection
 import { Songs } from '../api/songs.js';
 
@@ -85,6 +79,7 @@ class App extends Component {
 
   clickPlaylist(e) { //click handler to set state of playlist
     this.handleSetPlaylist(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, ""));
+    console.log("what is e.target", e.target.innerHTML);
   }
 
   handleSetPlaylist(playList) {
@@ -180,7 +175,7 @@ class App extends Component {
           <ul className="list-group">
             <h1 className="which-alignment">{filterPlaylist}</h1>
             { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
-            { filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl}/>)) }
+            { filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl} songUrl={this.state.songUrl}/>)) }
           </ul>
         )
       }
@@ -229,7 +224,7 @@ class App extends Component {
 
     showMusicPlayer = () => {
       let songUrl = this.state.songUrl;
-      if(this.state.selectedUrl || this.state.searchMatches){
+      if(this.state.genre || this.state.playList || this.state.searchMatches){
         return <MusicPlayer songUrl={songUrl} selectedUrl={this.state.selectedUrl} searchMatches={this.state.searchMatches}/>
       }
     }
@@ -239,7 +234,7 @@ class App extends Component {
       if(this.state.searchMatches){
         return (
           <div>
-            { matchedSongs.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl}/>)) }
+            { matchedSongs.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl} />)) }
           </div>
         )
       }
@@ -253,7 +248,7 @@ class App extends Component {
       return (
 
         <div>
-          <NavBar />
+          <NavBar clickToHome={this.clickToHome}/>
 
 
           <div className="container">
