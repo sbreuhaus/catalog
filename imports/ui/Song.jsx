@@ -4,6 +4,7 @@ import ReactAudioPlayer from 'react-audio-player';
 import SongMeta from './SongMeta';
 import FontAwesome from 'react-fontawesome';
 import ReactDOM from 'react-dom';
+import { sound } from '../startup/audioEl.js';
 
 
 class Song extends Component {
@@ -13,13 +14,19 @@ class Song extends Component {
       this.state = {
         showMeta: false,
         name: this.props.song.name,
+        intervalId: undefined,
+        slider: undefined
       }
     }
 
     componentDidMount(){
-      let song = ReactDOM.findDOMNode(this.refs.song);
-      console.log("HOPEFULLY THIS IS THE SONG", song);
-
+      // let song = ReactDOM.findDOMNode(this.refs.song);
+      console.log("Songs Mounted");
+      let slider = setInterval(this.upDateSongSliderTwo, 500);
+      this.setState({slider: slider})
+      // let duration = document.querySelector('.duration');
+      // duration.textContent = "00:00";
+      // console.log("sound.textContent", duration.textContent);
     }
 
     clickSong = (e) => {
@@ -44,15 +51,40 @@ class Song extends Component {
       }
     }
 
+    convertTime = (secs) => {
+      let min = Math.floor(secs/60);
+      let sec = secs % 60;
+      min = (min < 10) ? "0" + min : min;
+      sec = (sec < 10) ? "0" + sec : sec;
+      return (min + ":" + sec);
+    }
+
+
+    showDuration = () => {
+      let sound = document.querySelector('.att_player');
+      let duration = document.querySelector('.duration');
+      let songSlider = document.getElementById('songSlider');
+      if(sound){
+        sound.addEventListener('loadedmetadata', () => {
+          let d = Math.floor(sound.duration);
+          duration.textContent = this.convertTime(d);
+          songSlider.setAttribute("max", d);
+          console.log("THIS IS D", d);
+        })
+    } else {
+        console.log("sound does not exist");
+        return
+      }
+    }
+
     playAudio = (e) => {
       e.preventDefault()
       console.log("playAudio");
-      // console.log("this.refs", this.refs);
-      // let sound = ReactDOM.findDOMNode(this.refs.att_player)
       let sound = document.querySelector('.att_player');
-      // console.log("sound", sound);
-      // console.log("WHERE THE PROPS", this.props);
       sound.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${this.props.song.url}.mp3`;
+      //debugger;
+      let intervalId = setInterval(this.showDuration, 2000);
+      this.setState({intervalId: intervalId})
       sound.play();
     }
 
@@ -62,9 +94,27 @@ class Song extends Component {
       sound.pause()
     }
 
-    upDateSongSlider = () => {
+    upDateSongSliderTwo = () => {
+      let sound = document.querySelector('.att_player');
 
-      let c = Math.round()
+      if(sound){
+        let songSlider = document.getElementById('songSlider');
+        let currentTime = document.getElementById('currentTime');
+        //console.log("What is sound.current time", sound.currentTime);
+        let c = Math.round(sound.currentTime);
+        songSlider.value = c;
+        currentTime.textContent = this.convertTime(c);
+      } else {
+        console.log("sound does not exist");
+        return
+      }
+
+    }
+
+    componentWillUnmount(){
+      console.log("Songs unmounted");
+      clearInterval(this.state.intervalId);
+      clearInterval(this.state.slider);
     }
 
     render(){
@@ -94,3 +144,16 @@ export default Song;
 Song.propTypes = {
   song: PropTypes.object
 };
+
+// upDateSongSlider = () => {
+//   let sound = document.querySelector('.att_player');
+//   let songSlider = document.getElementById('songSlider');
+//   let currentTime = document.getElementById('currentTime');
+//   // Set max value when you know the duration
+//   sound.onloadedmetadata = () => songSlider.max = sound.duration;
+//   // update audio position
+//   songSlider.onchange = () => sound.currentTime = songSlider.value;
+//   // update range input when currentTime updates
+//   sound.ontimeupdate = () => songSlider.value = sound.currentTime;
+//   currentTime.textContent = sound.currentTime;
+// }

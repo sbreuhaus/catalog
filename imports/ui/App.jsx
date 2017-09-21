@@ -175,7 +175,7 @@ class App extends Component {
           <ul className="list-group">
             <h1 className="which-alignment">{filterPlaylist}</h1>
             { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
-            { filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl} songUrl={this.state.songUrl}/>)) }
+            { filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl} songUrl={this.state.songUrl} isGenre={this.state.isGenre}/>)) }
           </ul>
         )
       }
@@ -224,9 +224,7 @@ class App extends Component {
 
     showMusicPlayer = () => {
       let songUrl = this.state.songUrl;
-      if(this.state.genre || this.state.playList || this.state.searchMatches){
-        return <MusicPlayer songUrl={songUrl} selectedUrl={this.state.selectedUrl} searchMatches={this.state.searchMatches}/>
-      }
+      return <MusicPlayer songUrl={songUrl} selectedUrl={this.state.selectedUrl} searchMatches={this.state.searchMatches} seekSong={this.seekSong}/>    
     }
 
     handleDisplayTable() {
@@ -240,26 +238,30 @@ class App extends Component {
       }
     }
 
+    seekSong = () => {
+      console.log("seeksong is firing");
+      let sound = document.querySelector('.att_player');
+      let songSlider = document.getElementById('songSlider');
+      sound.currentTime = songSlider.value;
+
+    }
+
     render() {
       let isGenre = this.state.isGenre;
       let searchMatches = this.state.searchMatches;
       let songUrl = this.state.songUrl;
-      console.log("currentUser", this.props.currentUser);
+      // console.log("currentUser", this.props.currentUser);
       return (
 
         <div>
-          <NavBar clickToHome={this.clickToHome}/>
+          <NavBar clickToHome={this.clickToHome} showMusicPlayer={this.showMusicPlayer}/>
 
 
           <div className="container">
 
             <div className="row">
-              <img className="mmm-logo" src="/MMM Logo_Text Only.png"></img>
-              <SearchBar handleSearch={this.handleSearch}/>
-            </div>
 
-            <div className="row audio-player">
-              { this.showMusicPlayer() }
+              {this.state.isGenre ? <SearchBar handleSearch={this.handleSearch}/> : ''}
             </div>
 
             <div className="row">

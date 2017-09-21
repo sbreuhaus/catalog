@@ -3,8 +3,8 @@ import FontAwesome from 'react-fontawesome';
 
 const BackToHome = ({clickToHome}) => {
     return (
-      <div className="home-button">
-        <button id="home-btn" type="button" className="btn btn-secondary" onClick={clickToHome}>Home</button>
+      <div className="home-button" onClick={clickToHome}>
+        <div className="play-button" type="button"><span className="fa fa-home fa-3x"></span></div>
       </div>
     )
 }
