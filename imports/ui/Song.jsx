@@ -51,15 +51,6 @@ class Song extends Component {
       }
     }
 
-    convertTime = (secs) => {
-      let min = Math.floor(secs/60);
-      let sec = secs % 60;
-      min = (min < 10) ? "0" + min : min;
-      sec = (sec < 10) ? "0" + sec : sec;
-      return (min + ":" + sec);
-    }
-
-
     showDuration = () => {
       let sound = document.querySelector('.att_player');
       let duration = document.querySelector('.duration');
@@ -67,7 +58,7 @@ class Song extends Component {
       if(sound){
         sound.addEventListener('loadedmetadata', () => {
           let d = Math.floor(sound.duration);
-          duration.textContent = this.convertTime(d);
+          duration.textContent = this.props.convertTime(d);
           songSlider.setAttribute("max", d);
           console.log("THIS IS D", d);
         })
@@ -102,8 +93,8 @@ class Song extends Component {
         let currentTime = document.getElementById('currentTime');
         //console.log("What is sound.current time", sound.currentTime);
         let c = Math.round(sound.currentTime);
-        songSlider.value = c;
-        currentTime.textContent = this.convertTime(c);
+        songSlider.value = sound.currentTime;
+        currentTime.textContent = this.props.convertTime(c);
       } else {
         console.log("sound does not exist");
         return

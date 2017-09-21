@@ -16,7 +16,7 @@ class MusicPlayer extends React.Component {
       <div className="audio-player-container col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div className="player">
           <div id="currentTime" className="current-time">00:00</div>
-          <input id="songSlider" className="song-slider" type="range" min="0" step="1" value="0" onChange={this.props.seekSong}></input>
+          <input id="songSlider" className="song-slider" type="range" min="0" step=".01" value="0" onChange={this.props.seekSong}></input>
           <div id="duration" className="duration">00:00</div>
           <audio className="att_player" ref="att_player" preload="true"></audio>
         </div>

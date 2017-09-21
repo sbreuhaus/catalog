@@ -175,7 +175,16 @@ class App extends Component {
           <ul className="list-group">
             <h1 className="which-alignment">{filterPlaylist}</h1>
             { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
-            { filtered.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl} songUrl={this.state.songUrl} isGenre={this.state.isGenre}/>)) }
+            { filtered.map((song, index) => (
+              <Song
+                song={song}
+                key={index}
+                clickSong={this.clickSong}
+                setUrl={this.handleSetUrl}
+                songUrl={this.state.songUrl}
+                isGenre={this.state.isGenre}
+                convertTime={this.convertTime}
+                />)) }
           </ul>
         )
       }
@@ -224,7 +233,7 @@ class App extends Component {
 
     showMusicPlayer = () => {
       let songUrl = this.state.songUrl;
-      return <MusicPlayer songUrl={songUrl} selectedUrl={this.state.selectedUrl} searchMatches={this.state.searchMatches} seekSong={this.seekSong}/>    
+      return <MusicPlayer songUrl={songUrl} selectedUrl={this.state.selectedUrl} searchMatches={this.state.searchMatches} seekSong={this.seekSong}/>
     }
 
     handleDisplayTable() {
@@ -242,8 +251,17 @@ class App extends Component {
       console.log("seeksong is firing");
       let sound = document.querySelector('.att_player');
       let songSlider = document.getElementById('songSlider');
+      let currentTime = document.getElementById('currentTime');
       sound.currentTime = songSlider.value;
+      currentTime.textContent = convertTime(sound.currentTime)
+    }
 
+    convertTime = (secs) => {
+      let min = Math.floor(secs/60);
+      let sec = secs % 60;
+      min = (min < 10) ? "0" + min : min;
+      sec = (sec < 10) ? "0" + sec : sec;
+      return (min + ":" + sec);
     }
 
     render() {
