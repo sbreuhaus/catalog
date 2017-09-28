@@ -18,12 +18,11 @@ import DisplayTable from './DisplayTable';
 import MusicPlayer from './MusicPlayer';
 import NavBar from './NavBar';
 import SongMeta from './SongMeta';
-import SongUpload from './SongUpload';
 import AccountsUIWrapper from './AccountsUIWrapper';
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isGenre: true,
       isPlaylist: true,
@@ -35,7 +34,7 @@ class App extends Component {
       playerSong: undefined,
       songMeta: false,
       selectedUrl: undefined,
-      songUrl: undefined
+      songUrl: undefined,
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
@@ -44,24 +43,23 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) { // Meteor createContainer sends data in chunks.  This receives it.
-    this.setState({songs: nextProps.songs})
+    this.setState({ songs: nextProps.songs });
   }
 
   clickGenre(e) {
-    console.log("genre what is this?", this);
-    this.handleSetGenre(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, "")); //strip html tags
-    this.toggleView()
+    this.handleSetGenre(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, '')); //strip html tags
+    this.toggleView();
   }
 
   toggleView = () => {
     this.setState({
       isGenre: !this.state.isGenre,
-    })
+    });
   }
 
   clickToHome = (e) => { // passed to BackToHome component
-    this.toggleView()
-    this.handleClearState()
+    this.toggleView();
+    this.handleClearState();
   }
 
   handleClearState = () => { // set state to empty strings
@@ -70,50 +68,49 @@ class App extends Component {
       playList: '',
       selectedUrl: '',
       songUrl: ''
-    })
+    });
   }
 
   handleSetGenre(genre) {
-    this.setState({genre: genre})
+    this.setState({ genre: genre });
   }
 
   clickPlaylist(e) { //click handler to set state of playlist
-    this.handleSetPlaylist(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, ""));
-    console.log("what is e.target", e.target.innerHTML);
+    this.handleSetPlaylist(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, ''));
   }
 
   handleSetPlaylist(playList) {
     this.setState({
-      playList: playList,
+      playList,
       isGenre: !this.state.isGenre
-    })
+    });
   }
 
   handleSetUrl = (e) => { //grabs song name from click event.  matches that to song object and grabs url.
     e.preventDefault();
-    let selectedUrl = e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, "").trim()
+    const selectedUrl = e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, '').trim()
     //console.log("selectedurl", selectedUrl);
-    this.setState({selectedUrl: selectedUrl})
-    let songs = this.state.songs;
-    let filtered = songs.filter( song => song.name === selectedUrl)
-    let newUrl = filtered[0].url;
+    this.setState({ selectedUrl });
+    const songs = this.state.songs;
+    const filtered = songs.filter(song => song.name === selectedUrl);
+    const newUrl = filtered[0].url;
     //debugger;
     this.setState({songUrl: newUrl})
   }
 
   handleFilterGenrePlaylist() { // on page load, filter through all genre's and playlists and display no duplicates
-    if(this.state.isGenre){
-      let allSongs = this.state.songs;
-      let genres = [];
-      let playLists = [];
-      for(var i = 0; i < allSongs.length; i ++) {
-          let genre = allSongs[i].genre;
-          let playList = allSongs[i].playlist;
-          if(genres.indexOf(genre) == -1){
-            genres.push(genre)
+    if (this.state.isGenre) {
+      const allSongs = this.state.songs;
+      const genres = [];
+      const playLists = [];
+      for (let i = 0; i < allSongs.length; i++) {
+          const genre = allSongs[i].genre;
+          const playList = allSongs[i].playlist;
+          if (genres.indexOf(genre) === -1) {
+            genres.push(genre);
           }
-          if(playLists.indexOf(playList) == -1){
-            if(playList.length){playLists.push(playList)}
+          if (playLists.indexOf(playList) === -1) {
+            if (playList.length) { playLists.push(playList); }
           }
         }
 
@@ -122,31 +119,46 @@ class App extends Component {
           <div className="row playlist-container">
             <h2 id="playlist">PLAYLISTS</h2>
             <div className="grid-playlist">
-              {playLists.map((playList, index) => <PlayList key={index} unique={index} playList={playList} ref={playList} clickPlaylist={this.clickPlaylist}/>)}
+              {playLists.map((playList, index) =>
+                <PlayList
+                  key={index}
+                  unique={index}
+                  playList={playList}
+                  ref={playList}
+                  clickPlaylist={this.clickPlaylist}
+                />
+              )}
             </div>
           </div>
           <div className="row">
             <h2 id="playlist">GENRE</h2>
             <div className="grid-genre">
-              {genres.map((genre, index) => <Genre key={index} unique={index} genre={genre} ref={genre} clickGenre={this.clickGenre}/>)}
+              {genres.map((genre, index) =>
+                <Genre
+                  key={index}
+                  unique={index}
+                  genre={genre}
+                  ref={genre}
+                  clickGenre={this.clickGenre}
+                />
+              )}
             </div>
           </div>
         </div>
-      )
+      );
     }
   }
 
   handleShowSongGenres() {
-    if(!this.state.isGenre) {
-      let filterSongs = this.state.songs;
-      let filtered = [];
-      let filterGenre = this.state.genre;
-      let songMeta = this.state.songMeta;
-      for(var i = 0; i < filterSongs.length; i ++) {
-          let song = filterSongs[i];
-          let genre = filterSongs[i].genre;
-          if(genre == filterGenre) {
-            filtered.push(song)
+    if (!this.state.isGenre) {
+      const filterSongs = this.state.songs;
+      const filtered = [];
+      const filterGenre = this.state.genre;
+      for (let i = 0; i < filterSongs.length; i++) {
+          const song = filterSongs[i];
+          const genre = filterSongs[i].genre;
+          if (genre === filterGenre) {
+            filtered.push(song);
           }
         }
       return (
@@ -160,23 +172,24 @@ class App extends Component {
     }
 
     handleShowPlayListSongs() {
-      if(!this.state.isGenre){
-        let filterSongs = this.state.songs;
-        let filtered = [];
-        let filterPlaylist = this.state.playList;
-        for(var i = 0; i < filterSongs.length; i ++) {
-          let song = filterSongs[i];
-          let playlist = filterSongs[i].playlist;
-          if(playlist == filterPlaylist && playlist != '') {
-            filtered.push(song)
+      if (!this.state.isGenre) {
+        const filterSongs = this.state.songs;
+        const filtered = [];
+        const filterPlaylist = this.state.playList;
+        for (let i = 0; i < filterSongs.length; i++) {
+          const song = filterSongs[i];
+          const playlist = filterSongs[i].playlist;
+          if (playlist === filterPlaylist && playlist !== '') {
+            filtered.push(song);
           }
         }
         return (
           <ul className="list-group">
             <h1 className="which-alignment">{filterPlaylist}</h1>
-            { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
+            { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome} /> : ''}
             { filtered.map((song, index) => (
               <Song
+                matchedSongs={this.state.matchedSongs}
                 song={song}
                 key={index}
                 clickSong={this.clickSong}
@@ -184,9 +197,13 @@ class App extends Component {
                 songUrl={this.state.songUrl}
                 isGenre={this.state.isGenre}
                 convertTime={this.convertTime}
-                />)) }
+                playAudio={this.playAudio}
+                showDuration={this.showDuration}
+                upDateSongSliderTwo={this.upDateSongSliderTwo}
+              />)
+            ) }
           </ul>
-        )
+        );
       }
     }
 
@@ -211,39 +228,98 @@ class App extends Component {
 
     handleSearch(e) {
       e.preventDefault();
-      this.setState({searchMatches: e.target.value.trim().toLowerCase()}, () => {
-        let songs = this.state.songs;
-        let matches = [];
-        let searchMatches = this.state.searchMatches;
+      this.setState({ searchMatches: e.target.value.trim().toLowerCase() }, () => {
+        const songs = this.state.songs;
+        const matches = [];
+        const searchMatches = this.state.searchMatches;
         //console.log("searchMatches", searchMatches);
-        for(var i = 0; i < songs.length; i++) {
-
-          for(key in songs[i]) {
+        for (let i = 0; i < songs.length; i++) {
+          for (key in songs[i]) {
             //console.log("YO", songs[i][key], searchMatches);
             //console.log(songs[i][key].toString().toLowerCase().indexOf(searchMatches));
-            if(songs[i][key].toString().toLowerCase().indexOf(searchMatches)!=-1) {
+            if (songs[i][key].toString().toLowerCase().indexOf(searchMatches)!=-1) {
 
-              if(!this.itemExists(matches, songs[i])) matches.push(songs[i]);
+              if (!this.itemExists(matches, songs[i])) matches.push(songs[i]);
             }
           }
         }
-        this.setState({matchedSongs: matches})
+        this.setState({ matchedSongs: matches })
       })
     }
 
     showMusicPlayer = () => {
-      let songUrl = this.state.songUrl;
-      return <MusicPlayer songUrl={songUrl} selectedUrl={this.state.selectedUrl} searchMatches={this.state.searchMatches} seekSong={this.seekSong}/>
+      const songUrl = this.state.songUrl;
+      console.log('songUrl', songUrl);
+      return (
+        <MusicPlayer
+          songUrl={songUrl}
+          selectedUrl={this.state.selectedUrl}
+          searchMatches={this.state.searchMatches}
+          seekSong={this.seekSong}
+          playAudioNav={this.playAudioNav}
+          pauseAudioNav={this.pauseAudioNav}
+          songUrl={this.state.songUrl}
+        />
+      );
     }
 
     handleDisplayTable() {
-      let matchedSongs = this.state.matchedSongs;
-      if(this.state.searchMatches){
+      const matchedSongs = this.state.matchedSongs;
+      if (this.state.searchMatches) {
         return (
           <div>
-            { matchedSongs.map((song, index) => (<Song song={song} key={index} clickSong={this.clickSong} setUrl={this.handleSetUrl} />)) }
+            { matchedSongs.map((song, index) => (
+              <Song
+                song={song}
+                key={index}
+                clickSong={this.clickSong}
+                setUrl={this.handleSetUrl}
+                matchedSongs={this.state.matchedSongs}
+                setUrl={this.handleSetUrl}
+                songUrl={this.state.songUrl}
+                isGenre={this.state.isGenre}
+                convertTime={this.convertTime}
+                playAudio={this.playAudio}
+                showDuration={this.showDuration}
+                upDateSongSliderTwo={this.upDateSongSliderTwo}
+              />))
+            }
           </div>
-        )
+        );
+      }
+    }
+
+    showDuration = () => {
+      console.log("showDuration firing");
+      const sound = document.querySelector('.att_player');
+      const duration = document.querySelector('.duration');
+      const songSlider = document.getElementById('songSlider');
+      if (sound) {
+        sound.addEventListener('loadedmetadata', () => {
+          const d = Math.floor(sound.duration);
+          duration.textContent = this.convertTime(d);
+          songSlider.setAttribute("max", d);
+          console.log("THIS IS D", d);
+        })
+      } else {
+        console.log("sound does not exist");
+        return
+      }
+    }
+
+    upDateSongSliderTwo = () => {
+      const sound = document.querySelector('.att_player');
+      if (sound.src) {
+        const songSlider = document.getElementById('songSlider');
+        const currentTime = document.getElementById('currentTime');
+        //console.log("What is sound.current time", sound.currentTime);
+        const c = Math.round(sound.currentTime);
+        songSlider.value = sound.currentTime;
+        //debugger;
+        currentTime.textContent = this.convertTime(c);
+      } else {
+        console.log("sound does not exist");
+        return
       }
     }
 
@@ -251,9 +327,30 @@ class App extends Component {
       console.log("seeksong is firing");
       let sound = document.querySelector('.att_player');
       let songSlider = document.getElementById('songSlider');
+      console.log(songSlider.value);
       let currentTime = document.getElementById('currentTime');
       sound.currentTime = songSlider.value;
-      currentTime.textContent = convertTime(sound.currentTime)
+      currentTime.textContent = this.convertTime(sound.currentTime)
+    }
+
+    playAudioNav = (e) => {
+      e.preventDefault();
+      // const showDuration = this.props.showDuration;
+      // debugger;
+      // console.log('playAudio');
+      const sound = document.querySelector('.att_player');
+      // sound.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${this.props.song.url}.mp3`;
+      // const intervalId = setInterval(showDuration, 2000);
+      //
+      // this.setState({ intervalId: intervalId });
+      //debugger;
+      sound.play();
+    }
+
+    pauseAudioNav = (e) => {
+      e.preventDefault();
+      const sound = document.querySelector('.att_player');
+      sound.pause();
     }
 
     convertTime = (secs) => {
@@ -265,21 +362,19 @@ class App extends Component {
     }
 
     render() {
-      let isGenre = this.state.isGenre;
-      let searchMatches = this.state.searchMatches;
-      let songUrl = this.state.songUrl;
-      // console.log("currentUser", this.props.currentUser);
+      const isGenre = this.state.isGenre;
       return (
 
         <div>
-          <NavBar clickToHome={this.clickToHome} showMusicPlayer={this.showMusicPlayer}/>
-
-
+          <NavBar
+            clickToHome={this.clickToHome}
+            showMusicPlayer={this.showMusicPlayer}
+          />
           <div className="container">
 
             <div className="row">
 
-              {this.state.isGenre ? <SearchBar handleSearch={this.handleSearch}/> : ''}
+              {this.state.isGenre ? <SearchBar handleSearch={this.handleSearch} /> : ''}
             </div>
 
             <div className="row">
@@ -287,13 +382,13 @@ class App extends Component {
               { this.handleFilterGenrePlaylist() }
               { this.handleShowSongGenres() }
               { this.handleShowPlayListSongs() }
-              { !isGenre ? <BackToHome clickToHome={this.clickToHome}/> : '' }
+              { !isGenre ? <BackToHome clickToHome={this.clickToHome} /> : '' }
             </div>
 
           </div>
 
         </div>
-      )
+      );
     }
 }
 

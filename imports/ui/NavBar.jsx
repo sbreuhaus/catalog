@@ -14,7 +14,7 @@ const NavBar = (props) => {
               className="logo-main"
               style={{ width: 32 }}
               />
-
+            <div id="powered">AT&T Microcatalog<br/> powered by</div>
             <ReactSVG
               path="../../Horizontal_Logo_Inverted.svg"
               className="mmm-logo"
