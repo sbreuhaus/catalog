@@ -79,9 +79,14 @@ class App extends Component {
     });
   }
 
+  clearSearch = () => {
+    this.setState({ searchMatches: '', matchedSongs: [] });
+  }
+
   clickToHome = () => { // passed to BackToHome component
     this.toggleView();
     this.handleClearState();
+    this.clearSearch();
   }
 
   handleClearState = () => { // set state to empty strings
@@ -299,7 +304,7 @@ class App extends Component {
 
     DisplaySearchResults() {
       const matchedSongs = this.state.matchedSongs;
-      if (this.state.searchMatches) {
+      if (this.state.searchMatches && this.state.isGenre) {
         return (
           <div>
             { matchedSongs.map((song, index) => (
@@ -319,6 +324,7 @@ class App extends Component {
                 isPlaying={this.isPlaying}
                 isPaused={this.isPaused}
                 playing={this.state.playing}
+                audio={this.state.audio}
               />))
             }
           </div>
