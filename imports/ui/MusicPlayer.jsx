@@ -11,7 +11,6 @@ class MusicPlayer extends React.Component {
   render() {
     const { songUrl, selectedUrl, searchMatches, playAudioNav, pauseAudioNav } = this.props;
     function showPlayPause() {
-      console.log('showPlayPause');
       if (true) {
         return (
           <div className="play-pause">

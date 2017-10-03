@@ -36,7 +36,11 @@ class App extends Component {
       selectedUrl: undefined,
       songUrl: undefined,
       playing: false,
-      sponsorshipSongs: undefined
+      sponsorshipSongs: undefined,
+      audio: undefined,
+      duration: undefined,
+      songSlider: undefined,
+      currentTime: undefined
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
@@ -46,10 +50,14 @@ class App extends Component {
 
   componentDidMount() {
     const songs = this.state.songs;
-    const sponsorship = songs.filter((song) => {
+    const sponsorshipSongs = songs.filter((song) => {
       return song.sponsorship === 'yes';
     });
-    this.setState({ sponsorshipSongs: sponsorship });
+    const audio = document.querySelector('.att_player');
+    const duration = document.querySelector('.duration');
+    const songSlider = document.getElementById('songSlider');
+    const currentTime = document.getElementById('currentTime');
+    this.setState({ sponsorshipSongs, audio, duration, songSlider, currentTime });
   }
 
   componentWillReceiveProps(nextProps) { // Meteor createContainer sends data in chunks.  This receives it.
@@ -178,7 +186,6 @@ class App extends Component {
       return (
         <ul className="list-group">
           <h1 className="which-alignment">{filterGenre}</h1>
-          { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome} /> : ''}
           { filtered.map((song, index) => (
             <Song song={song} key={index} setUrl={this.handleSetUrl} />)) }
         </ul>
@@ -192,7 +199,6 @@ class App extends Component {
         let filtered = [];
         const filterPlaylist = this.state.playList;
         const sponsorship = this.state.sponsorshipSongs;
-        console.log('filterPlaylist', filterPlaylist);
         if (filterPlaylist === 'Anthem/Sponsorship') {
           console.log('sponsorship inside if', sponsorship);
           filtered = filtered.concat(sponsorship);
@@ -205,11 +211,9 @@ class App extends Component {
             }
           }
         }
-
         return (
           <ul className="list-group">
             <h1 className="which-alignment">{filterPlaylist}</h1>
-            { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome} /> : ''}
             { filtered.map((song, index) => (
               <Song
                 playlist={filterPlaylist}
@@ -227,6 +231,7 @@ class App extends Component {
                 isPlaying={this.isPlaying}
                 isPaused={this.isPaused}
                 playing={this.state.playing}
+                audio={this.state.audio}
               />)
             ) }
           </ul>
@@ -266,17 +271,19 @@ class App extends Component {
             //console.log(songs[i][key].toString().toLowerCase().indexOf(searchMatches));
             if (songs[i][key].toString().toLowerCase().indexOf(searchMatches)!=-1) {
 
-              if (!this.itemExists(matches, songs[i])) matches.push(songs[i]);
+              if (!this.itemExists(matches, songs[i])) {
+                matches.push(songs[i]);
+                //console.log('matches', matches);
+              }
             }
           }
         }
-        this.setState({ matchedSongs: matches })
-      })
+        this.setState({ matchedSongs: matches });
+      });
     }
 
     showMusicPlayer = () => {
       const songUrl = this.state.songUrl;
-      console.log('songUrl', songUrl);
       return (
         <MusicPlayer
           songUrl={songUrl}
@@ -309,6 +316,9 @@ class App extends Component {
                 playAudio={this.playAudio}
                 showDuration={this.showDuration}
                 upDateSongSliderTwo={this.upDateSongSliderTwo}
+                isPlaying={this.isPlaying}
+                isPaused={this.isPaused}
+                playing={this.state.playing}
               />))
             }
           </div>
@@ -317,45 +327,39 @@ class App extends Component {
     }
 
     showDuration = () => {
-      console.log("showDuration firing");
-      const sound = document.querySelector('.att_player');
-      const duration = document.querySelector('.duration');
-      const songSlider = document.getElementById('songSlider');
+      const sound = this.state.audio;
+      const duration = this.state.duration;
+      const songSlider = this.state.songSlider;
       if (sound) {
         sound.addEventListener('loadedmetadata', () => {
           const d = Math.floor(sound.duration);
           duration.textContent = this.convertTime(d);
-          songSlider.setAttribute("max", d);
-          console.log("THIS IS D", d);
-        })
+          songSlider.setAttribute('max', d);
+        });
       } else {
-        console.log("sound does not exist");
-        return
+        return;
       }
     }
 
     upDateSongSliderTwo = () => {
-      const sound = document.querySelector('.att_player');
+      const sound = this.state.audio;
       if (sound.src) {
-        const songSlider = document.getElementById('songSlider');
-        const currentTime = document.getElementById('currentTime');
+        const songSlider = this.state.songSlider;
+        const currentTime = this.state.currentTime;
         //console.log("What is sound.current time", sound.currentTime);
         const c = Math.round(sound.currentTime);
         songSlider.value = sound.currentTime;
         //debugger;
         currentTime.textContent = this.convertTime(c);
       } else {
-        console.log("sound does not exist");
-        return
+        return;
       }
     }
 
     seekSong = () => {
-      console.log("seeksong is firing");
-      let sound = document.querySelector('.att_player');
-      let songSlider = document.getElementById('songSlider');
-      console.log(songSlider.value);
-      let currentTime = document.getElementById('currentTime');
+      const sound = this.state.audio;
+      const songSlider = this.state.songSlider;
+      const currentTime = this.state.currentTime;
       sound.currentTime = songSlider.value;
       currentTime.textContent = this.convertTime(sound.currentTime)
     }
@@ -365,7 +369,7 @@ class App extends Component {
       // const showDuration = this.props.showDuration;
       // debugger;
       // console.log('playAudio');
-      const sound = document.querySelector('.att_player');
+      const sound = this.state.audio;
       // sound.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${this.props.song.url}.mp3`;
       // const intervalId = setInterval(showDuration, 2000);
       //
@@ -376,7 +380,7 @@ class App extends Component {
 
     pauseAudioNav = (e) => {
       e.preventDefault();
-      const sound = document.querySelector('.att_player');
+      const sound = this.state.audio;
       sound.pause();
     }
 
@@ -402,6 +406,7 @@ class App extends Component {
 
         <div>
           <NavBar
+            isGenre={isGenre}
             clickToHome={this.clickToHome}
             showMusicPlayer={this.showMusicPlayer}
           />
@@ -417,7 +422,6 @@ class App extends Component {
               { this.handleFilterGenrePlaylist() }
               { this.handleShowSongGenres() }
               { this.handleShowPlayListSongs() }
-              { !isGenre ? <BackToHome clickToHome={this.clickToHome} /> : '' }
             </div>
 
           </div>
@@ -432,7 +436,7 @@ App.propTypes = {
 };
 
 export default createContainer(() => {
-  const songs = Songs.find({}).fetch()
+  const songs = Songs.find({}).fetch();
   return {
     songs
   };

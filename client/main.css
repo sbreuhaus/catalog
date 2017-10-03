@@ -53,6 +53,9 @@ audio {
 .home-button {
   margin-bottom: 3vh;
 }
+.att-home {
+  cursor: pointer;
+}
 
 .song {
   margin-bottom: 2vh;
@@ -60,7 +63,7 @@ audio {
 
 .song-name {
   font-size: 1.3em;
-  margin-left: 3%;
+  margin-left: 1vw;
 }
 
 .list-group h1 {
@@ -183,7 +186,7 @@ audio {
 }
 
 .li-last {
-  margin-left: 7vh;
+  margin-left: 5vw;
 }
 
 .react-audio-player {
@@ -652,6 +655,12 @@ input[type=range]:focus::-ms-fill-upper {
   .grid-div-genre:last-of-type {
     grid-column: auto / span 2;
     grid-row: auto / span 1;
+  }
+}
+
+@media screen and (max-width: 768px){
+  body {
+    padding-top: 120px;
   }
 }
 
