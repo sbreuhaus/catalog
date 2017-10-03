@@ -14,7 +14,7 @@ class Song extends Component {
         name: this.props.song.name,
         intervalId: undefined,
         slider: undefined,
-        matchedSongs: this.props.matchedSongs
+        matchedSongs: this.props.matchedSongs,
       };
     }
 
@@ -24,6 +24,7 @@ class Song extends Component {
       let slider = setInterval(this.props.upDateSongSliderTwo, 500);
       this.setState({ slider })
       //console.log("this.state.matchedSongs", this.state.matchedSongs);
+      console.log('this.props.playlist', this.props.playlist);
     }
 
     clickSong = (e) => {
@@ -56,8 +57,8 @@ class Song extends Component {
       const sound = document.querySelector('.att_player');
       sound.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${this.props.song.url}.mp3`;
       const intervalId = setInterval(showDuration, 2000);
-
-      this.setState({ intervalId });
+      this.props.isPlaying();
+      this.setState({ intervalId, });
       //debugger;
       sound.play();
     }
@@ -65,6 +66,7 @@ class Song extends Component {
     pauseAudio = (e) => {
       e.preventDefault();
       const sound = document.querySelector('.att_player');
+      this.props.isPaused();
       sound.pause();
     }
 
@@ -76,6 +78,32 @@ class Song extends Component {
 
     render() {
       const name = this.state.name;
+      const playing = this.props.playing;
+      const that = this;
+      const sound = document.querySelector('.att_player');
+      const playlist = this.props.playlist;
+      function playOrPause() {
+        if (playing === false ) {
+          console.log("inside if");
+          return (
+            <div className="play-button" type="button" onClick={that.playAudio}>
+              <span className="fa fa-play fa-lg" />
+            </div>
+          )
+        } else if (sound.src === `http://www.manmademusic.com/files/att_microcatalog/resources/${that.props.song.url}.mp3`) {
+          console.log("now else");
+          return (
+            <div className="pause-button" type="button" onClick={that.pauseAudio}>
+              <span className="fa fa-pause fa-lg" />
+            </div>
+          )
+        }
+      }
+      function download() {
+        if (that.props.playlist === 'Anthem/Sponsorship') {
+          return <a href={`http://www.manmademusic.com/files/att_microcatalog/resources/${that.props.song.url}.mp3`} download><span className="fa fa-download fa-lg"></span></a>
+        }
+      }
       return (
         <li className="list-group-item song" id={name}>
           <div>
@@ -95,12 +123,8 @@ class Song extends Component {
                   />
 
               }
-                <div className="play-button" type="button" onClick={this.playAudio}>
-                  <span className="fa fa-play fa-lg" />
-                </div>
-                <div className="pause-button" type="button" onClick={this.pauseAudio}>
-                  <span className="fa fa-pause fa-lg" />
-                </div>
+                { playOrPause() }
+                { download() }
                 <span className="song-name" onClick={this.clickSong} ref="song">{name}</span>
             </div>
             {this.renderSongMeta()}

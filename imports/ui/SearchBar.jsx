@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const SearchBar = (props) => {
-    return(
+    return (
       <div className="form-group padding-top">
-        <input type="text" className="form-control input-lg" placeholder="Search for..." onChange={props.handleSearch}></input>
+        <input
+          type="text"
+          className="form-control input-lg"
+          placeholder="Search for titles, genres, tags, instrumentation etc." 
+          onChange={props.handleSearch}>
+        </input>
       </div>
     )
 }

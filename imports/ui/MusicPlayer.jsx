@@ -9,7 +9,7 @@ class MusicPlayer extends React.Component {
   }
 
   render() {
-    let { songUrl, selectedUrl, searchMatches, playAudioNav, pauseAudioNav } = this.props;
+    const { songUrl, selectedUrl, searchMatches, playAudioNav, pauseAudioNav } = this.props;
     function showPlayPause() {
       console.log('showPlayPause');
       if (true) {
@@ -18,7 +18,7 @@ class MusicPlayer extends React.Component {
             <span className="fa fa-play fa-lg nav-play" type="button" onClick={playAudioNav} />
             <span className="fa fa-pause fa-lg nav-pause" type="button" onClick={pauseAudioNav} />
           </div>
-        )
+        );
       }
     }
 

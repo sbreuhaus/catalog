@@ -43,6 +43,7 @@ audio {
 
 .which-alignment {
   text-align: left;
+  color: #5a5a5a;
 }
 
 .song-param:hover {
@@ -151,6 +152,14 @@ audio {
   flex-wrap: wrap;
 }
 
+.play-pause {
+  width: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .navbar-logos {
   display: flex;
   flex-direction: row;
@@ -192,7 +201,7 @@ audio {
 }
 
 #playlist {
-  margin-top: 5vh;
+  /*margin-top: 5vh;*/
   color: #5a5a5a;
 }
 
@@ -395,58 +404,6 @@ audio {
   border-bottom: 0px;
 }
 
-@media screen and (min-width: 900px) {
-  .grid-div-playlist:hover {
-
-    transition: opacity 1s ease-out;
-    opacity: 1;
-    cursor: pointer;
-  }
-  .grid-div-playlist:hover > p {
-    display: none;
-  }
-  /*underline animation*/
-  /*.grid-div-playlist > p:hover:before {
-    visibility: visible;
-    -webkit-transform: scaleX(.70);
-    transform: scaleX(.70);
-  }*/
-  .navbar-att {
-    min-height: 75px;
-  }
-}
-
-.grid-div-playlist:last-of-type {
-  font-weight: bold;
-
-}
-
-.grid-div-playlist:nth-child(5) {
-  grid-column: auto / span 2;
-
-}
-
-.grid-div-playlist:nth-child(7) {
-  grid-column: auto / span 2;
-}
-
-@media screen and (max-width: 1199px){
-  .grid-div-playlist:nth-child(6) {
-    grid-column: auto / span 2;
-  }
-}
-
-@media screen and (max-width: 992px){
-  .grid-div-playlist:nth-child(6) {
-    grid-column: auto / span 1;
-    grid-row: auto / span 2;
-
-  }
-  .grid-div-playlist:nth-child(5) {
-    grid-column: auto / span 1;
-  }
-}
-
 .grid-div-playlist:last-of-type {
   order: 1;
   grid-column: auto / span 2;
@@ -623,26 +580,27 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .player {
-  width: 100%;
-  margin: 7px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  margin: 7px;
 }
 
 #currentTime {
   font-size: 1.5em;
-  margin-right: 3%;
+  /*margin-right: 3%;*/
   align-self: center;
 }
 
 #duration {
   font-size: 1.5em;
-  margin-left: 3%;
+  /*margin-left: 3%;*/
   align-self: center;
 }
 
 #songSlider {
+  max-width: 65%;
 }
 
 .song-title {
@@ -715,6 +673,21 @@ input[type=range]:focus::-ms-fill-upper {
   .play-button {
     margin-right: 3%;
   }
+  .mmm-logo {
+    max-width: 130px;
+  }
+  #songSlider {
+    max-width: 40%;
+  }
+  #powered {
+    margin-left: 1%;
+  }
+  .play-pause {
+    justify-content: space-around;
+  }
+  body {
+    padding-top: 110px;
+  }
 }
 
 .navbar {
@@ -758,8 +731,8 @@ input[type=range]:focus::-ms-fill-upper {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    background-color: #71c5e8;
-    color: white;
+    /*background-color: #71c5e8;*/
+    /*color: white;*/
     margin-left: 0px;
     margin-bottom: 0px;
     margin-top: 0px;
@@ -770,5 +743,57 @@ input[type=range]:focus::-ms-fill-upper {
   .which-alignment {
     text-align: center;
     margin-top: 0px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .grid-div-playlist:hover {
+
+    transition: opacity 1s ease-out;
+    opacity: 1;
+    cursor: pointer;
+  }
+  .grid-div-playlist:hover > p {
+    display: none;
+  }
+  /*underline animation*/
+  /*.grid-div-playlist > p:hover:before {
+    visibility: visible;
+    -webkit-transform: scaleX(.70);
+    transform: scaleX(.70);
+  }*/
+  .navbar-att {
+    min-height: 75px;
+  }
+}
+
+.grid-div-playlist:last-of-type {
+  font-weight: bold;
+
+}
+
+.grid-div-playlist:nth-child(5) {
+  grid-column: auto / span 2;
+
+}
+
+.grid-div-playlist:nth-child(7) {
+  grid-column: auto / span 2;
+}
+
+@media screen and (max-width: 1199px){
+  .grid-div-playlist:nth-child(6) {
+    grid-column: auto / span 2;
+  }
+}
+
+@media screen and (max-width: 992px){
+  .grid-div-playlist:nth-child(6) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 2;
+
+  }
+  .grid-div-playlist:nth-child(5) {
+    grid-column: auto / span 1;
   }
 }

@@ -8,13 +8,13 @@ const NavBar = (props) => {
     <nav className="navbar navbar-inverse navbar-fixed-top">
       <div className="container-fluid">
         <div className="navbar-header navbar-att" style={{width: '100%'}}>
-          <div className="col-md-4 navbar-logos">
+          <div className="col-md-4 col-sm-12 col-xs-12 navbar-logos">
             <ReactSVG
               path="../../ATT.svg"
               className="logo-main"
               style={{ width: 32 }}
               />
-            <div id="powered">AT&T Microcatalog<br/> powered by</div>
+            <div id="powered">AT&T MicroCatalog <span className="fa fa-registered fa-lg"/><br/> powered by</div>
             <ReactSVG
               path="../../Horizontal_Logo_Inverted.svg"
               className="mmm-logo"

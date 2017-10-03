@@ -35,15 +35,29 @@ class App extends Component {
       songMeta: false,
       selectedUrl: undefined,
       songUrl: undefined,
+      playing: false,
+      sponsorshipSongs: undefined
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    this.handleDisplayTable = this.handleDisplayTable.bind(this);
+    this.DisplaySearchResults = this.DisplaySearchResults.bind(this);
+  }
+
+  componentDidMount() {
+    const songs = this.state.songs;
+    const sponsorship = songs.filter((song) => {
+      return song.sponsorship === 'yes';
+    });
+    this.setState({ sponsorshipSongs: sponsorship });
   }
 
   componentWillReceiveProps(nextProps) { // Meteor createContainer sends data in chunks.  This receives it.
-    this.setState({ songs: nextProps.songs });
+    const songs = nextProps.songs;
+    const sponsorship = songs.filter((song) => {
+      return song.sponsorship === 'yes';
+    });
+    this.setState({ songs: nextProps.songs, sponsorshipSongs: sponsorship });
   }
 
   clickGenre(e) {
@@ -57,7 +71,7 @@ class App extends Component {
     });
   }
 
-  clickToHome = (e) => { // passed to BackToHome component
+  clickToHome = () => { // passed to BackToHome component
     this.toggleView();
     this.handleClearState();
   }
@@ -164,31 +178,41 @@ class App extends Component {
       return (
         <ul className="list-group">
           <h1 className="which-alignment">{filterGenre}</h1>
-          { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome}/> : ''}
-          { filtered.map((song, index) => (<Song song={song} key={index} setUrl={this.handleSetUrl}/>)) }
+          { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome} /> : ''}
+          { filtered.map((song, index) => (
+            <Song song={song} key={index} setUrl={this.handleSetUrl} />)) }
         </ul>
-        )
+      );
       }
     }
 
     handleShowPlayListSongs() {
       if (!this.state.isGenre) {
         const filterSongs = this.state.songs;
-        const filtered = [];
+        let filtered = [];
         const filterPlaylist = this.state.playList;
-        for (let i = 0; i < filterSongs.length; i++) {
-          const song = filterSongs[i];
-          const playlist = filterSongs[i].playlist;
-          if (playlist === filterPlaylist && playlist !== '') {
-            filtered.push(song);
+        const sponsorship = this.state.sponsorshipSongs;
+        console.log('filterPlaylist', filterPlaylist);
+        if (filterPlaylist === 'Anthem/Sponsorship') {
+          console.log('sponsorship inside if', sponsorship);
+          filtered = filtered.concat(sponsorship);
+        } else {
+          for (let i = 0; i < filterSongs.length; i++) {
+            const song = filterSongs[i];
+            const playlist = filterSongs[i].playlist;
+            if (playlist === filterPlaylist && playlist !== '') {
+              filtered.push(song);
+            }
           }
         }
+
         return (
           <ul className="list-group">
             <h1 className="which-alignment">{filterPlaylist}</h1>
             { filtered.length > 8 ? <BackToHome clickToHome={this.clickToHome} /> : ''}
             { filtered.map((song, index) => (
               <Song
+                playlist={filterPlaylist}
                 matchedSongs={this.state.matchedSongs}
                 song={song}
                 key={index}
@@ -200,6 +224,9 @@ class App extends Component {
                 playAudio={this.playAudio}
                 showDuration={this.showDuration}
                 upDateSongSliderTwo={this.upDateSongSliderTwo}
+                isPlaying={this.isPlaying}
+                isPaused={this.isPaused}
+                playing={this.state.playing}
               />)
             ) }
           </ul>
@@ -263,7 +290,7 @@ class App extends Component {
       );
     }
 
-    handleDisplayTable() {
+    DisplaySearchResults() {
       const matchedSongs = this.state.matchedSongs;
       if (this.state.searchMatches) {
         return (
@@ -361,6 +388,14 @@ class App extends Component {
       return (min + ":" + sec);
     }
 
+    isPlaying = () => {
+      this.setState({ playing: true })
+    }
+
+    isPaused = () => {
+      this.setState({ playing: false })
+    }
+
     render() {
       const isGenre = this.state.isGenre;
       return (
@@ -378,7 +413,7 @@ class App extends Component {
             </div>
 
             <div className="row">
-              { this.handleDisplayTable() }
+              { this.DisplaySearchResults() }
               { this.handleFilterGenrePlaylist() }
               { this.handleShowSongGenres() }
               { this.handleShowPlayListSongs() }
