@@ -62,10 +62,10 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) { // Meteor createContainer sends data in chunks.  This receives it.
     const songs = nextProps.songs;
-    const sponsorship = songs.filter((song) => {
+    const sponsorshipSongs = songs.filter((song) => {
       return song.sponsorship === 'yes';
     });
-    this.setState({ songs: nextProps.songs, sponsorshipSongs: sponsorship });
+    this.setState({ songs: nextProps.songs, sponsorshipSongs });
   }
 
   clickGenre(e) {
@@ -79,14 +79,9 @@ class App extends Component {
     });
   }
 
-  clearSearch = () => {
-    this.setState({ searchMatches: '', matchedSongs: [] });
-  }
-
   clickToHome = () => { // passed to BackToHome component
     this.toggleView();
     this.handleClearState();
-    this.clearSearch();
   }
 
   handleClearState = () => { // set state to empty strings
@@ -94,7 +89,9 @@ class App extends Component {
       genre: '',
       playList: '',
       selectedUrl: '',
-      songUrl: ''
+      songUrl: '',
+      searchMatches: '',
+      matchedSongs: []
     });
   }
 
@@ -291,6 +288,8 @@ class App extends Component {
       const songUrl = this.state.songUrl;
       return (
         <MusicPlayer
+          isGenre={this.state.isGenre}
+          audio={this.state.audio}
           songUrl={songUrl}
           selectedUrl={this.state.selectedUrl}
           searchMatches={this.state.searchMatches}
@@ -336,15 +335,9 @@ class App extends Component {
       const sound = this.state.audio;
       const duration = this.state.duration;
       const songSlider = this.state.songSlider;
-      if (sound) {
-        sound.addEventListener('loadedmetadata', () => {
-          const d = Math.floor(sound.duration);
-          duration.textContent = this.convertTime(d);
-          songSlider.setAttribute('max', d);
-        });
-      } else {
-        return;
-      }
+      const d = Math.floor(sound.duration);
+      duration.textContent = this.convertTime(d);
+      songSlider.setAttribute('max', d);
     }
 
     upDateSongSliderTwo = () => {

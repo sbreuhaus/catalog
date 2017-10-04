@@ -1,17 +1,11 @@
 import React from 'react';
-import ReactAudioPlayer from 'react-audio-player';
-import ReactSVG from 'react-svg';
 
 class MusicPlayer extends React.Component {
 
-  componentWillUnmount() {
-    console.log("NusicPlayer UnMounted");
-  }
-
   render() {
-    const { songUrl, selectedUrl, searchMatches, playAudioNav, pauseAudioNav } = this.props;
+    const { playAudioNav, pauseAudioNav, audio, isGenre } = this.props;
     function showPlayPause() {
-      if (true) {
+      if (isGenre) {
         return (
           <div className="play-pause">
             <span className="fa fa-play fa-lg nav-play" type="button" onClick={playAudioNav} />
@@ -36,7 +30,7 @@ class MusicPlayer extends React.Component {
             onChange={this.props.seekSong}
           />
           <div id="duration" className="duration">00:00</div>
-          <audio className="att_player" ref="att_player" preload="true" />
+          <audio src="" className="att_player" ref="att_player" preload="true" />
         </div>
       </div>
     );
