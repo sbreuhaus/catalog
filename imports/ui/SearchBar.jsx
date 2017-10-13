@@ -6,7 +6,7 @@ const SearchBar = (props) => {
         <input
           type="text"
           className="form-control input-lg"
-          placeholder="Search for titles, genres, tags, instrumentation etc." 
+          placeholder="Search for titles, genres, tags, instrumentation etc."
           onChange={props.handleSearch}>
         </input>
       </div>

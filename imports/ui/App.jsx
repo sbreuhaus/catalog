@@ -19,6 +19,7 @@ import MusicPlayer from './MusicPlayer';
 import NavBar from './NavBar';
 import SongMeta from './SongMeta';
 import AccountsUIWrapper from './AccountsUIWrapper';
+import ShowAllButton from './ShowAllButton';
 
 class App extends Component {
   constructor(props) {
@@ -40,7 +41,12 @@ class App extends Component {
       audio: undefined,
       duration: undefined,
       songSlider: undefined,
-      currentTime: undefined
+      currentTime: undefined,
+      showAllSongs: false,
+      notAltMix: undefined,
+      altMixes: undefined,
+      sponsorAltMixes: undefined
+
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
@@ -50,27 +56,91 @@ class App extends Component {
 
   componentDidMount() {
     const songs = this.state.songs;
+    const sponsorAltMixes = [];
     const sponsorshipSongs = songs.filter((song) => {
       return song.sponsorship === 'yes';
     });
+    const notAltMix = songs.filter((song) => {
+      return song.parent_track === '';
+    })
+    const altMixes = songs.filter((song) => {
+      return song.parent_track.length;
+    })
+    for (var i = 0; i < songs.length; i++) {
+      if (songs[i].sponsorship === 'yes' && songs[i].parent_track.length ){
+        sponsorAltMixes.push(songs[i]);
+      }
+    }
     const audio = document.querySelector('.att_player');
     const duration = document.querySelector('.duration');
     const songSlider = document.getElementById('songSlider');
     const currentTime = document.getElementById('currentTime');
-    this.setState({ sponsorshipSongs, audio, duration, songSlider, currentTime });
+    this.setState({
+      sponsorshipSongs, audio, duration, songSlider, currentTime, altMixes, notAltMix, sponsorAltMixes
+    });
   }
 
   componentWillReceiveProps(nextProps) { // Meteor createContainer sends data in chunks.  This receives it.
     const songs = nextProps.songs;
+    const sponsorAltMixes = [];
     const sponsorshipSongs = songs.filter((song) => {
       return song.sponsorship === 'yes';
     });
-    this.setState({ songs: nextProps.songs, sponsorshipSongs });
+    const notAltMix = songs.filter((song) => {
+      return song.parent_track === '';
+    })
+    const altMixes = songs.filter((song) => {
+      return song.parent_track.length;
+    })
+    for (var i = 0; i < songs.length; i++) {
+      if (songs[i].sponsorship === 'yes' && songs[i].parent_track.length ){
+        sponsorAltMixes.push(songs[i]);
+      }
+    }
+    this.setState({
+      songs: nextProps.songs, sponsorshipSongs, altMixes, notAltMix, sponsorAltMixes
+    });
   }
 
   clickGenre(e) {
     this.handleSetGenre(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, '')); //strip html tags
     this.toggleView();
+  }
+
+  toggleShowAllSongs = () => {
+    this.setState({ showAllSongs: !this.state.showAllSongs, isGenre: !this.state.isGenre });
+  }
+
+  showAllSongs = () => {
+    if (this.state.showAllSongs) {
+      const songs = this.state.songs;
+      console.log('songs inside of showAllSongs', songs);
+      return (
+        <ul className="list-group">
+          { songs.map((song, index) => (
+            <Song
+              matchedSongs={this.state.matchedSongs}
+              song={song}
+              key={index}
+              clickSong={this.clickSong}
+              setUrl={this.handleSetUrl}
+              songUrl={this.state.songUrl}
+              isGenre={this.state.isGenre}
+              convertTime={this.convertTime}
+              playAudio={this.playAudio}
+              showDuration={this.showDuration}
+              upDateSongSliderTwo={this.upDateSongSliderTwo}
+              isPlaying={this.isPlaying}
+              isPaused={this.isPaused}
+              playing={this.state.playing}
+              audio={this.state.audio}
+            />)
+          ) }
+        </ul>
+
+      )
+
+    }
   }
 
   toggleView = () => {
@@ -91,7 +161,8 @@ class App extends Component {
       selectedUrl: '',
       songUrl: '',
       searchMatches: '',
-      matchedSongs: []
+      matchedSongs: [],
+      showAllSongs: false,
     });
   }
 
@@ -137,7 +208,7 @@ class App extends Component {
             if (playList.length) { playLists.push(playList); }
           }
         }
-
+        //console.log('playlists array', playLists);
       return (
         <div className="container">
           <div className="row playlist-container">
@@ -198,26 +269,34 @@ class App extends Component {
     handleShowPlayListSongs() {
       if (!this.state.isGenre) {
         const filterSongs = this.state.songs;
+        const altMixes = this.state.altMixes;
+        //const songAltMixes = [];
         let filtered = [];
         const filterPlaylist = this.state.playList;
         const sponsorship = this.state.sponsorshipSongs;
-        if (filterPlaylist === 'Anthem/Sponsorship') {
+        //console.log('sponsorship.should be no altmixes', sponsorship);
+        if (filterPlaylist === 'Anthem/Sponsorship Package') {
           console.log('sponsorship inside if', sponsorship);
-          filtered = filtered.concat(sponsorship);
+          const arr = sponsorship.filter(obj => obj.parent_track === '')
+          filtered = filtered.concat(arr);
+          //console.log('yes altmix', sponsorAltMix);
         } else {
           for (let i = 0; i < filterSongs.length; i++) {
             const song = filterSongs[i];
             const playlist = filterSongs[i].playlist;
-            if (playlist === filterPlaylist && playlist !== '') {
+
+            if (playlist === filterPlaylist && playlist !== '' && song.parent_track === '') {
               filtered.push(song);
             }
           }
+          //console.log('songAltMixes', songAltMixes);
         }
         return (
           <ul className="list-group">
             <h1 className="which-alignment">{filterPlaylist}</h1>
             { filtered.map((song, index) => (
               <Song
+                altMixes={altMixes}
                 playlist={filterPlaylist}
                 matchedSongs={this.state.matchedSongs}
                 song={song}
@@ -417,6 +496,11 @@ class App extends Component {
             </div>
 
             <div className="row">
+              {this.state.showAllSongs === false && this.state.isGenre ?
+                <ShowAllButton
+                  toggleShowAllSongs={this.toggleShowAllSongs}
+                /> : ''}
+              { this.showAllSongs() }
               { this.DisplaySearchResults() }
               { this.handleFilterGenrePlaylist() }
               { this.handleShowSongGenres() }

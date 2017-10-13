@@ -3,9 +3,10 @@ import React from 'react';
 class MusicPlayer extends React.Component {
 
   render() {
-    const { playAudioNav, pauseAudioNav, audio, isGenre } = this.props;
+    const { playAudioNav, pauseAudioNav, audio } = this.props;
     function showPlayPause() {
-      if (isGenre) {
+      const player = document.querySelector('.att_player')
+      if (player && (player.src.indexOf('.mp3') > -1)) {
         return (
           <div className="play-pause">
             <span className="fa fa-play fa-lg nav-play" type="button" onClick={playAudioNav} />

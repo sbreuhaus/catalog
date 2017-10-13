@@ -3,6 +3,7 @@ import FontAwesome from 'react-fontawesome';
 import PropTypes from 'prop-types';
 import SongMeta from './SongMeta';
 import elements from '../startup/audioEl.js';
+import AltMixes from './AltMixes';
 
 
 class Song extends Component {
@@ -15,11 +16,14 @@ class Song extends Component {
         intervalId: undefined,
         slider: undefined,
         matchedSongs: this.props.matchedSongs,
-        songIsPlaying: false
+        songIsPlaying: false,
+        altMixes: this.props.altMixes,
+        songAltMixes: undefined
       };
     }
 
     componentDidMount() {
+      this.findAltMixes();
       //console.log("elements", elements.newSound);
       //console.log("Songs Mounted");
       let slider = setInterval(this.props.upDateSongSliderTwo, 500);
@@ -28,6 +32,12 @@ class Song extends Component {
       // console.log('this.props.playlist', this.props.playlist);
     }
 
+    findAltMixes = () => {
+      const name = this.state.name;
+      const altMixes = this.state.altMixes;
+      const songAltMixes = altMixes.filter(mix => mix.parent_track === name)
+      this.setState({ songAltMixes })
+    }
 
     clickChevron = (e) => {
       e.preventDefault();
@@ -77,7 +87,7 @@ class Song extends Component {
       const that = this;
       const sound = this.props.audio;
       const playlist = this.props.playlist;
-      const songIsPlaying = this.state.songIsPlaying
+      const songIsPlaying = this.state.songIsPlaying;
       function playOrPause() {
         if (songIsPlaying === false) {
           return (
@@ -120,6 +130,11 @@ class Song extends Component {
                 { playOrPause() }
                 { download() }
                 <span className="song-name" onClick={this.clickSong} ref="song">{name}</span>
+                {
+                  this.props.sponsorAltMix ?
+                  <AltMixes altMixes={this.state.songAltMixes} />
+                  : ''
+                }
             </div>
             {this.renderSongMeta()}
           </div>
