@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SongMeta from './SongMeta';
 import elements from '../startup/audioEl.js';
 import AltMixes from './AltMixes';
-
+import SongMetaModal from './SongMetaModal';
 
 class Song extends Component {
     constructor(props) {
@@ -23,7 +23,10 @@ class Song extends Component {
     }
 
     componentDidMount() {
-      this.findAltMixes();
+      if (this.state.altMixes){
+        this.findAltMixes();
+      }
+
       //console.log("elements", elements.newSound);
       //console.log("Songs Mounted");
       let slider = setInterval(this.props.upDateSongSliderTwo, 500);
@@ -88,6 +91,7 @@ class Song extends Component {
       const sound = this.props.audio;
       const playlist = this.props.playlist;
       const songIsPlaying = this.state.songIsPlaying;
+      const songAltMixes = this.state.songAltMixes;
       function playOrPause() {
         if (songIsPlaying === false) {
           return (
@@ -112,31 +116,16 @@ class Song extends Component {
         <li className="list-group-item song" id={name}>
           <div>
             <div className="song-controller">
+              <SongMetaModal song={this.props.song} />
+              { playOrPause() }
+              { download() }
+              <span className="song-name" onClick={this.clickSong} ref="song">{name}</span>
               {
-                !this.state.showMeta ?
-                  <FontAwesome
-                    onClick={this.clickChevron}
-                    className="fa fa-chevron-down song-meta"
-                    aria-hidden="true"
-                  />
-
-                  : <FontAwesome
-                    onClick={this.clickChevron}
-                    className="fa fa-chevron-up song-meta"
-                    aria-hidden="true"
-                  />
-
+                songAltMixes !== undefined && songAltMixes.length > 0 ?                
+                <AltMixes altMixes={this.state.songAltMixes} />
+                : ''
               }
-                { playOrPause() }
-                { download() }
-                <span className="song-name" onClick={this.clickSong} ref="song">{name}</span>
-                {
-                  this.props.sponsorAltMix ?
-                  <AltMixes altMixes={this.state.songAltMixes} />
-                  : ''
-                }
             </div>
-            {this.renderSongMeta()}
           </div>
         </li>
       );
