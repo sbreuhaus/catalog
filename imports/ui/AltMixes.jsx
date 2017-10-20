@@ -4,7 +4,7 @@ import ReactSVG from 'react-svg';
 // const AltMixes = (props) => {
 //   return (
 //     <li className="list-group-item song">
-//       {props.altMixes.map(mix => <span>{mix.name}</span>)}
+//       {props.altMixes.map(mix => <span>{props.altMixes[0].name}</span>)}
 //     </li>
 //   );
 // };

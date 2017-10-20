@@ -12,7 +12,9 @@ export const renderRoutes = () => (
   <Router history={browserHistory}>
     <div>
       <Route exact path="/" component={App}/>
-      <Route path="/login" component={Login}/>
     </div>
   </Router>
 );
+
+
+// <Route path="/login" component={Login}/>

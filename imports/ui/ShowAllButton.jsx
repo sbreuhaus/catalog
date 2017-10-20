@@ -2,7 +2,7 @@ import React from 'react';
 
 const ShowAllButton = ({toggleShowAllSongs}) => {
   return (
-    <button className="btn btn-lg" onClick={toggleShowAllSongs}>Show All Songs</button>
+    <button className="btn btn-lg show-all" onClick={toggleShowAllSongs}>Show All Songs</button>
   );
 };
 

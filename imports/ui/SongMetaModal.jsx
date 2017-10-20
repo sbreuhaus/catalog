@@ -36,6 +36,7 @@ class SongMetaModal extends React.Component {
           <FontAwesome
              className="fa fa-plus fa-lg song-meta"
              aria-hidden="true"
+             name="plus"
           />
          <span>More Info</span>
         </div>

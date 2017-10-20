@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import FontAwesome from 'react-fontawesome';
 import PropTypes from 'prop-types';
 import SongMeta from './SongMeta';
 import elements from '../startup/audioEl.js';
@@ -22,9 +21,11 @@ class Song extends Component {
       };
     }
 
+
     componentDidMount() {
       if (this.state.altMixes){
         this.findAltMixes();
+        console.log('MOUNTING');
       }
 
       //console.log("elements", elements.newSound);
@@ -93,7 +94,7 @@ class Song extends Component {
       const songIsPlaying = this.state.songIsPlaying;
       const songAltMixes = this.state.songAltMixes;
       function playOrPause() {
-        if (songIsPlaying === false) {
+        if (songIsPlaying === false || sound.src !== `http://www.manmademusic.com/files/att_microcatalog/resources/${that.props.song.url}.mp3`) {
           return (
             <div className="play-button" type="button" onClick={that.playAudio}>
               <span className="fa fa-play fa-lg" />
@@ -108,25 +109,25 @@ class Song extends Component {
         }
       }
       function download() {
-        if (that.props.playlist === 'Anthem/Sponsorship') {
+        if (that.props.playlist === 'Anthem/Sponsorship Package') {
           return <a href={`http://www.manmademusic.com/files/att_microcatalog/resources/${that.props.song.url}.mp3`} download><span className="fa fa-download fa-lg"></span></a>
         }
       }
       return (
         <li className="list-group-item song" id={name}>
-          <div>
+
             <div className="song-controller">
               <SongMetaModal song={this.props.song} />
               { playOrPause() }
               { download() }
-              <span className="song-name" onClick={this.clickSong} ref="song">{name}</span>
+              <span className="song-name" ref="song">{name}</span>
               {
-                songAltMixes !== undefined && songAltMixes.length > 0 ?                
+                songAltMixes !== undefined && songAltMixes.length > 0 ?
                 <AltMixes altMixes={this.state.songAltMixes} />
                 : ''
               }
             </div>
-          </div>
+          
         </li>
       );
   }

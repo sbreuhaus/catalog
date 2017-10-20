@@ -13,6 +13,7 @@ import Song from './Song.jsx';
 import Genre from './Genre.jsx';
 import BackToHome from './BackToHome.jsx';
 import SearchBar from './SearchBar';
+import SearchFilters from './SearchFilters';
 import PlayList from './PlayList';
 import DisplayTable from './DisplayTable';
 import MusicPlayer from './MusicPlayer';
@@ -20,8 +21,10 @@ import NavBar from './NavBar';
 import SongMeta from './SongMeta';
 import AccountsUIWrapper from './AccountsUIWrapper';
 import ShowAllButton from './ShowAllButton';
+import ShowAllSongs from './ShowAllSongs';
 
 class App extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -29,6 +32,7 @@ class App extends Component {
       isPlaylist: true,
       genre: '',
       playList: '',
+      playing: false,
       songs: this.props.songs,
       searchMatches: '',
       matchedSongs: [],
@@ -36,7 +40,7 @@ class App extends Component {
       songMeta: false,
       selectedUrl: undefined,
       songUrl: undefined,
-      playing: false,
+      audioIsPlaying: false,
       sponsorshipSongs: undefined,
       audio: undefined,
       duration: undefined,
@@ -45,7 +49,9 @@ class App extends Component {
       showAllSongs: false,
       notAltMix: undefined,
       altMixes: undefined,
-      sponsorAltMixes: undefined
+      sponsorAltMixes: undefined,
+      availableHeight: 0,
+      scrollTop: 0
 
     }
     this.clickGenre = this.clickGenre.bind(this);
@@ -71,12 +77,21 @@ class App extends Component {
         sponsorAltMixes.push(songs[i]);
       }
     }
+    // let w = window,
+    //   d = document,
+    //   e = d.documentElement,
+    //   g = d.getElementsByTagName('body')[0],
+    //   x = w.innerWidth || e.clientWidth || g.clientWidth,
+    //   y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+    //w.addEventListener('scroll', this.handleScroll);
+    //console.log(x + ' × ' + y);
+    // const body = document.querySelector('body')
     const audio = document.querySelector('.att_player');
     const duration = document.querySelector('.duration');
     const songSlider = document.getElementById('songSlider');
     const currentTime = document.getElementById('currentTime');
     this.setState({
-      sponsorshipSongs, audio, duration, songSlider, currentTime, altMixes, notAltMix, sponsorAltMixes
+      sponsorshipSongs, audio, duration, songSlider, currentTime, altMixes, notAltMix, sponsorAltMixes, availableHeight: this.node.clientHeight
     });
   }
 
@@ -102,6 +117,24 @@ class App extends Component {
     });
   }
 
+  handleScroll = (event) => {
+    console.log('scroll event', event.target);
+    this.setState({
+      scrollTop: event.target.scrollTop
+    })
+    //console.log('handleScroll: ', this.state.scrollTop);
+  }
+
+  audioIsPlaying() {
+    let audio = this.state.audio;
+    //debugger;
+    if (audio) {
+      console.log('audio is NOW playing');
+      console.log('App.state.audioIsPlaying', this.state.audioIsPlaying);
+      this.setState({ audioIsPlaying: !this.state.audioIsPlaying })
+    }
+  }
+
   clickGenre(e) {
     this.handleSetGenre(e.target.innerHTML.replace(/<\/?[^>]+(>|$)/g, '')); //strip html tags
     this.toggleView();
@@ -117,12 +150,11 @@ class App extends Component {
       console.log('songs inside of showAllSongs', songs);
       return (
         <ul className="list-group">
+          <h1 className="which-alignment">All Songs</h1>
           { songs.map((song, index) => (
             <Song
-              matchedSongs={this.state.matchedSongs}
               song={song}
               key={index}
-              clickSong={this.clickSong}
               setUrl={this.handleSetUrl}
               songUrl={this.state.songUrl}
               isGenre={this.state.isGenre}
@@ -137,9 +169,7 @@ class App extends Component {
             />)
           ) }
         </ul>
-
-      )
-
+      );
     }
   }
 
@@ -208,7 +238,6 @@ class App extends Component {
             if (playList.length) { playLists.push(playList); }
           }
         }
-        //console.log('playlists array', playLists);
       return (
         <div className="container">
           <div className="row playlist-container">
@@ -270,11 +299,9 @@ class App extends Component {
       if (!this.state.isGenre) {
         const filterSongs = this.state.songs;
         const altMixes = this.state.altMixes;
-        //const songAltMixes = [];
         let filtered = [];
         const filterPlaylist = this.state.playList;
         const sponsorship = this.state.sponsorshipSongs;
-        //console.log('sponsorship.should be no altmixes', sponsorship);
         if (filterPlaylist === 'Anthem/Sponsorship Package') {
           console.log('sponsorship inside if', sponsorship);
           const arr = sponsorship.filter(obj => obj.parent_track === '')
@@ -289,7 +316,6 @@ class App extends Component {
               filtered.push(song);
             }
           }
-          //console.log('songAltMixes', songAltMixes);
         }
         return (
           <ul className="list-group">
@@ -424,10 +450,8 @@ class App extends Component {
       if (sound.src) {
         const songSlider = this.state.songSlider;
         const currentTime = this.state.currentTime;
-        //console.log("What is sound.current time", sound.currentTime);
         const c = Math.round(sound.currentTime);
         songSlider.value = sound.currentTime;
-        //debugger;
         currentTime.textContent = this.convertTime(c);
       } else {
         return;
@@ -481,22 +505,25 @@ class App extends Component {
     render() {
       const isGenre = this.state.isGenre;
       return (
-
-        <div>
+        <div
+          style={{ height: '100%', overflowY: 'scroll' }}
+          onClick={this.handleScroll}
+          ref={(node) => { this.node = node; }}
+          >
           <NavBar
             isGenre={isGenre}
             clickToHome={this.clickToHome}
             showMusicPlayer={this.showMusicPlayer}
           />
           <div className="container">
-
             <div className="row">
-
-              {this.state.isGenre ? <SearchBar handleSearch={this.handleSearch} /> : ''}
+              {this.state.isGenre ?
+                <SearchBar handleSearch={this.handleSearch} />
+                : ''}
             </div>
 
             <div className="row">
-              {this.state.showAllSongs === false && this.state.isGenre ?
+              {this.state.showAllSongs === false && this.state.isGenre && this.state.searchMatches === '' ?
                 <ShowAllButton
                   toggleShowAllSongs={this.toggleShowAllSongs}
                 /> : ''}
