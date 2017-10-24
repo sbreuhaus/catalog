@@ -58,6 +58,7 @@ class App extends Component {
     this.clickPlaylist = this.clickPlaylist.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.DisplaySearchResults = this.DisplaySearchResults.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
@@ -77,6 +78,7 @@ class App extends Component {
         sponsorAltMixes.push(songs[i]);
       }
     }
+    //window.addEventListener('scroll', this.handleScroll);
     // let w = window,
     //   d = document,
     //   e = d.documentElement,
@@ -86,7 +88,7 @@ class App extends Component {
     //w.addEventListener('scroll', this.handleScroll);
     //console.log(x + ' × ' + y);
     // const body = document.querySelector('body')
-    const audio = document.querySelector('.att_player');
+    const audio = document.getElementById('att_player');
     const duration = document.querySelector('.duration');
     const songSlider = document.getElementById('songSlider');
     const currentTime = document.getElementById('currentTime');
@@ -117,8 +119,8 @@ class App extends Component {
     });
   }
 
-  handleScroll = (event) => {
-    console.log('scroll event', event.target);
+  handleScroll(event) {
+    console.log('scroll event', event.target.scrollTop);
     this.setState({
       scrollTop: event.target.scrollTop
     })
@@ -155,7 +157,6 @@ class App extends Component {
             <Song
               song={song}
               key={index}
-              setUrl={this.handleSetUrl}
               songUrl={this.state.songUrl}
               isGenre={this.state.isGenre}
               convertTime={this.convertTime}
@@ -317,17 +318,17 @@ class App extends Component {
             }
           }
         }
+        const altMixesFilter = (song) => altMixes.filter(mix => mix.parent_track === song.name)
         return (
           <ul className="list-group">
             <h1 className="which-alignment">{filterPlaylist}</h1>
             { filtered.map((song, index) => (
               <Song
-                altMixes={altMixes}
+                altMixes={altMixesFilter(song)}
                 playlist={filterPlaylist}
                 matchedSongs={this.state.matchedSongs}
                 song={song}
                 key={index}
-                clickSong={this.clickSong}
                 setUrl={this.handleSetUrl}
                 songUrl={this.state.songUrl}
                 isGenre={this.state.isGenre}
@@ -371,9 +372,10 @@ class App extends Component {
         const songs = this.state.songs;
         const matches = [];
         const searchMatches = this.state.searchMatches;
-        //console.log("searchMatches", searchMatches);
+        console.log("searchMatches", searchMatches);
         for (let i = 0; i < songs.length; i++) {
           for (key in songs[i]) {
+            //console.log('key', key);
             //console.log("YO", songs[i][key], searchMatches);
             //console.log(songs[i][key].toString().toLowerCase().indexOf(searchMatches));
             if (songs[i][key].toString().toLowerCase().indexOf(searchMatches)!=-1) {
@@ -415,7 +417,6 @@ class App extends Component {
               <Song
                 song={song}
                 key={index}
-                clickSong={this.clickSong}
                 setUrl={this.handleSetUrl}
                 matchedSongs={this.state.matchedSongs}
                 setUrl={this.handleSetUrl}
@@ -502,20 +503,38 @@ class App extends Component {
       this.setState({ playing: false })
     }
 
+    playOrPause = () => {
+      if (songIsPlaying === false || sound.src !== `http://www.manmademusic.com/files/att_microcatalog/resources/${that.props.song.url}.mp3`) {
+        return (
+          <div className="play-button" type="button" onClick={that.playAudio}>
+            <span className="fa fa-play fa-lg" />
+          </div>
+        )
+      } else if (sound.src === `http://www.manmademusic.com/files/att_microcatalog/resources/${that.props.song.url}.mp3`) {
+        return (
+          <div className="pause-button" type="button" onClick={that.pauseAudio}>
+            <span className="fa fa-pause fa-lg" />
+          </div>
+        )
+      }
+    }
+
     render() {
       const isGenre = this.state.isGenre;
+      //console.log('this.handleScroll', this.handleScroll);
+
       return (
         <div
           style={{ height: '100%', overflowY: 'scroll' }}
-          onClick={this.handleScroll}
+          onScroll={this.handleScroll}
           ref={(node) => { this.node = node; }}
-          >
+        >
           <NavBar
             isGenre={isGenre}
             clickToHome={this.clickToHome}
             showMusicPlayer={this.showMusicPlayer}
           />
-          <div className="container">
+        <div className="container">
             <div className="row">
               {this.state.isGenre ?
                 <SearchBar handleSearch={this.handleSearch} />

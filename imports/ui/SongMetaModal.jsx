@@ -29,6 +29,46 @@ class SongMetaModal extends React.Component {
       isOpen: false
     });
   };
+
+  renderModal() {
+    if (!this.state.isOpen) {
+      return false;
+    }
+
+    return (
+      <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
+        <ModalHeader className='modal-header'>
+          <ModalClose onClick={this.hideModal} />
+          <div className="modal-header-logo-title">
+            <ReactSVG
+              className='modal-att-logo'
+              path="../../ATT.svg"
+              style={{ width: 32 }}
+            />
+          </div>
+          <div className="modal-header-logo-title">
+          <ModalTitle className='modal-title'>{this.props.song.name}</ModalTitle>
+          </div>
+        </ModalHeader>
+        <ModalBody className='modal-body'>
+          <ul className='li-last'>
+            <li>Genre:<span>{this.props.song.genre}</span></li>
+            <li>Description:<span>{this.props.song.description}</span></li>
+            <li>Notable Instruments:<span>{this.props.song.notable_instr}</span></li>
+            <li>Potential Uses:<span>{this.props.song.potential_uses}</span></li>
+            <li>Tags:<span>{this.props.song.other_tags}</span></li>
+            <li>Sponsorship:<span>{this.props.song.sponsorship}</span></li>
+          </ul>
+        </ModalBody>
+        <ModalFooter className='modal-footer'>
+          <button className='btn btn-default modal-close' onClick={this.hideModal}>
+            Close
+          </button>
+        </ModalFooter>
+      </Modal>
+    )
+  }
+
   render() {
     return (
       <div>
@@ -41,34 +81,8 @@ class SongMetaModal extends React.Component {
          <span>More Info</span>
         </div>
 
-        <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
-          <ModalHeader className='modal-header'>
-            <ModalClose onClick={this.hideModal} />
-            <div className="modal-header-logo-title">
-              <ReactSVG
-                className='modal-att-logo'
-                path="../../ATT.svg"
-                style={{ width: 32 }}
-              />
-            <ModalTitle className='modal-title'>{this.props.song.name}</ModalTitle>
-            </div>
-          </ModalHeader>
-          <ModalBody className='modal-body'>
-            <ul className='li-last'>
-              <li>Genre:<span>{this.props.song.genre}</span></li>
-              <li>Description:<span>{this.props.song.description}</span></li>
-              <li>Notable Instruments:<span>{this.props.song.notable_instr}</span></li>
-              <li>Potential Uses:<span>{this.props.song.potential_uses}</span></li>
-              <li>Tags:<span>{this.props.song.other_tags}</span></li>
-              <li>Sponsorship:<span>{this.props.song.sponsorship}</span></li>
-            </ul>
-          </ModalBody>
-          <ModalFooter className='modal-footer'>
-            <button className='btn btn-default modal-close' onClick={this.hideModal}>
-              Close
-            </button>
-          </ModalFooter>
-        </Modal>
+        { this.renderModal() }
+
       </div>
     );
   }

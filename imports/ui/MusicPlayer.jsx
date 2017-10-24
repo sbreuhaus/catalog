@@ -31,7 +31,7 @@ class MusicPlayer extends React.Component {
             onChange={this.props.seekSong}
           />
           <div id="duration" className="duration">00:00</div>
-          <audio src="" className="att_player" ref="att_player" preload="true" />
+          <audio id="att_player" src="" className="att_player" ref="att_player" preload="true" />
         </div>
       </div>
     );

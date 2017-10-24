@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SongMeta from './SongMeta';
-import elements from '../startup/audioEl.js';
 import AltMixes from './AltMixes';
 import SongMetaModal from './SongMetaModal';
 
@@ -16,17 +14,18 @@ class Song extends Component {
         slider: undefined,
         matchedSongs: this.props.matchedSongs,
         songIsPlaying: false,
-        altMixes: this.props.altMixes,
-        songAltMixes: undefined
+        altMixes: undefined,
+        songAltMixes: this.props.altMixes
       };
     }
 
 
     componentDidMount() {
-      if (this.state.altMixes){
-        this.findAltMixes();
-        console.log('MOUNTING');
-      }
+      console.log('thi.props.altmixes', this.props.altMixes);
+      // if (this.state.altMixes){
+      //   this.findAltMixes();
+      //   console.log('MOUNTING');
+      // }
 
       //console.log("elements", elements.newSound);
       //console.log("Songs Mounted");
@@ -36,33 +35,19 @@ class Song extends Component {
       // console.log('this.props.playlist', this.props.playlist);
     }
 
-    findAltMixes = () => {
-      const name = this.state.name;
-      const altMixes = this.state.altMixes;
-      const songAltMixes = altMixes.filter(mix => mix.parent_track === name)
-      this.setState({ songAltMixes })
-    }
-
-    clickChevron = (e) => {
-      e.preventDefault();
-      this.setState({
-        showMeta: !this.state.showMeta
-      });
-    }
-
-    renderSongMeta = () => {
-      const song = this.props.song;
-      if (this.state.showMeta) {
-        return <SongMeta song={song} />;
-      }
-    }
+    // findAltMixes = () => {
+    //   const name = this.state.name;
+    //   const altMixes = this.state.altMixes;
+    //   const songAltMixes = altMixes.filter(mix => mix.parent_track === name)
+    //   this.setState({ songAltMixes })
+    // }
 
     playAudio = (e) => {
       e.preventDefault();
       const showDuration = this.props.showDuration;
       //debugger;
       console.log('playAudio');
-      const sound = document.querySelector('.att_player');
+      const sound = document.getElementById('att_player');
       sound.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${this.props.song.url}.mp3`;
       const intervalId = setInterval(showDuration, 2000);
       this.props.isPlaying();
@@ -73,7 +58,7 @@ class Song extends Component {
 
     pauseAudio = (e) => {
       e.preventDefault();
-      const sound = document.querySelector('.att_player');
+      const sound = document.getElementById('att_player');
       this.setState({ songIsPlaying: false })
       this.props.isPaused();
       sound.pause();
@@ -127,7 +112,7 @@ class Song extends Component {
                 : ''
               }
             </div>
-          
+
         </li>
       );
   }
