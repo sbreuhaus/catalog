@@ -57,7 +57,7 @@ class SongMetaModal extends React.Component {
             <li>Notable Instruments:<span>{this.props.song.notable_instr}</span></li>
             <li>Potential Uses:<span>{this.props.song.potential_uses}</span></li>
             <li>Tags:<span>{this.props.song.other_tags}</span></li>
-            <li>Sponsorship:<span>{this.props.song.sponsorship}</span></li>
+            <li>For more information on this track, please contact Anjali Nair at anjali@manmademusic.com</li>
           </ul>
         </ModalBody>
         <ModalFooter className='modal-footer'>
@@ -71,7 +71,7 @@ class SongMetaModal extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="more-info-container">
         <div className="more-info" onClick={this.openModal}>
           <FontAwesome
              className="fa fa-plus fa-lg song-meta"
