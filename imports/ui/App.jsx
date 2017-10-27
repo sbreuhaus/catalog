@@ -58,7 +58,6 @@ class App extends Component {
     this.clickPlaylist = this.clickPlaylist.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.DisplaySearchResults = this.DisplaySearchResults.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
@@ -117,14 +116,6 @@ class App extends Component {
     this.setState({
       songs: nextProps.songs, sponsorshipSongs, altMixes, notAltMix, sponsorAltMixes
     });
-  }
-
-  handleScroll(event) {
-    console.log('scroll event', event.target.scrollTop);
-    this.setState({
-      scrollTop: event.target.scrollTop
-    })
-    //console.log('handleScroll: ', this.state.scrollTop);
   }
 
   audioIsPlaying() {
@@ -304,7 +295,7 @@ class App extends Component {
         const filterPlaylist = this.state.playList;
         const sponsorship = this.state.sponsorshipSongs;
         if (filterPlaylist === 'Anthem/Sponsorship Package') {
-          console.log('sponsorship inside if', sponsorship);
+          //console.log('sponsorship inside if', sponsorship);
           const arr = sponsorship.filter(obj => obj.parent_track === '')
           filtered = filtered.concat(arr);
           //console.log('yes altmix', sponsorAltMix);
@@ -372,7 +363,7 @@ class App extends Component {
         const songs = this.state.songs;
         const matches = [];
         const searchMatches = this.state.searchMatches;
-        console.log("searchMatches", searchMatches);
+        //console.log("searchMatches", searchMatches);
         for (let i = 0; i < songs.length; i++) {
           for (key in songs[i]) {
             //console.log('key', key);
@@ -524,11 +515,7 @@ class App extends Component {
       //console.log('this.handleScroll', this.handleScroll);
 
       return (
-        <div
-          style={{ height: '100%', overflowY: 'scroll' }}
-          onScroll={this.handleScroll}
-          ref={(node) => { this.node = node; }}
-        >
+        <div>
           <NavBar
             isGenre={isGenre}
             clickToHome={this.clickToHome}

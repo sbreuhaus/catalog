@@ -110,7 +110,7 @@ class Song extends Component {
                 <span className="song-name">{mix.name}</span>
               </li>
             );
-      }
+          }
 
     render() {
       const name = this.props.song.name;
@@ -136,7 +136,7 @@ class Song extends Component {
       }
       function download() {
         if (that.props.playlist === 'Anthem/Sponsorship Package') {
-          return <a href={`${mmmUrl}${that.props.song.url}.mp3`} download><span className="fa fa-download fa-lg"></span></a>
+          return <a className="download" href={`${mmmUrl}${that.props.song.url}.mp3`} download><span className="fa fa-download fa-lg"></span></a>
         }
       }
       return (
