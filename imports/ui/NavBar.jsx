@@ -5,14 +5,11 @@ import ReactSVG from 'react-svg';
 
 const NavBar = (props) => {
   return (
-    <nav className="navbar navbar-inverse navbar-fixed-top">
-      <div className="container-fluid">
-        <div className="navbar-header navbar-att" style={{width: '100%'}}>
-          <div
-            className="col-md-4 col-sm-12 col-xs-12 navbar-logos"
-            onClick={!props.isGenre ? props.clickToHome : ''}
-          >
-            <div className="att-home">
+    <nav className="navbar navbar-inverse navbar-fixed-top navbar-att">
+      <div className="container">
+        <div className="row" style={{width: '100%'}}>
+          <div className=" col-sm-12 col-md-6 col-lg-6 navbar-logos">
+            <div className="att-home" onClick={!props.isGenre ? props.clickToHome : ''}>
               <ReactSVG
                 path="../../ATT.svg"
                 className="logo-main"

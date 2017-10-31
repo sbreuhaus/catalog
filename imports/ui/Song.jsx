@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import AltMixes from './AltMixes';
 import SongMetaModal from './SongMetaModal';
 
 class Song extends Component {
@@ -29,7 +28,7 @@ class Song extends Component {
 
       //console.log("elements", elements.newSound);
       //console.log("Songs Mounted");
-      let slider = setInterval(this.props.upDateSongSliderTwo, 500);
+      const slider = setInterval(this.props.upDateSongSliderTwo, 500);
       this.setState({ slider });
       //console.log("this.state.matchedSongs", this.state.matchedSongs);
       // console.log('this.props.playlist', this.props.playlist);
@@ -62,12 +61,6 @@ class Song extends Component {
       this.setState({ songIsPlaying: false })
       this.props.isPaused();
       sound.pause();
-    }
-
-    componentWillUnmount() {
-      console.log("Songs unmounted");
-      // clearInterval(this.state.intervalId);
-      // clearInterval(this.state.slider);
     }
 
     altPlayOrPause = (mix) => {
@@ -112,15 +105,22 @@ class Song extends Component {
             );
           }
 
+    componentWillUnmount() {
+      console.log("Songs unmounted");
+      // clearInterval(this.state.intervalId);
+      // clearInterval(this.state.slider);
+    }
+    
     render() {
       const name = this.props.song.name;
       const that = this;
       const sound = this.props.audio;
       const songIsPlaying = this.state.songIsPlaying;
+      const playing = this.props.playing;
       const songAltMixes = this.state.songAltMixes;
       const mmmUrl = 'http://www.manmademusic.com/files/att_microcatalog/resources/';
       function playOrPause() {
-        if (songIsPlaying === false || sound.src !== `${mmmUrl}${that.props.song.url}.mp3`) {
+        if (playing === false || sound.src !== `${mmmUrl}${that.props.song.url}.mp3`) {
           return (
             <div className="play-button" type="button" onClick={that.playAudio}>
               <span className="fa fa-play fa-lg" />

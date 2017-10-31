@@ -18,7 +18,7 @@ html, body {
 
 body {
   background-color: #d2d2d2;
-  padding-top: 70px;
+  padding-top: 80px;
 }
 
 .filtered-songs {
@@ -39,6 +39,14 @@ li {
 
 audio {
   padding: 0px;
+}
+
+.btn {
+  border-radius: 0px;
+}
+
+.btn-lg {
+  border-radius: 0px;
 }
 
 .which-alignment {
@@ -73,7 +81,7 @@ audio {
 
 .song-name-container {
   /*border: 1px dotted black;*/
-  width: 100%;
+  width: 66%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -103,8 +111,6 @@ audio {
 }
 
 .more-info-container {
-  /*border: 1px solid pink;*/
-  max-width: 7vw;
   height: 30px;
   align-self: center;
 }
@@ -222,7 +228,7 @@ audio {
 #powered {
   color: white;
   margin-left: -15%;
-  font-size: .75em;
+  font-size: 1rem;
 }
 
 .li-last li:last-of-type {
@@ -280,10 +286,10 @@ audio {
 .mmm-logo {
   max-width: 200px;
   margin-top: 1%;
-  margin-left: -30%;
+  margin-left: -10%;
 }
 
-/*Styles for Playlist divs*/
+/*Styles for Playlist and Genre divs*/
 
 .grid-playlist {
   display: grid;
@@ -291,13 +297,19 @@ audio {
   /*grid-gap: 1px;*/
   /*margin-bottom: 5vh;*/
 }
-
+.grid-genre {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /*grid-gap: 1px;*/
+  /*margin-top: 5vh;*/
+  /*margin-bottom: 10vh;*/
+}
 .grid-div-playlist {
-  order: 2;
+  /*order: 2;*/
   /*background-color: black;*/
   color: white;
   padding: 0px;
-  font-size: 150%;
+  font-size: 2rem;
   text-align: center;
   min-height: 150px;
   display: flex;
@@ -310,8 +322,26 @@ audio {
   /*filter: saturate(5%);*/
   /*filter:sepia(50%);*/
 }
-
+.grid-div-genre {
+  /*background-color: white;*/
+  color: white;
+  padding: 0px;
+  font-size: 2rem;
+  text-align: center;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /*opacity: 1;
+  transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;*/
+}
 .grid-div-playlist > p {
+  z-index: 1;
+  position: relative;
+  text-decoration: none;
+}
+.grid-div-genre > p {
   z-index: 1;
   position: relative;
   text-decoration: none;
@@ -334,6 +364,10 @@ audio {
 }*/
 
 .grid-div-playlist * {
+    position: relative;
+    /* hack */
+}
+.grid-div-genre * {
     position: relative;
     /* hack */
 }
@@ -485,12 +519,127 @@ audio {
   border-bottom: 0px;
 }
 
-.grid-div-2 {
+#genre0:after {
+  background-color: #009fdb;
+}
+
+#genre0 {
+  position: relative;
+  background: no-repeat url(/genre_images/Electronic.jpg) 50% / 100%;
+  border-bottom: 0px;
+}
+
+#genre0 > img {
+    vertical-align: top;
+    width: 100%; /* max width */
+    opacity: 0;  /* make it transparent */
+}
+
+#genre1:after {
+  background-color: #009fdb;
+}
+
+#genre1 {
+  position: relative;
+  background: no-repeat url(/genre_images/World.jpg) 50% / 100%;
+  border-bottom: 0px;
+}
+
+#genre2:after {
+  background-color: #009fdb;
+}
+
+#genre2 {
+  position: relative;
+  background: no-repeat url(/genre_images/Electro_Rock.jpg) 50% / 100%;
+  border-bottom: 0px;
+}
+
+#genre3:after {
+  background-color: #009fdb;
+}
+
+#genre3 {
+  position: relative;
+  background: no-repeat url(/genre_images/Orchestral.jpg) 50% / 100%;
+  border-bottom: 0px;
+}
+
+#genre4:after {
+  background-color: #009fdb;
+}
+
+#genre4 {
+  position: relative;
+  background: no-repeat url(/genre_images/Indie.jpg) 50% / 100%;
+  border-bottom: 0px;
+}
+
+#genre5:after {
+  background-color: #009fdb;
+}
+
+#genre5 {
+  position: relative;
+  background: no-repeat url(/genre_images/Rock.jpg) 50% / 100%;
+  border-bottom: 0px;
+}
+
+#genre6:after {
+  background-color: #009fdb;
+}
+
+#genre6 {
+  position: relative;
+  background: no-repeat url(/genre_images/Pop.jpg) 50% / 100%;
+  border-bottom: 0px;
+}
+
+#genre7:after {
+  background-color: #009fdb;
+}
+
+#genre7 {
+  position: relative;
+  /*background: no-repeat url(/genre_images/Underscore.jpg) 50% / 100%;*/
+  border-bottom: 0px;
+}
+
+#genre8:after {
+  background-color: #009fdb;
+}
+
+#genre8 {
+  position: relative;
+  background: no-repeat url(/genre_images/Holiday.jpg) 50% / 100%;
+  border-bottom: 0px;
+}
+#genre9:after {
+  background-color: #009fdb;
+}
+
+#genre9 {
+  position: relative;
+  background: no-repeat url(/genre_images/HipHop.jpg) 50% / 100%;
+  border-bottom: 0px;
+}
+
+#genre10:after {
+  background-color: #009fdb;
+}
+
+#genre10 {
+  position: relative;
+  background: no-repeat url(/genre_images/Drumline.jpg) 50% / 100%;
+  border-bottom: 0px;
+}
+
+/*.grid-div-2 {
   grid-column: 3 / 6;
   grid-row: 2 / 3;
   outline: 2px solid red;
   z-index: 10;
-}
+}*/
 
 .grid-div:hover {
   cursor: pointer;
@@ -501,48 +650,40 @@ audio {
   color: #000;
 }
 
-.grid-genre {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 1px;
-  /*margin-top: 5vh;*/
-  margin-bottom: 10vh;
-}
-
-.grid-div-genre {
-  background-color: white;
-  color: black;
-  padding: 20px;
-  font-size: 150%;
-  text-align: center;
-  min-height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  opacity: 1;
-  transition: opacity 0.3s;
-  -webkit-transition: opacity 0.3s;
-}
-
-.grid-div-genre:hover {
+/*.grid-div-genre:hover {
   background-color: #d2d2d2;
   color: black;
   cursor: pointer;
-}
+}*/
 
 .grid-div-genre:first-of-type {
+  grid-column: auto / span 2;
+}
+.grid-div-playlist:first-of-type {
   grid-column: auto / span 2;
 }
 
 .grid-div-genre:nth-child(9) {
   grid-column: auto / span 2;
 }
+.grid-div-playlist:nth-child(9) {
+  grid-column: auto / span 2;
+}
 .grid-div-genre:nth-child(3) {
+  grid-column: auto / span 2;
+}
+.grid-div-playlist:nth-child(3) {
   grid-column: auto / span 2;
 }
 
 .grid-div-genre:nth-child(7) {
   grid-column: auto / span 2;
+}
+.grid-div-playlist:nth-child(7) {
+  grid-column: auto / span 2;
+}
+.grid-div-playlist:last-of-type {
+  font-weight: bold;
 }
 
 .song-meta {
@@ -745,28 +886,124 @@ input[type=range]:focus::-ms-fill-upper {
   cursor: pointer;
 }
 
+.navbar {
+  -webkit-box-shadow: 0px 10px 35px -17px rgba(0,0,0,0.92);
+  -moz-box-shadow: 0px 10px 35px -17px rgba(0,0,0,0.92);
+  box-shadow: 0px 10px 35px -17px rgba(0,0,0,0.92);
+}
+
 @media screen and (max-width: 1199px) {
   .grid-div-genre:nth-child(1) {
-    grid-column: auto / span 1;
+    grid-column: auto / span 2;
     grid-row: auto / span 2;
   }
+  .grid-div-playlist:nth-child(1) {
+    grid-column: auto / span 2;
+    grid-row: auto / span 2;
+  }
+
   .grid-div-genre:nth-child(6) {
     grid-row: auto / span 2;
+    grid-row: auto / span 1;
   }
+  .grid-div-playlist:nth-child(6) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 1;
+  }
+
+  .grid-div-playlist:nth-child(5) {
+    grid-column: auto / span 1;
+  }
+  .grid-div-genre:nth-child(5) {
+    grid-column: auto / span 1;
+  }
+
+  .grid-div-playlist:nth-child(9) {
+    grid-column: auto / span 1;
+  }
+  .grid-div-genre:nth-child(9) {
+    grid-column: auto / span 1;
+  }
+
+  .grid-div-playlist:nth-child(3) {
+    grid-column: auto / span 1;
+  }
+  .grid-div-genre:nth-child(3) {
+    grid-column: auto / span 1;
+  }
+
+  .grid-div-playlist:last-of-type {
+    grid-column: auto / span 2;
+  }
+  .grid-div-genre:last-of-type {
+    grid-column: auto / span 2;
+  }
+  /*.grid-div-playlist:nth-child(6) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 2;
+
+  }*/
 }
 
 @media screen and (max-width: 992px){
+  body {
+    padding-top: 120px;
+  }
+  .grid-div-playlist:nth-child(1) {
+    grid-column: auto / span 2;
+    grid-row: auto / span 1;
+  }
+  .grid-div-genre:nth-child(1) {
+    grid-column: auto / span 2;
+    grid-row: auto / span 1;
+  }
+
   .grid-div-genre:nth-child(3) {
     grid-column: auto / span 1;
     grid-row: auto / span 1;
   }
+
   .grid-div-genre:nth-child(4) {
     grid-column: auto / span 1;
-    grid-row: auto / span 2;
+    grid-row: auto / span 1;
   }
+  .grid-div-playlist:nth-child(4) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 1;
+  }
+
   .grid-div-genre:last-of-type {
     grid-column: auto / span 2;
     grid-row: auto / span 1;
+  }
+  .grid-div-playlist:last-of-type {
+    grid-column: auto / span 2;
+    grid-row: auto / span 1;
+  }
+
+  .grid-div-playlist:nth-child(3) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 1;
+  }
+  .grid-div-genre:nth-child(3) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 1;
+  }
+
+  .grid-div-playlist:nth-child(7) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 1;
+  }
+  .grid-div-genre:nth-child(7) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 1;
+  }
+
+  .grid-div-playlist:last-of-type {
+    grid-column: auto / span 1;
+  }
+  .grid-div-genre:last-of-type {
+    grid-column: auto / span 1;
   }
 }
 
@@ -774,17 +1011,34 @@ input[type=range]:focus::-ms-fill-upper {
   body {
     padding-top: 120px;
   }
+  .mmm-logo {
+    max-width: 150px;
+  }
 }
 
 @media screen and (max-width: 602px){
   .grid-div-genre:nth-child(7) {
     grid-column: auto / span 1;
-
   }
+  .grid-div-playlist:nth-child(7) {
+    grid-column: auto / span 1;
+  }
+
   .grid-div-genre:nth-child(9) {
     grid-column: auto / span 1;
-    grid-row: auto / span 2;
+    grid-row: auto / span 1;
   }
+  .grid-div-playlist:nth-child(9) {
+    grid-column: auto / span 1;
+    grid-row: auto / span 1;
+  }
+
+
+
+  /*.grid-div-playlist:nth-child(1) {
+    grid-row: auto / span 2;
+    grid-column: auto / span 1;
+  }*/
   body {
     padding-top: 103px;
   }
@@ -802,6 +1056,7 @@ input[type=range]:focus::-ms-fill-upper {
   }
   #powered {
     margin-left: 1%;
+    display: none;
   }
   .play-pause {
     justify-content: space-around;
@@ -809,12 +1064,12 @@ input[type=range]:focus::-ms-fill-upper {
   body {
     padding-top: 110px;
   }
-}
-
-.navbar {
-  -webkit-box-shadow: 0px 10px 35px -17px rgba(0,0,0,0.92);
-  -moz-box-shadow: 0px 10px 35px -17px rgba(0,0,0,0.92);
-  box-shadow: 0px 10px 35px -17px rgba(0,0,0,0.92);
+  .song-name-container {
+    width: 66%;
+  }
+  .song {
+    justify-content: space-between;
+  }
 }
 
 @media screen and (min-width: 768px){
@@ -869,12 +1124,19 @@ input[type=range]:focus::-ms-fill-upper {
 
 @media screen and (min-width: 900px) {
   .grid-div-playlist:hover {
-
     transition: opacity 1s ease-out;
     opacity: 1;
     cursor: pointer;
   }
   .grid-div-playlist:hover > p {
+    display: none;
+  }
+  .grid-div-genre:hover {
+    transition: opacity 1s ease-out;
+    opacity: 1;
+    cursor: pointer;
+  }
+  .grid-div-genre:hover > p {
     display: none;
   }
   /*underline animation*/
@@ -888,39 +1150,11 @@ input[type=range]:focus::-ms-fill-upper {
   }
 }
 
-.grid-div-playlist:last-of-type {
-  font-weight: bold;
-
-}
-
-.grid-div-playlist:first-of-type {
-  grid-column: auto / span 2;
-}
-
-.grid-div-playlist:nth-child(9) {
-  grid-column: auto / span 2;
-}
-.grid-div-playlist:nth-child(3) {
-  grid-column: auto / span 2;
-}
-
-.grid-div-playlist:nth-child(7) {
-  grid-column: auto / span 2;
-}
-
-@media screen and (max-width: 1199px){
-  .grid-div-playlist:nth-child(6) {
-    grid-column: auto / span 2;
-  }
-}
-
-@media screen and (max-width: 992px){
-  .grid-div-playlist:nth-child(6) {
-    grid-column: auto / span 1;
-    grid-row: auto / span 2;
-
-  }
-  .grid-div-playlist:nth-child(5) {
-    grid-column: auto / span 1;
-  }
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    body {
+      padding-top: 120px;
+    }
 }

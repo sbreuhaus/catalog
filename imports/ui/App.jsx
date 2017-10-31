@@ -13,15 +13,12 @@ import Song from './Song.jsx';
 import Genre from './Genre.jsx';
 import BackToHome from './BackToHome.jsx';
 import SearchBar from './SearchBar';
-import SearchFilters from './SearchFilters';
 import PlayList from './PlayList';
-import DisplayTable from './DisplayTable';
 import MusicPlayer from './MusicPlayer';
 import NavBar from './NavBar';
 import SongMeta from './SongMeta';
 import AccountsUIWrapper from './AccountsUIWrapper';
 import ShowAllButton from './ShowAllButton';
-import ShowAllSongs from './ShowAllSongs';
 
 class App extends Component {
 
@@ -50,9 +47,6 @@ class App extends Component {
       notAltMix: undefined,
       altMixes: undefined,
       sponsorAltMixes: undefined,
-      availableHeight: 0,
-      scrollTop: 0
-
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
@@ -92,7 +86,7 @@ class App extends Component {
     const songSlider = document.getElementById('songSlider');
     const currentTime = document.getElementById('currentTime');
     this.setState({
-      sponsorshipSongs, audio, duration, songSlider, currentTime, altMixes, notAltMix, sponsorAltMixes, availableHeight: this.node.clientHeight
+      sponsorshipSongs, audio, duration, songSlider, currentTime, altMixes, notAltMix, sponsorAltMixes,
     });
   }
 
@@ -268,24 +262,48 @@ class App extends Component {
   handleShowSongGenres() {
     if (!this.state.isGenre) {
       const filterSongs = this.state.songs;
-      const filtered = [];
+      const altMixes = this.state.altMixes;
+      let filtered = [];
       const filterGenre = this.state.genre;
+      const sponsorship = this.state.sponsorshipSongs;
+
       for (let i = 0; i < filterSongs.length; i++) {
-          const song = filterSongs[i];
-          const genre = filterSongs[i].genre;
-          if (genre === filterGenre) {
-            filtered.push(song);
-          }
+        const song = filterSongs[i];
+        const genre = filterSongs[i].genre;
+
+        if (genre === filterGenre && genre !== '' && song.parent_track === '') {
+          filtered.push(song);
         }
+      }
+
+      const altMixesFilter = (song) => altMixes.filter(mix => mix.parent_track === song.name)
       return (
         <ul className="list-group">
           <h1 className="which-alignment">{filterGenre}</h1>
           { filtered.map((song, index) => (
-            <Song song={song} key={index} setUrl={this.handleSetUrl} />)) }
+            <Song
+              altMixes={altMixesFilter(song)}
+              genre={filterGenre}
+              matchedSongs={this.state.matchedSongs}
+              song={song}
+              key={index}
+              setUrl={this.handleSetUrl}
+              songUrl={this.state.songUrl}
+              isGenre={this.state.isGenre}
+              convertTime={this.convertTime}
+              playAudio={this.playAudio}
+              showDuration={this.showDuration}
+              upDateSongSliderTwo={this.upDateSongSliderTwo}
+              isPlaying={this.isPlaying}
+              isPaused={this.isPaused}
+              playing={this.state.playing}
+              audio={this.state.audio}
+            />)
+          ) }
         </ul>
       );
-      }
     }
+  }
 
     handleShowPlayListSongs() {
       if (!this.state.isGenre) {
@@ -460,6 +478,7 @@ class App extends Component {
 
     playAudioNav = (e) => {
       e.preventDefault();
+      this.isPlaying()
       // const showDuration = this.props.showDuration;
       // debugger;
       // console.log('playAudio');
@@ -474,6 +493,7 @@ class App extends Component {
 
     pauseAudioNav = (e) => {
       e.preventDefault();
+      this.isPaused()
       const sound = this.state.audio;
       sound.pause();
     }
@@ -517,11 +537,12 @@ class App extends Component {
       return (
         <div>
           <NavBar
+            isPlaying={this.isPlaying}
             isGenre={isGenre}
             clickToHome={this.clickToHome}
             showMusicPlayer={this.showMusicPlayer}
           />
-        <div className="container">
+        <div className="container ">
             <div className="row">
               {this.state.isGenre ?
                 <SearchBar handleSearch={this.handleSearch} />

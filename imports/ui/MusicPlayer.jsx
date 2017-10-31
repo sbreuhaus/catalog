@@ -20,7 +20,7 @@ class MusicPlayer extends React.Component {
       <div className="audio-player-container col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div className="player">
           { showPlayPause() }
-          <div id="currentTime" className="current-time">00:00</div>
+          <div id="currentTime" className="current-time">0:00</div>
           <input
             id="songSlider"
             className="song-slider"
@@ -30,7 +30,7 @@ class MusicPlayer extends React.Component {
             value="0"
             onChange={this.props.seekSong}
           />
-          <div id="duration" className="duration">00:00</div>
+          <div id="duration" className="duration">0:00</div>
           <audio id="att_player" src="" className="att_player" ref="att_player" preload="true" />
         </div>
       </div>
