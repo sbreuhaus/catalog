@@ -1,6 +1,5 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-import ReactSVG from 'react-svg';
 
 import {
   Modal,
@@ -28,6 +27,7 @@ class SongMetaModal extends React.Component {
     this.setState({
       isOpen: false
     });
+    document.body.classList.remove('modal-open');
   };
 
   renderModal() {
@@ -40,11 +40,6 @@ class SongMetaModal extends React.Component {
         <ModalHeader className='modal-header'>
           <ModalClose onClick={this.hideModal} />
           <div className="modal-header-logo-title">
-            <ReactSVG
-              className='modal-att-logo'
-              path="../../ATT.svg"
-              style={{ width: 32 }}
-            />
           </div>
           <div className="modal-header-logo-title">
           <ModalTitle className='modal-title'>{this.props.song.name}</ModalTitle>
@@ -52,18 +47,15 @@ class SongMetaModal extends React.Component {
         </ModalHeader>
         <ModalBody className='modal-body'>
           <ul className='li-last'>
-            <li>Genre:<span>{this.props.song.genre}</span></li>
-            <li>Description:<span>{this.props.song.description}</span></li>
-            <li>Notable Instruments:<span>{this.props.song.notable_instr}</span></li>
-            <li>Potential Uses:<span>{this.props.song.potential_uses}</span></li>
-            <li>Tags:<span>{this.props.song.other_tags}</span></li>
+            <li><span className="info">Genre: </span><span>{this.props.song.genre}</span></li>
+            <li><span className="info">Description: </span><span>{this.props.song.description}</span></li>
+            <li><span className="info">Notable Instruments: </span><span>{this.props.song.notable_instr}</span></li>
+            <li><span className="info">Potential Uses: </span><span>{this.props.song.potential_uses}</span></li>
+            <li><span className="info">Tags: </span><span>{this.props.song.other_tags}</span></li>
             <li>For more information on this track, please contact Anjali Nair at anjali@manmademusic.com</li>
           </ul>
         </ModalBody>
         <ModalFooter className='modal-footer'>
-          <button className='btn btn-default modal-close' onClick={this.hideModal}>
-            Close
-          </button>
         </ModalFooter>
       </Modal>
     )

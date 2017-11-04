@@ -16,7 +16,7 @@ const NavBar = (props) => {
                 style={{ width: 32 }}
               />
             </div>
-            <div id="powered">AT&T MicroCatalog <span className="fa fa-registered fa-lg"/><br/> powered by</div>
+            <div id="powered">AT&T MicroCatalog <span className="fa fa-registered fa-lg"/><br/>by Man Made Music</div>
             <ReactSVG
               path="../../Horizontal_Logo_Inverted.svg"
               className="mmm-logo"

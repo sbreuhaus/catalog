@@ -2,7 +2,7 @@ import React from 'react';
 
 const SearchBar = (props) => {
     return (
-      <div className="form-group padding-top">
+      <div className="form-group col-md-8">
         <input
           type="text"
           className="form-control input-lg"

@@ -86,7 +86,7 @@ class App extends Component {
     const songSlider = document.getElementById('songSlider');
     const currentTime = document.getElementById('currentTime');
     this.setState({
-      sponsorshipSongs, audio, duration, songSlider, currentTime, altMixes, notAltMix, sponsorAltMixes,
+      sponsorshipSongs, audio, duration, songSlider, currentTime, altMixes, notAltMix, sponsorAltMixes
     });
   }
 
@@ -543,17 +543,17 @@ class App extends Component {
             showMusicPlayer={this.showMusicPlayer}
           />
         <div className="container ">
-            <div className="row">
+            <div className="row search padding-top">
+              {this.state.showAllSongs === false && this.state.isGenre && this.state.searchMatches === '' ?
+                <ShowAllButton
+                  toggleShowAllSongs={this.toggleShowAllSongs}
+                /> : ''}              
               {this.state.isGenre ?
                 <SearchBar handleSearch={this.handleSearch} />
                 : ''}
             </div>
 
             <div className="row">
-              {this.state.showAllSongs === false && this.state.isGenre && this.state.searchMatches === '' ?
-                <ShowAllButton
-                  toggleShowAllSongs={this.toggleShowAllSongs}
-                /> : ''}
               { this.showAllSongs() }
               { this.DisplaySearchResults() }
               { this.handleFilterGenrePlaylist() }

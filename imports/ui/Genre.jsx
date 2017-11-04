@@ -12,7 +12,7 @@ export default class Genre extends Component {
   render() {
     let idKey = `genre${this.state.idKey}`;
     return (
-      <li className="grid-div-genre" id={idKey} onClick={this.props.clickGenre}>
+      <li className="grid-div-genre overlay" id={idKey} onClick={this.props.clickGenre}>
         <p>{this.props.genre}</p>
       </li>
     );
