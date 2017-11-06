@@ -100,7 +100,7 @@ class Song extends Component {
       return songAltMixes.map((mix, index) =>
               <li key={index} className="alt-mix-name">
                 {this.altPlayOrPause(mix)}
-                <span className="song-name">{mix.name}</span>
+                <span className="song-name">alt mix</span>
               </li>
             );
           }
@@ -110,7 +110,7 @@ class Song extends Component {
       // clearInterval(this.state.intervalId);
       // clearInterval(this.state.slider);
     }
-    
+
     render() {
       const name = this.props.song.name;
       const that = this;
@@ -141,7 +141,10 @@ class Song extends Component {
       }
       return (
         <li className="list-group-item song" id={name}>
-            <SongMetaModal song={this.props.song} />
+            <SongMetaModal
+              song={this.props.song}
+              altMixes={songAltMixes}
+            />
             <div className="song-name-container">
               <div className="song-controller">
                 { playOrPause() }

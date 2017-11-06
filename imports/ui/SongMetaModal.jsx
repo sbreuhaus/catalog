@@ -36,7 +36,7 @@ class SongMetaModal extends React.Component {
     }
 
     return (
-      <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
+      <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal} className="fade">
         <ModalHeader className='modal-header'>
           <ModalClose onClick={this.hideModal} />
           <div className="modal-header-logo-title">
