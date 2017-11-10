@@ -5,25 +5,26 @@ import ReactSVG from 'react-svg';
 
 const NavBar = (props) => {
   return (
-    <nav className="navbar navbar-inverse navbar-fixed-top navbar-att">
+    <nav className="navbar navbar-inverse navbar-fixed-top">
       <div className="container">
-        <div className="row" style={{width: '100%'}}>
-          <div className=" col-sm-12 col-md-6 col-lg-6 navbar-logos">
-            <div className="att-home" onClick={!props.isGenre ? props.clickToHome : ''}>
+        <div className="row">
+          <div className="att-home col-md-1 col-sm-2 col-xs-2">
+            <div onClick={!props.isGenre ? props.clickToHome : ''}>
               <ReactSVG
                 path="../../ATT.svg"
                 className="logo-main"
                 style={{ width: 32 }}
               />
             </div>
-            <div id="powered">AT&T MicroCatalog <span className="fa fa-registered fa-lg"/><br/>by Man Made Music</div>
+          </div>
+          <div className="col-md-11 col-sm-9 col-xs 9 mmm-player">
             <ReactSVG
               path="../../Horizontal_Logo_Inverted.svg"
               className="mmm-logo"
               style={{ width: 200 }}
             />
-          </div>
             {props.showMusicPlayer()}
+          </div>
         </div>
       </div>
     </nav>

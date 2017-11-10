@@ -404,6 +404,7 @@ class App extends Component {
       const songUrl = this.state.songUrl;
       return (
         <MusicPlayer
+          playing={this.state.playing}
           isGenre={this.state.isGenre}
           audio={this.state.audio}
           songUrl={songUrl}
@@ -543,11 +544,11 @@ class App extends Component {
             showMusicPlayer={this.showMusicPlayer}
           />
         <div className="container ">
-            <div className="row search padding-top">
+            <div className="row search">
               {this.state.showAllSongs === false && this.state.isGenre && this.state.searchMatches === '' ?
                 <ShowAllButton
                   toggleShowAllSongs={this.toggleShowAllSongs}
-                /> : ''}              
+                /> : ''}
               {this.state.isGenre ?
                 <SearchBar handleSearch={this.handleSearch} />
                 : ''}

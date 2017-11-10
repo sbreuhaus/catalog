@@ -100,7 +100,11 @@ class Song extends Component {
       return songAltMixes.map((mix, index) =>
               <li key={index} className="alt-mix-name">
                 {this.altPlayOrPause(mix)}
-                <span className="song-name">alt mix</span>
+                {
+                  this.props.playlist === 'Anthem/Sponsorship Package' ?
+                  <div className="download"><span className="fa fa-download fa-lg" style={{ color: 'white' }}></span><span className="song-name">alt mix</span></div> :
+                  <span className="song-name">alt mix</span>
+                }
               </li>
             );
           }

@@ -82,7 +82,14 @@ audio {
   margin-bottom: 3vh;
 }
 .att-home {
+  border: 1px solid yellow;
   cursor: pointer;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /*align-self: flex-start;*/
+  /*width: 32px;*/
 }
 
 .song {
@@ -95,7 +102,7 @@ audio {
 
 .song-name {
   font-size: 1.5rem;
-  margin-left: 1vw;
+  margin-left: 15px;
   margin-top: .3%;
 }
 
@@ -151,11 +158,17 @@ audio {
 }
 
 .show-all {
+  width: 150px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
   background-color: #009fdb;
   color: white;
   height: 46px;
   opacity: .75;
   transition: all .25s ease-in-out;
+  padding: 0px;
 }
 
 .show-all:hover {
@@ -240,6 +253,17 @@ audio {
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
+
+}
+
+.mmm-player {
+  height: 70px;
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  /*flex-direction: row;*/
+  justify-content: space-around;
+  /*flex-wrap: wrap;*/
 }
 
 .play-pause {
@@ -250,13 +274,28 @@ audio {
   align-items: center;
 }
 
-.navbar-logos {
+/*.navbar-logos {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin-top: 3vh;
-  margin-bottom: 1vh;
+  justify-content: space-around;
+}*/
+
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
+
+.mmm-logo {
+  /*padding-top: 3vh;*/
+  max-width: 200px;
+  margin-top: 1%;
+  align-self: flex-end;
+  border: 1px dotted white;
+  /*margin-left: -10%;*/
+}
+
 
 #powered {
   color: white;
@@ -317,11 +356,6 @@ audio {
   padding-top: 5vh;
 }
 
-.mmm-logo {
-  max-width: 200px;
-  margin-top: 1%;
-  margin-left: -10%;
-}
 
 /*Styles for Playlist and Genre divs*/
 
@@ -859,10 +893,10 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .audio-player-container {
-  margin-top: 1vh;
-  height: 60px;
+  /*margin-top: 2vh;*/
   padding: 0px;
   color: white;
+  border: 1px solid pink;
 }
 
 .player-logo {
@@ -874,7 +908,7 @@ input[type=range]:focus::-ms-fill-upper {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  margin: 7px;
+  /*margin: 7px;*/
 }
 
 #currentTime {
@@ -1204,6 +1238,21 @@ input[type=range]:focus::-ms-fill-upper {
   .li-last {
     margin-left: 3vh;
   }
+  .show-all {
+    width: 100px;
+    font-size: 1.5rem;
+  }
+  .mmm-logo {
+    margin-left: 0px;
+  }
+  .mmm-player {
+    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    /*flex-wrap: none;*/
+  }
+
 }
 
 @media only screen
