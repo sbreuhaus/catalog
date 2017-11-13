@@ -4,9 +4,16 @@ import { check } from 'meteor/check';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-import '../ui/SongUpload.jsx';
 
 export const Songs = new Mongo.Collection('songs');
+
+if (Meteor.isServer) {
+  console.log('is server');
+  // This code only runs on the server
+  Meteor.publish('songs', () => {
+    return Songs.find();
+  });
+}
 
 // Songs.schema = new SimpleSchema({
 //   name: {type: String},

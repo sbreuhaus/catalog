@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
-import Masonry from 'react-masonry-component';
 import '../../client/main.css';
 
 //songs collection
@@ -19,6 +19,7 @@ import NavBar from './NavBar';
 import SongMeta from './SongMeta';
 import AccountsUIWrapper from './AccountsUIWrapper';
 import ShowAllButton from './ShowAllButton';
+import SoundManager from './SoundManager';
 
 class App extends Component {
 
@@ -401,13 +402,13 @@ class App extends Component {
     }
 
     showMusicPlayer = () => {
-      const songUrl = this.state.songUrl;
+
       return (
         <MusicPlayer
           playing={this.state.playing}
           isGenre={this.state.isGenre}
           audio={this.state.audio}
-          songUrl={songUrl}
+          songUrl={this.state.songUrl}
           selectedUrl={this.state.selectedUrl}
           searchMatches={this.state.searchMatches}
           seekSong={this.seekSong}
@@ -574,8 +575,8 @@ App.propTypes = {
 };
 
 export default createContainer(() => {
-  const songs = Songs.find({}).fetch();
+  Meteor.subscribe('songs');
   return {
-    songs
+    songs: Songs.find({}).fetch()
   };
 }, App);

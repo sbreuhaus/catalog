@@ -5,7 +5,6 @@ import createBrowserHistory from 'history/createBrowserHistory';
 const browserHistory = createBrowserHistory();
 
 import App from '../../ui/App';
-import SongUpload from '../../ui/SongUpload';
 import Login from '../../ui/Login';
 
 export const renderRoutes = () => (
