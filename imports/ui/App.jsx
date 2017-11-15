@@ -19,7 +19,6 @@ import NavBar from './NavBar';
 import SongMeta from './SongMeta';
 import AccountsUIWrapper from './AccountsUIWrapper';
 import ShowAllButton from './ShowAllButton';
-import SoundManager from './SoundManager';
 
 class App extends Component {
 
