@@ -8,7 +8,7 @@ const NavBar = (props) => {
     <nav className="navbar navbar-inverse navbar-fixed-top">
       <div className="container">
         <div className="row">
-          <div className="att-home col-md-1 col-sm-2 col-xs-2">
+          <div className="att-home col-md-6 col-xs-12">
             <div onClick={!props.isGenre ? props.clickToHome : ''}>
               <ReactSVG
                 path="../../ATT.svg"
@@ -16,13 +16,9 @@ const NavBar = (props) => {
                 style={{ width: 32 }}
               />
             </div>
+            <div className="current-song">{props.currentSong}</div>
           </div>
-          <div className="col-md-11 col-sm-9 col-xs 9 mmm-player">
-            <ReactSVG
-              path="../../Horizontal_Logo_Inverted.svg"
-              className="mmm-logo"
-              style={{ width: 200 }}
-            />
+          <div className="col-md-6 col-xs-12 mmm-player">
             {props.showMusicPlayer()}
           </div>
         </div>
@@ -32,3 +28,9 @@ const NavBar = (props) => {
 }
 
 export default NavBar;
+
+// <ReactSVG
+//   path="../../Horizontal_Logo_Inverted.svg"
+//   className="mmm-logo"
+//   style={{ width: 200 }}
+// />

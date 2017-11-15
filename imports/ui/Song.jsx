@@ -20,39 +20,34 @@ class Song extends Component {
 
 
     componentDidMount() {
-      console.log('thi.props.altmixes', this.props.altMixes);
-      // if (this.state.altMixes){
-      //   this.findAltMixes();
-      //   console.log('MOUNTING');
-      // }
-
-      //console.log("elements", elements.newSound);
-      //console.log("Songs Mounted");
-      const slider = setInterval(this.props.upDateSongSliderTwo, 500);
+      //console.log('thi.props.altmixes', this.props.altMixes);
+      const slider = setInterval(this.props.upDateSongSliderTwo, 1000);
       this.setState({ slider });
-      //console.log("this.state.matchedSongs", this.state.matchedSongs);
-      // console.log('this.props.playlist', this.props.playlist);
     }
-
-    // findAltMixes = () => {
-    //   const name = this.state.name;
-    //   const altMixes = this.state.altMixes;
-    //   const songAltMixes = altMixes.filter(mix => mix.parent_track === name)
-    //   this.setState({ songAltMixes })
-    // }
 
     playAudio = (e) => {
       e.preventDefault();
       const showDuration = this.props.showDuration;
-      //debugger;
-      console.log('playAudio');
       const sound = document.getElementById('att_player');
-      sound.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${this.props.song.url}.mp3`;
-      const intervalId = setInterval(showDuration, 2000);
-      this.props.isPlaying();
-      this.setState({ intervalId, songIsPlaying: true });
       //debugger;
-      sound.play();
+      this.props.whichSong(this.props.song.name)
+      if(sound.src === `http://www.manmademusic.com/files/att_microcatalog/resources/${this.props.song.url}.mp3`){
+        const intervalId = setInterval(showDuration, 1000);
+        this.props.isPlaying();
+        this.setState({ intervalId, songIsPlaying: true });
+        //debugger;
+        sound.play();
+        return;
+      } else {
+        sound.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${this.props.song.url}.mp3`;
+        const intervalId = setInterval(showDuration, 1000);
+        this.props.isPlaying();
+        this.setState({ intervalId, songIsPlaying: true });
+        //debugger;
+        sound.play();
+      }
+      console.log('playAudio');
+
     }
 
     pauseAudio = (e) => {
@@ -73,7 +68,7 @@ class Song extends Component {
         //debugger;
         console.log('altplayAudio', e.target);
         sound.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${mix.url}.mp3`;
-        const intervalId = setInterval(showDuration, 2000);
+        const intervalId = setInterval(showDuration, 1000);
         that.props.isPlaying();
         that.setState({ intervalId, songIsPlaying: true });
         //debugger;

@@ -11,8 +11,8 @@ class MusicPlayer extends React.Component {
           <div className="play-pause">
             {
               playing ?
-              <span className="fa fa-pause fa-lg nav-pause" type="button" onClick={pauseAudioNav} /> :
-              <span className="fa fa-play fa-lg nav-play" type="button" onClick={playAudioNav} />
+              <span className="fa fa-pause fa-2x nav-pause" type="button" onClick={pauseAudioNav} /> :
+              <span className="fa fa-play fa-2x nav-play" type="button" onClick={playAudioNav} />
             }
           </div>
         );
@@ -20,7 +20,7 @@ class MusicPlayer extends React.Component {
     }
 
     return (
-      <div className="audio-player-container col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <div className="audio-player-container">
         <div className="player">
           { showPlayPause() }
           <div id="currentTime" className="current-time">0:00</div>

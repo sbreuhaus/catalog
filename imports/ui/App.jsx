@@ -48,6 +48,7 @@ class App extends Component {
       notAltMix: undefined,
       altMixes: undefined,
       sponsorAltMixes: undefined,
+      currentSong: undefined
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
@@ -284,6 +285,7 @@ class App extends Component {
           { filtered.map((song, index) => (
             <Song
               altMixes={altMixesFilter(song)}
+              whichSong={this.whichSong}
               genre={filterGenre}
               matchedSongs={this.state.matchedSongs}
               song={song}
@@ -335,6 +337,7 @@ class App extends Component {
             { filtered.map((song, index) => (
               <Song
                 altMixes={altMixesFilter(song)}
+                whichSong={this.whichSong}
                 playlist={filterPlaylist}
                 matchedSongs={this.state.matchedSongs}
                 song={song}
@@ -355,6 +358,10 @@ class App extends Component {
           </ul>
         );
       }
+    }
+
+    whichSong = (name) => {
+      this.setState({ currentSong: name })
     }
 
     trimString = (s) => {
@@ -402,7 +409,6 @@ class App extends Component {
     }
 
     showMusicPlayer = () => {
-
       return (
         <MusicPlayer
           playing={this.state.playing}
@@ -427,6 +433,7 @@ class App extends Component {
             { matchedSongs.map((song, index) => (
               <Song
                 song={song}
+                whichSong={this.whichSong}
                 key={index}
                 setUrl={this.handleSetUrl}
                 matchedSongs={this.state.matchedSongs}
@@ -452,7 +459,9 @@ class App extends Component {
       const sound = this.state.audio;
       const duration = this.state.duration;
       const songSlider = this.state.songSlider;
-      const d = Math.floor(sound.duration);
+      const d = Math.floor(parseFloat(sound.duration));
+      if(isNaN(d) === true) return
+      console.log('d', d);
       duration.textContent = this.convertTime(d);
       songSlider.setAttribute('max', d);
     }
@@ -476,6 +485,7 @@ class App extends Component {
       const currentTime = this.state.currentTime;
       sound.currentTime = songSlider.value;
       currentTime.textContent = this.convertTime(sound.currentTime)
+      console.log('songslider', songSlider.value);
     }
 
     playAudioNav = (e) => {
@@ -503,7 +513,7 @@ class App extends Component {
     convertTime = (secs) => {
       let min = Math.floor(secs/60);
       let sec = secs % 60;
-      min = (min < 10) ? "0" + min : min;
+      min = (min < 10) ? + min : min;
       sec = (sec < 10) ? "0" + sec : sec;
       return (min + ":" + sec);
     }
@@ -534,11 +544,10 @@ class App extends Component {
 
     render() {
       const isGenre = this.state.isGenre;
-      //console.log('this.handleScroll', this.handleScroll);
-
       return (
         <div>
           <NavBar
+            currentSong={this.state.currentSong}
             isPlaying={this.isPlaying}
             isGenre={isGenre}
             clickToHome={this.clickToHome}
@@ -554,7 +563,6 @@ class App extends Component {
                 <SearchBar handleSearch={this.handleSearch} />
                 : ''}
             </div>
-
             <div className="row">
               { this.showAllSongs() }
               { this.DisplaySearchResults() }
@@ -562,9 +570,7 @@ class App extends Component {
               { this.handleShowSongGenres() }
               { this.handleShowPlayListSongs() }
             </div>
-
           </div>
-
         </div>
       );
     }
