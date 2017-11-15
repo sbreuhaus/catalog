@@ -142,6 +142,7 @@ class App extends Component {
           { songs.map((song, index) => (
             <Song
               song={song}
+              whichSong={this.whichSong}
               key={index}
               songUrl={this.state.songUrl}
               isGenre={this.state.isGenre}
