@@ -12,8 +12,6 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-addons-pure-render-mixin": "^15.6.0",
-    "react-audio-player": "^0.6.1",
-    "react-audioplayer": "^0.3.1",
     "react-dom": "^15.6.1",
     "react-fontawesome": "^1.6.1",
     "react-modal-bootstrap": "^1.1.1",
