@@ -64,6 +64,8 @@ class Song extends Component {
       const sound = this.props.audio;
       function altPlayAudio(e) {
         e.preventDefault();
+
+        that.props.whichSong(mix.name)
         const showDuration = that.props.showDuration;
         //debugger;
         console.log('altplayAudio', e.target);
@@ -93,16 +95,16 @@ class Song extends Component {
     altMixHandler = () => {
       const songAltMixes = this.state.songAltMixes;
       return songAltMixes.map((mix, index) =>
-              <li key={index} className="alt-mix-name">
-                {this.altPlayOrPause(mix)}
-                {
-                  this.props.playlist === 'Anthem/Sponsorship Package' ?
-                  <div className="download"><span className="fa fa-download fa-lg" style={{ color: 'white' }}></span><span className="song-name">alt mix</span></div> :
-                  <span className="song-name">alt mix</span>
-                }
-              </li>
-            );
+        <li key={index} className="alt-mix-name">
+          {this.altPlayOrPause(mix)}
+          {
+            this.props.playlist === 'Anthem/Sponsorship Package' ?
+            <div className="download"><span className="fa fa-download fa-lg" style={{ color: 'white' }}></span><span className="song-name">alt mix</span></div> :
+            <span className="song-name">alt mix</span>
           }
+        </li>
+      );
+    }
 
     componentWillUnmount() {
       console.log("Songs unmounted");
