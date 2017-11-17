@@ -58,7 +58,7 @@ audio {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 /*.btn {
@@ -302,11 +302,11 @@ audio {
 
 .mmm-logo {
   /*padding-top: 3vh;*/
-  max-width: 200px;
+  max-width: 150px;
   margin-top: 1%;
-  align-self: flex-end;
+  /*align-self: flex-end;*/
   /*border: 1px dotted white;*/
-  /*margin-left: -10%;*/
+  margin-left: -15px;
 }
 
 
@@ -1162,11 +1162,11 @@ input[type=range]:focus::-ms-fill-upper {
     margin-right: 3%;
   }
   .mmm-logo {
-    max-width: 130px;
+    /*max-width: 130px;*/
   }
-  /*#songSlider {
-    max-width: 40%;
-  }*/
+  #songSlider {
+    max-width: 300px;
+  }
   #powered {
     margin-left: 1%;
     display: none;
@@ -1209,7 +1209,7 @@ input[type=range]:focus::-ms-fill-upper {
     margin-left: 2vh;
   }
   .mmm-logo {
-    margin-left: 2vh;
+    /*margin-left: 2vh;*/
   }
   input .form-control {
     margin-left: 2vh;
@@ -1275,7 +1275,7 @@ input[type=range]:focus::-ms-fill-upper {
     font-size: 1.5rem;
   }
   .mmm-logo {
-    margin-left: 0px;
+    width: 100px;
   }
   .mmm-player {
     height: 50px;;

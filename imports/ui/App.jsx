@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
+import ReactSVG from 'react-svg';
 import '../../client/main.css';
 
 //songs collection
@@ -316,10 +317,8 @@ class App extends Component {
         const filterPlaylist = this.state.playList;
         const sponsorship = this.state.sponsorshipSongs;
         if (filterPlaylist === 'Anthem/Sponsorship Package') {
-          //console.log('sponsorship inside if', sponsorship);
           const arr = sponsorship.filter(obj => obj.parent_track === '')
           filtered = filtered.concat(arr);
-          //console.log('yes altmix', sponsorAltMix);
         } else {
           for (let i = 0; i < filterSongs.length; i++) {
             const song = filterSongs[i];
@@ -554,6 +553,11 @@ class App extends Component {
             showMusicPlayer={this.showMusicPlayer}
           />
         <div className="container ">
+          <ReactSVG
+            path="../../Horizontal_Logo_Inverted.svg"
+            className="mmm-logo"
+            style={{ width: 200 }}
+          />
             <div className="row search">
               {this.state.showAllSongs === false && this.state.isGenre && this.state.searchMatches === '' ?
                 <ShowAllButton
@@ -571,7 +575,7 @@ class App extends Component {
               { this.handleShowPlayListSongs() }
             </div>
           </div>
-        </div>
+        </div> // end of container
       );
     }
 }

@@ -67,13 +67,10 @@ class Song extends Component {
 
         that.props.whichSong(mix.name)
         const showDuration = that.props.showDuration;
-        //debugger;
-        console.log('altplayAudio', e.target);
         sound.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${mix.url}.mp3`;
         const intervalId = setInterval(showDuration, 1000);
         that.props.isPlaying();
         that.setState({ intervalId, songIsPlaying: true });
-        //debugger;
         sound.play();
       }
 
@@ -171,27 +168,3 @@ export default Song;
 Song.propTypes = {
   song: PropTypes.object
 };
-
-// upDateSongSlider = () => {
-//   let sound = document.querySelector('.att_player');
-//   let songSlider = document.getElementById('songSlider');
-//   let currentTime = document.getElementById('currentTime');
-//   // Set max value when you know the duration
-//   sound.onloadedmetadata = () => songSlider.max = sound.duration;
-//   // update audio position
-//   songSlider.onchange = () => sound.currentTime = songSlider.value;
-//   // update range input when currentTime updates
-//   sound.ontimeupdate = () => songSlider.value = sound.currentTime;
-//   currentTime.textContent = sound.currentTime;
-// }
-
-// <AltMixes
-//   sound={sound}
-//   altMixes={this.state.songAltMixes}
-//   mmmUrl={mmmUrl}
-//   playAudio={this.playAudio}
-//   pauseAudio={this.pauseAudio}
-//   song={this.props.song}
-//   songIsPlaying={songIsPlaying}
-//   showDuration={this.props.showDuration}
-// />
