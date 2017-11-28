@@ -227,6 +227,13 @@ class App extends Component {
             if (playList.length) { playLists.push(playList); }
           }
         }
+        // swap 1st and 2nd items in each array
+        let b = playLists[1];
+          playLists[1] = playLists[0];
+          playLists[0] = b;
+        let c = genres[1];
+          genres[1] = genres[0];
+          genres[0] = c;
       return (
         <div className="container">
           <div className="row playlist-container">

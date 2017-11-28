@@ -9,7 +9,7 @@ export default class PlayList extends Component {
   }
 
   render() {
-    let idKey = `playlist${this.state.idKey}`
+    let idKey = `playlist${this.state.idKey}`;
     return (
       <li id={idKey} className="grid-div-playlist overlay" onClick={this.props.clickPlaylist}>
         <p>{this.props.playList}</p>
