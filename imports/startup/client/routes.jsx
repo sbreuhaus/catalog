@@ -1,19 +1,19 @@
 import React from 'react';
-import { Router, Route } from 'react-router';
+import { Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
+import App from '../../ui/App';
 
 const browserHistory = createBrowserHistory();
-
-import App from '../../ui/App';
+window.browserHistory = browserHistory;
 import Login from '../../ui/Login';
+
+const unAuthenticatedPage = ['/login', '/signup']
 
 export const renderRoutes = () => (
   <Router history={browserHistory}>
-    <div>
+    <Switch>
       <Route exact path="/" component={App}/>
-    </div>
+      <Route path="/login" component={Login}/>
+    </Switch>
   </Router>
 );
-
-
-// <Route path="/login" component={Login}/>

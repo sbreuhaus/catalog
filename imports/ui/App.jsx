@@ -48,7 +48,8 @@ class App extends Component {
       notAltMix: undefined,
       altMixes: undefined,
       sponsorAltMixes: undefined,
-      currentSong: undefined
+      currentSong: undefined,
+      cueList: []
     }
     this.clickGenre = this.clickGenre.bind(this);
     this.clickPlaylist = this.clickPlaylist.bind(this);
@@ -57,6 +58,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const audio = document.getElementById('att_player');
+    const duration = document.querySelector('.duration');
+    const songSlider = document.getElementById('songSlider');
+    songSlider.value = 0;
+    const currentTime = document.getElementById('currentTime');
+    const sound = this.state.audio;
     const songs = this.state.songs;
     const sponsorAltMixes = [];
     const sponsorshipSongs = songs.filter((song) => {
@@ -73,20 +80,8 @@ class App extends Component {
         sponsorAltMixes.push(songs[i]);
       }
     }
-    //window.addEventListener('scroll', this.handleScroll);
-    // let w = window,
-    //   d = document,
-    //   e = d.documentElement,
-    //   g = d.getElementsByTagName('body')[0],
-    //   x = w.innerWidth || e.clientWidth || g.clientWidth,
-    //   y = w.innerHeight|| e.clientHeight|| g.clientHeight;
-    //w.addEventListener('scroll', this.handleScroll);
-    //console.log(x + ' × ' + y);
-    // const body = document.querySelector('body')
-    const audio = document.getElementById('att_player');
-    const duration = document.querySelector('.duration');
-    const songSlider = document.getElementById('songSlider');
-    const currentTime = document.getElementById('currentTime');
+    // audio.addEventListener('timeupdate', clearInterval(this.state.slider))
+
     this.setState({
       sponsorshipSongs, audio, duration, songSlider, currentTime, altMixes, notAltMix, sponsorAltMixes
     });
@@ -115,7 +110,7 @@ class App extends Component {
   }
 
   audioIsPlaying() {
-    let audio = this.state.audio;
+    const audio = this.state.audio;
     //debugger;
     if (audio) {
       console.log('audio is NOW playing');
@@ -182,11 +177,58 @@ class App extends Component {
       searchMatches: '',
       matchedSongs: [],
       showAllSongs: false,
+      cueList: []
     });
   }
 
   handleSetGenre(genre) {
     this.setState({ genre: genre });
+  }
+
+  setCue = (song) => {
+    let listArr = this.state.cueList;
+    listArr.push(song)
+    this.setState({ cueList: listArr })
+  }
+
+  playNext = () => {
+    const audio = this.state.audio;
+    const currentSong = this.state.currentSong;
+    const cueList = this.state.cueList;
+    const elementPos = cueList.map(function(x) {return x.name; }).indexOf(currentSong);
+    const nextSongIndex = elementPos + 1;
+    if(elementPos + 1 === cueList.length){
+      console.log('no more songs');
+      // return;
+      this.whichSong(cueList[0].name);
+      audio.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${cueList[0].url}.mp3`;
+      audio.play();
+      return;
+    }
+    this.whichSong(cueList[nextSongIndex].name);
+    //console.log('cueList[nextSongIndex].url', cueList[nextSongIndex].url);
+    audio.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${cueList[nextSongIndex].url}.mp3`;
+    //console.log('audio.src', audio.src);
+    audio.play();
+  }
+
+  playPrev = () => {
+    const audio = this.state.audio;
+    const currentSong = this.state.currentSong;
+    const cueList = this.state.cueList;
+    const elementPos = cueList.map(function(x) {return x.name; }).indexOf(currentSong);
+    const prevSongIndex = elementPos - 1;
+    if(elementPos === 0) {
+      this.whichSong(cueList[cueList.length - 1].name);
+      audio.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${cueList[cueList.length - 1].url}.mp3`;
+      audio.play();
+      return;
+    }
+
+    this.whichSong(cueList[prevSongIndex].name);
+    audio.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${cueList[prevSongIndex].url}.mp3`;
+    audio.play();
+
   }
 
   clickPlaylist(e) { //click handler to set state of playlist
@@ -292,6 +334,7 @@ class App extends Component {
           <h1 className="which-alignment">{filterGenre}</h1>
           { filtered.map((song, index) => (
             <Song
+              setCue={this.setCue}
               altMixes={altMixesFilter(song)}
               whichSong={this.whichSong}
               genre={filterGenre}
@@ -342,6 +385,7 @@ class App extends Component {
             <h1 className="which-alignment">{filterPlaylist}</h1>
             { filtered.map((song, index) => (
               <Song
+                setCue={this.setCue}
                 altMixes={altMixesFilter(song)}
                 whichSong={this.whichSong}
                 playlist={filterPlaylist}
@@ -427,6 +471,8 @@ class App extends Component {
           playAudioNav={this.playAudioNav}
           pauseAudioNav={this.pauseAudioNav}
           songUrl={this.state.songUrl}
+          playNext={this.playNext}
+          playPrev={this.playPrev}
         />
       );
     }
@@ -467,7 +513,7 @@ class App extends Component {
       const songSlider = this.state.songSlider;
       const d = Math.floor(parseFloat(sound.duration));
       if(isNaN(d) === true) return
-      console.log('d', d);
+      //console.log('d', d);
       duration.textContent = this.convertTime(d);
       songSlider.setAttribute('max', d);
     }
@@ -479,11 +525,20 @@ class App extends Component {
         const currentTime = this.state.currentTime;
         const c = Math.round(sound.currentTime);
         songSlider.value = sound.currentTime;
+        //console.log('sound.currentTime', sound.currentTime);
         currentTime.textContent = this.convertTime(c);
       } else {
         return;
       }
     }
+
+    // fireUpdateSongSlider = () => {
+    //   if(this.state.playing){
+    //     console.log('there is a song playing');
+    //     const slider = setInterval(this.upDateSongSliderTwo, 1000);
+    //     this.setState({ slider });
+    //   }
+    // }
 
     seekSong = () => {
       const sound = this.state.audio;
@@ -496,16 +551,9 @@ class App extends Component {
 
     playAudioNav = (e) => {
       e.preventDefault();
-      this.isPlaying()
-      // const showDuration = this.props.showDuration;
-      // debugger;
-      // console.log('playAudio');
+      this.isPlaying();
       const sound = this.state.audio;
-      // sound.src = `http://www.manmademusic.com/files/att_microcatalog/resources/${this.props.song.url}.mp3`;
-      // const intervalId = setInterval(showDuration, 2000);
-      //
-      // this.setState({ intervalId: intervalId });
-      //debugger;
+      console.log('WHATS THE CURRENT TIME', sound.currentTime);
       sound.play();
     }
 

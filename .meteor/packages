@@ -23,7 +23,7 @@ react-meteor-data
 accounts-ui@1.1.9
 accounts-password@1.4.0
 twbs:bootstrap
-harrison:papa-parse
 aldeed:simple-schema
 std:accounts-bootstrap
 email@1.2.3
+accounts-base

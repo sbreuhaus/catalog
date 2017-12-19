@@ -20,13 +20,15 @@ class Song extends Component {
 
 
     componentDidMount() {
-      //console.log('thi.props.altmixes', this.props.altMixes);
-      const slider = setInterval(this.props.upDateSongSliderTwo, 1000);
-      this.setState({ slider });
+      // const slider = setInterval(this.props.upDateSongSliderTwo, 1000);
+      // this.setState({ slider });
+      this.props.setCue(this.props.song)
     }
 
     playAudio = (e) => {
       e.preventDefault();
+      const slider = setInterval(this.props.upDateSongSliderTwo, 1000);
+      this.setState({ slider });
       const showDuration = this.props.showDuration;
       const sound = document.getElementById('att_player');
       //debugger;
@@ -97,7 +99,7 @@ class Song extends Component {
           {
             this.props.playlist === 'Anthem/Sponsorship Package' ?
             <div className="download"><span className="fa fa-download fa-lg" style={{ color: 'white' }}></span><span className="song-name">alt mix</span></div> :
-            <span className="song-name">alt mix</span>
+            <span className="song-name">Light Mix</span>
           }
         </li>
       );
@@ -105,8 +107,8 @@ class Song extends Component {
 
     componentWillUnmount() {
       console.log("Songs unmounted");
-      // clearInterval(this.state.intervalId);
-      // clearInterval(this.state.slider);
+      //clearInterval(this.state.intervalId);
+      //clearInterval(this.state.slider);
     }
 
     render() {

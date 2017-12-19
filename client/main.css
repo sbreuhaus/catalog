@@ -125,6 +125,7 @@ audio {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  margin-bottom: 7px;
 }
 
 .alt-mix-name {
@@ -266,7 +267,6 @@ audio {
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
-
 }
 
 .mmm-player {
@@ -277,6 +277,14 @@ audio {
   /*flex-direction: row;*/
   justify-content: space-around;
   /*flex-wrap: wrap;*/
+}
+
+.play-next {
+  margin-left: 10px;
+}
+
+.play-prev {
+  margin-right: 10px;
 }
 
 .play-pause {
@@ -931,22 +939,27 @@ input[type=range]:focus::-ms-fill-upper {
 
 #currentTime {
   font-size: 1.5em;
-  min-width: 40px;
+  width: 50px;
   align-self: center;
-  display: flex;
+  /*display: flex;
   flex-direction: row;
-  justify-content: space-around;
-
+  justify-content: space-around;*/
+  display: inline-block;
+  position: relative;
+  letter-spacing: 2px;
   /*margin: 10px;*/
 }
 
 #duration {
   font-size: 1.5em;
   align-self: center;
-  min-width: 40px;
-  display: flex;
+  width: 40px;
+  /*display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-around;*/
+  display: inline-block;
+  position: relative;
+  letter-spacing: 2px;
 }
 
 .song-title {
@@ -1264,6 +1277,12 @@ input[type=range]:focus::-ms-fill-upper {
   }
 }
 @media screen and (max-width: 420px){
+  .grid-playlist {
+    grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
+  }
+  .grid-genre {
+    grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
+  }
   .current-song {
     font-size: 2rem;
   }

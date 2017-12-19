@@ -1,11 +1,11 @@
 // import { Accounts } from 'meteor/std:accounts-bootstrap';
-//
-//
-// Accounts.config({
+import { Accounts } from 'meteor/accounts-base';
+
+// Accounts.ui.config({
 //   sendVerificationEmail: true,
-//   forbidClientAccountCreation: true
+//   forbidClientAccountCreation: false
 // });
-//
+
 // Accounts.ui.config({
 //
 //   loginPath: '/login',
