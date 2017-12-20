@@ -473,6 +473,7 @@ class App extends Component {
           songUrl={this.state.songUrl}
           playNext={this.playNext}
           playPrev={this.playPrev}
+          cueList={this.state.cueList}
         />
       );
     }

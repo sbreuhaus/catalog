@@ -3,19 +3,25 @@ import React from 'react';
 class MusicPlayer extends React.Component {
 
   render() {
-    const { playAudioNav, pauseAudioNav, audio, playing, playNext, playPrev } = this.props;
+    const { playAudioNav, pauseAudioNav, audio, playing, playNext, playPrev, cueList } = this.props;
     function showPlayPause() {
       const player = document.querySelector('.att_player')
       if (player && (player.src.indexOf('.mp3') > -1)) {
         return (
           <div className="play-pause">
-            <span className="fa fa-step-backward fa-2x play-prev" type="button" onClick={playPrev} />
+            {
+              cueList.length > 0 ?
+              <span className="fa fa-step-backward fa-2x play-prev" type="button" onClick={playPrev} /> : ''
+            }
             {
               playing ?
               <span className="fa fa-pause fa-2x nav-pause" type="button" onClick={pauseAudioNav} /> :
               <span className="fa fa-play fa-2x nav-play" type="button" onClick={playAudioNav} />
             }
-            <span className="fa fa-step-forward fa-2x play-next" type="button" onClick={playNext} />
+            {
+              cueList.length > 0 ?
+              <span className="fa fa-step-forward fa-2x play-next" type="button" onClick={playNext} /> : ''
+            }
           </div>
         );
       }
