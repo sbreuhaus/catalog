@@ -3,14 +3,14 @@ import React from 'react';
 class MusicPlayer extends React.Component {
 
   render() {
-    const { playAudioNav, pauseAudioNav, audio, playing, playNext, playPrev, cueList } = this.props;
+    const { playAudioNav, pauseAudioNav, audio, playing, playNext, playPrev, cueList, isGenre } = this.props;
     function showPlayPause() {
       const player = document.querySelector('.att_player')
       if (player && (player.src.indexOf('.mp3') > -1)) {
         return (
           <div className="play-pause">
             {
-              cueList.length > 0 ?
+              cueList.length > 0 && isGenre === false ?
               <span className="fa fa-step-backward fa-2x play-prev" type="button" onClick={playPrev} /> : ''
             }
             {
@@ -19,7 +19,7 @@ class MusicPlayer extends React.Component {
               <span className="fa fa-play fa-2x nav-play" type="button" onClick={playAudioNav} />
             }
             {
-              cueList.length > 0 ?
+              cueList.length > 0 && isGenre === false ?
               <span className="fa fa-step-forward fa-2x play-next" type="button" onClick={playNext} /> : ''
             }
           </div>

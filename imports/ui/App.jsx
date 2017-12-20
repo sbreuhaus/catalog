@@ -150,6 +150,8 @@ class App extends Component {
               isPaused={this.isPaused}
               playing={this.state.playing}
               audio={this.state.audio}
+              cueList={this.state.cueList}
+              setCue={this.setCue}
             />)
           ) }
         </ul>
@@ -193,6 +195,7 @@ class App extends Component {
 
   playNext = () => {
     const audio = this.state.audio;
+    audio.pause();
     const currentSong = this.state.currentSong;
     const cueList = this.state.cueList;
     const elementPos = cueList.map(function(x) {return x.name; }).indexOf(currentSong);
@@ -270,12 +273,12 @@ class App extends Component {
           }
         }
         // swap 1st and 2nd items in each array
-        let b = playLists[1];
-          playLists[1] = playLists[0];
-          playLists[0] = b;
-        let c = genres[1];
-          genres[1] = genres[0];
-          genres[0] = c;
+      let b = playLists[1];
+        playLists[1] = playLists[0];
+        playLists[0] = b;
+      let c = genres[1];
+        genres[1] = genres[0];
+        genres[0] = c;
       return (
         <div className="container">
           <div className="row playlist-container">
@@ -501,6 +504,8 @@ class App extends Component {
                 isPaused={this.isPaused}
                 playing={this.state.playing}
                 audio={this.state.audio}
+                cueList={this.state.cueList}
+                setCue={this.setCue}
               />))
             }
           </div>
