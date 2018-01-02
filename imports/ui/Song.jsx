@@ -98,7 +98,7 @@ class Song extends Component {
           {this.altPlayOrPause(mix)}
           {
             this.props.playlist === 'Anthem/Sponsorship Package' ?
-            <div className="download"><span className="fa fa-download fa-lg" style={{ color: 'white' }}></span><span className="song-name">alt mix</span></div> :
+            <div className="download"><span className="fa fa-download fa-lg" style={{ color: 'white' }}></span><span className="song-name">Light mix</span></div> :
             <span className="song-name">Light Mix</span>
           }
         </li>

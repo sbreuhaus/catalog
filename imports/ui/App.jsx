@@ -254,7 +254,7 @@ class App extends Component {
     const filtered = songs.filter(song => song.name === selectedUrl);
     const newUrl = filtered[0].url;
     //debugger;
-    this.setState({songUrl: newUrl})
+    this.setState({ songUrl: newUrl })
   }
 
   handleFilterGenrePlaylist() { // on page load, filter through all genre's and playlists and display no duplicates
