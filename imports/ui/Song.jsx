@@ -97,7 +97,7 @@ class Song extends Component {
         <li key={index} className="alt-mix-name">
           {this.altPlayOrPause(mix)}
           {
-            this.props.playlist === 'Anthem/Sponsorship Package' ?
+            this.props.playlist === 'Anthem' ?
             <div className="download"><span className="fa fa-download fa-lg" style={{ color: 'white' }}></span><span className="song-name">Light mix</span></div> :
             <span className="song-name">Light Mix</span>
           }
@@ -135,7 +135,7 @@ class Song extends Component {
         }
       }
       function download() {
-        if (that.props.playlist === 'Anthem/Sponsorship Package') {
+        if (that.props.playlist === 'Anthem') {
           return <a className="download" href={`${mmmUrl}${that.props.song.url}.mp3`} download><span className="fa fa-download fa-lg"></span></a>
         }
       }

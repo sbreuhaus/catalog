@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
 
+
 export default class Login extends Component {
   onSubmit(e) {
     e.preventDefault()
-    let email = 'sbreuhaus+48@gmail.com';
+    let email = 'sbreuhaus+62@gmail.com';
     let password = '1234';
     // alert("test");
     // Accounts
@@ -18,17 +19,20 @@ export default class Login extends Component {
      //   console.log("error: result", e, s);
      //   debugger;
      // });
-
-    Accounts.createUser({email, password}, (err) => {
-      if (err) {
-        console.log("err", err);
-        alert(err);
-      } else {
-        console.log("no error but this is err object", err);
-        // Accounts.sendVerificationEmail(Meteor.userId());
-        Meteor.call('sendEmail');
-      }
-    });
+    let valEmail = email.indexOf('@gmail.com');
+    if (valEmail > -1) {
+      Accounts.createUser({email, password}, (err) => {
+        if (err) {
+          console.log("err", err);
+          alert(err);
+        } else {
+          console.log("no error but this is err object", err);
+          Meteor.call('sendEmail');
+        }
+      });
+    } else {
+      alert('this is not a valid email address')
+    }
   }
 
   render(){

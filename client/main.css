@@ -154,7 +154,7 @@ audio {
 .more-info-container {
   height: 30px;
   /*align-self: center;*/
-  margin-top: 5px;
+  /* margin-top: 5px; */
 }
 .more-info-container-padding {
   height: 30px;
@@ -348,6 +348,7 @@ audio {
   flex-direction: row;
   justify-content: space-around;
   margin-right: 1vw;
+  margin-left: -3px;
   padding: 5px;
   transition: all .25s ease-in-out;
   border-radius: 4px;
@@ -714,11 +715,11 @@ audio {
 
 #genre9 {
   position: relative;
-  background: no-repeat url(/genre_images/HipHop.jpg) 50% / 100%;
+  background: no-repeat url(/genre_images/Drumline.jpg) 50% / 100%;
   border-bottom: 0px;
 }
 
-#genre10:after {
+/* #genre10:after {
   background-color: #009fdb;
 }
 
@@ -726,7 +727,7 @@ audio {
   position: relative;
   background: no-repeat url(/genre_images/Drumline.jpg) 50% / 100%;
   border-bottom: 0px;
-}
+} */
 
 /*.grid-div-2 {
   grid-column: 3 / 6;
@@ -779,11 +780,15 @@ audio {
 .grid-div-playlist:last-of-type {
   font-weight: bold;
 }
+.grid-div-genre:last-of-type {
+  grid-column: auto / span 2;
+}
 
 .song-meta {
   margin-right: 1%;
   cursor: pointer;
-  margin-top: 5%;
+  align-self: center;
+  /* margin-top: 5%; */
 }
 
 .modal-close {
@@ -1209,11 +1214,12 @@ input[type=range]:focus::-ms-fill-upper {
 .list-group-item {
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
+  border: 5px solid #ddd;
 }
-.list-group-item {
+/* .list-group-item {
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
-}
+} */
 
 @media screen and (max-width: 768px) {
   #playlist {

@@ -71,7 +71,7 @@ class SongMetaModal extends React.Component {
              aria-hidden="true"
              name="plus"
           />
-         <span>More Info</span>
+        <span>learn more</span>
         </div>
 
         { this.renderModal() }

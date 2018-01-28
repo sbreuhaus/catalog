@@ -66,9 +66,9 @@ class App extends Component {
     const sound = this.state.audio;
     const songs = this.state.songs;
     const sponsorAltMixes = [];
-    const sponsorshipSongs = songs.filter((song) => {
-      return song.sponsorship === 'yes';
-    });
+    // const sponsorshipSongs = songs.filter((song) => {
+    //   return song.sponsorship === 'yes';
+    // });
     const notAltMix = songs.filter((song) => {
       return song.parent_track === '';
     })
@@ -83,7 +83,7 @@ class App extends Component {
     // audio.addEventListener('timeupdate', clearInterval(this.state.slider))
 
     this.setState({
-      sponsorshipSongs, audio, duration, songSlider, currentTime, altMixes, notAltMix, sponsorAltMixes
+      audio, duration, songSlider, currentTime, altMixes, notAltMix, sponsorAltMixes
     });
   }
 
@@ -369,10 +369,10 @@ class App extends Component {
         let filtered = [];
         const filterPlaylist = this.state.playList;
         const sponsorship = this.state.sponsorshipSongs;
-        if (filterPlaylist === 'Anthem/Sponsorship Package') {
-          const arr = sponsorship.filter(obj => obj.parent_track === '')
-          filtered = filtered.concat(arr);
-        } else {
+        // if (filterPlaylist === 'Anthem/Sponsorship Package') {
+        //   const arr = sponsorship.filter(obj => obj.parent_track === '')
+        //   filtered = filtered.concat(arr);
+        // } else {
           for (let i = 0; i < filterSongs.length; i++) {
             const song = filterSongs[i];
             const playlist = filterSongs[i].playlist;
@@ -381,7 +381,7 @@ class App extends Component {
               filtered.push(song);
             }
           }
-        }
+        // }
         const altMixesFilter = (song) => altMixes.filter(mix => mix.parent_track === song.name)
         return (
           <ul className="list-group">
