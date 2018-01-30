@@ -1063,6 +1063,9 @@ input[type=range]:focus::-ms-fill-upper {
   .grid-div-genre:last-of-type {
     grid-column: auto / span 2;
   }
+  .grid-div-genre:nth-child(9) {
+    grid-column: auto / span 2;
+  }
   /*.grid-div-playlist:nth-child(6) {
     grid-column: auto / span 1;
     grid-row: auto / span 2;
@@ -1139,6 +1142,10 @@ input[type=range]:focus::-ms-fill-upper {
   }
 }
 
+.input-lg {
+  text-overflow: ellipsis !important;
+}
+
 @media screen and (max-width: 768px){
   body {
     padding-top: 120px;
@@ -1164,13 +1171,16 @@ input[type=range]:focus::-ms-fill-upper {
     grid-column: auto / span 1;
     grid-row: auto / span 1;
   }
-
-
-
+  .grid-div-genre:last-of-type {
+    grid-column: auto / span 2;
+  }
   /*.grid-div-playlist:nth-child(1) {
     grid-row: auto / span 2;
     grid-column: auto / span 1;
   }*/
+  .show-all {
+    width: 100px;
+  }
   body {
     padding-top: 103px;
   }
@@ -1203,6 +1213,7 @@ input[type=range]:focus::-ms-fill-upper {
     justify-content: space-between;
     /*border-radius: 4px;*/
   }
+
 }
 
 @media screen and (min-width: 768px){
@@ -1233,7 +1244,7 @@ input[type=range]:focus::-ms-fill-upper {
   }
   input .form-control {
     margin-left: 2vh;
-    width: 75%;
+    width: 100%;
   }
   #playlist {
     height: 9vh;
@@ -1254,6 +1265,9 @@ input[type=range]:focus::-ms-fill-upper {
     text-align: center;
     margin-top: 0px;
   }
+  /* .input-lg {
+    width: 400px;
+  } */
 }
 
 @media screen and (min-width: 900px) {
@@ -1270,15 +1284,6 @@ input[type=range]:focus::-ms-fill-upper {
     opacity: 1;
     cursor: pointer;
   }
-  /*.grid-div-genre:hover > p {
-    display:;
-  }*/
-  /*underline animation*/
-  /*.grid-div-playlist > p:hover:before {
-    visibility: visible;
-    -webkit-transform: scaleX(.70);
-    transform: scaleX(.70);
-  }*/
   .navbar-att {
     min-height: 80px;
   }
@@ -1317,6 +1322,9 @@ input[type=range]:focus::-ms-fill-upper {
     height: 40px;
     margin-top: 10px;
   }
+  /* .input-lg {
+    max-width: 230px;
+  } */
 }
 
 @media only screen
